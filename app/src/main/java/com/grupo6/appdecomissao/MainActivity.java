@@ -2,12 +2,7 @@ package com.grupo6.appdecomissao;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -15,5 +10,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toast.makeText(this, "Esse é um commit teste!", Toast.LENGTH_SHORT).show();
     }
 }

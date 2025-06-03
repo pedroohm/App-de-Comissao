@@ -1,7 +1,7 @@
 package com.grupo6.appdecomissao;
 
 public class Record {
-    private String id;
+    private Integer id;
     private String clientName;
 
     // Consultor responsável por esse registro
@@ -10,7 +10,7 @@ public class Record {
     // Estágio do processo que o registro se encontra
     private String stage;
 
-    public Record(String id, String clientName, String responsibleName, String stage) {
+    public Record(Integer id, String clientName, String responsibleName, String stage) {
         this.id = id;
         this.clientName = clientName;
         this.responsibleName = responsibleName;
@@ -18,7 +18,7 @@ public class Record {
     }
 
     // Métodos de get
-    public String getId() { return id; }
+    public Integer getId() { return id; }
     public String getClientName() { return clientName; }
     public String getResponsibleName() { return responsibleName; }
     public String getStage() { return stage; }

@@ -1,7 +1,6 @@
 package com.grupo6.appdecomissao;
 
-public class Sales {
-
+public class Sale {
     private Integer id;
     private Integer consultantId;
     private String product;
@@ -10,7 +9,7 @@ public class Sales {
     private double commission;
     private Integer recordId;
 
-    public Sales(Integer id, Integer consultantId, String product, double price, String saleDate, double commission, Integer recordId){
+    public Sale(Integer id, Integer consultantId, String product, double price, String saleDate, double commission, Integer recordId){
         this.id = id;
         this.consultantId = consultantId;
         this.product = product;

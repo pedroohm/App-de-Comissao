@@ -1,8 +1,15 @@
 package com.grupo6.appdecomissao;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
+    @SerializedName("id")
     private Integer id;
+
+    @SerializedName("nome")
     private String name;
+
+    @SerializedName("email")
     private String email;
 
     // Possíveis atributos (picture e password) que deverão ser armazenados em um BD

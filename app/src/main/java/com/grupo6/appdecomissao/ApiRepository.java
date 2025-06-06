@@ -13,12 +13,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/*
-    Essa classe é responsável por esconder toda a lógica pesada de requisição para uma API.
-    Aqui, implementaremos todos os métodos necessários para a nossa aplicação que envolvam a requisição de dados
-    na plataforma Rubeus.
- */
-
 public class ApiRepository {
 
     // Instância única do retrofit

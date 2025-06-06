@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
     @SerializedName("id")
-    private Integer id;
+    private String id;
 
     @SerializedName("nome")
     private String name;
@@ -20,7 +20,7 @@ public class User {
     // Atributo usado para identificar se o usuário é um consultor ou um supervisor
     private String profile;
 
-    public User(Integer id, String name, String email, String picture, String password, String profile) {
+    public User(String id, String name, String email, String picture, String password, String profile) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -30,7 +30,7 @@ public class User {
     }
 
     // Métodos de Get
-    public Integer getId() { return id; }
+    public String getId() { return id; }
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getPicture() { return picture; }

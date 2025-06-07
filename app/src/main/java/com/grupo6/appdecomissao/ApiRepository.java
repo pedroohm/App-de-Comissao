@@ -3,6 +3,7 @@ package com.grupo6.appdecomissao;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,13 +13,15 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.util.Log; // <-- Add this line
+
 
 public class ApiRepository {
 
     // Instância única do retrofit
     private final RubeusEndpointsAPI service;
     // Corpo de cada requisição
-    private Map<String, String> body;
+    private final Map<String, String> body;
 
     public ApiRepository() {
         service = ApiClient
@@ -44,7 +47,7 @@ public class ApiRepository {
 
                 JsonObject json = response.body();
                 if (!json.has("success") || !json.get("success").getAsBoolean()) {
-                    callback.onError("API retornou sucess=false");
+                    callback.onError("API retornou success=false");
                     return;
                 }
 
@@ -71,4 +74,99 @@ public class ApiRepository {
             }
         });
     }
+
+    public void getRecordsByStatus(String origin, String token, String targetStatus, ApiCallback<List<Record>> callback) {
+        try {
+            // Validação do status informado
+            if (targetStatus == null || (!targetStatus.equalsIgnoreCase("Em andamento")
+                    && !targetStatus.equalsIgnoreCase("Ganho")
+                    && !targetStatus.equalsIgnoreCase("Perdido"))) {
+                callback.onError("Status inválido");
+                return;
+            }
+
+            JsonObject requestBody = new JsonObject();
+            requestBody.addProperty("origem", origin);
+            requestBody.addProperty("token", token);
+
+            Log.d("API_REQUEST", "Enviando requisição para listRecords com status: " + targetStatus);
+
+            Call<JsonObject> call = service.listRecords(requestBody);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    try {
+                        if (!response.isSuccessful() || response.body() == null) {
+                            String error = "Erro HTTP: " + response.code();
+                            if (response.errorBody() != null) {
+                                error += " - " + response.errorBody().string();
+                            }
+                            Log.e("API_ERROR", error);
+                            callback.onError(error);
+                            return;
+                        }
+
+                        JsonObject jsonResponse = response.body();
+
+                        Log.d("API_RESPONSE", "Resposta bruta: " + jsonResponse.toString());
+
+                        if (!jsonResponse.has("success") || !jsonResponse.get("success").getAsBoolean()) {
+                            String errorMsg = jsonResponse.has("errors") ?
+                                    jsonResponse.get("errors").getAsString() : "API retornou success=false";
+                            callback.onError(errorMsg);
+                            return;
+                        }
+
+                        if (!jsonResponse.has("dados") || !jsonResponse.get("dados").isJsonObject()) {
+                            callback.onError("Campo 'dados' ausente ou inválido na resposta");
+                            return;
+                        }
+
+                        // Pega o objeto "dados" principal
+                        JsonObject dadosObj = jsonResponse.getAsJsonObject("dados");
+
+                        // Verifica se existe o array "dados" dentro do objeto "dados"
+                        if (!dadosObj.has("dados") || !dadosObj.get("dados").isJsonArray()) {
+                            callback.onError("Array 'dados' ausente ou inválido dentro do objeto 'dados'");
+                            return;
+                        }
+
+                        JsonArray recordsArray = dadosObj.getAsJsonArray("dados");
+                        List<Record> records = new ArrayList<>();
+
+                        // Itera pelo array e filtra pelo statusNome informado
+                        for (JsonElement element : recordsArray) {
+                            JsonObject recordJson = element.getAsJsonObject();
+
+                            if (recordJson.has("statusNome") &&
+                                    recordJson.get("statusNome").getAsString().equalsIgnoreCase(targetStatus)) {
+
+                                Record record = new Gson().fromJson(recordJson, Record.class);
+                                records.add(record);
+                            }
+                        }
+
+                        Log.d("API_SUCCESS", "Registros encontrados: " + records.size());
+                        callback.onSuccess(records);
+
+                    } catch (Exception e) {
+                        Log.e("API_PROCESSING", "Erro ao processar resposta", e);
+                        callback.onError("Erro no processamento: " + e.getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e("API_FAILURE", "Falha na requisição", t);
+                    callback.onError("Falha na rede: " + t.getMessage());
+                }
+            });
+
+        } catch (Exception e) {
+            Log.e("API_EXCEPTION", "Erro na chamada da API", e);
+            callback.onError("Erro interno: " + e.getMessage());
+        }
+    }
+
+
 }

@@ -12,6 +12,15 @@ import java.util.Map;
 import java.util.Set;
 
 public class DataCache {
+    // Singleton
+    private static final DataCache instance = null;
+
+    private DataCache() {}
+
+    public static DataCache getInstance(){
+        return instance;
+    }
+
     /* MAPS PARA AS ENTIDADES */
 
     /* Map para todos os usuários cadastrados */

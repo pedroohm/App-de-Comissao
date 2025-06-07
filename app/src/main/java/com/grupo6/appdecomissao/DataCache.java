@@ -30,7 +30,6 @@ public class DataCache {
     private final Map<String, CommissionRule> commissionRules = new HashMap<>();
 
 
-
     /* MAPS PARA RELACIONAMENTO ENTRE AS ENTIDADES */
 
     /* Mapeia um usuário a todas as suas regras de comissões */
@@ -44,7 +43,6 @@ public class DataCache {
 
     /* Mapeia um usuário a todos os seus registros */
     private final Map<String, Set<String>> userRecords = new HashMap<>();
-
 
     /* MÉTODOS PARA COLOCAR OU ATUALIZAR DADOS DOS OBJETOS */
     public void putUser(User user) {

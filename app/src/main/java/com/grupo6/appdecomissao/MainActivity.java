@@ -1,17 +1,13 @@
 package com.grupo6.appdecomissao;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class MainActivity extends Activity {
 
@@ -51,5 +47,10 @@ public class MainActivity extends Activity {
                 });
             }
         });
+    }
+
+    public void login(View v){
+        Intent it = new Intent(this, ConsultantDashboardActivity.class);
+        startActivity(it);
     }
 }

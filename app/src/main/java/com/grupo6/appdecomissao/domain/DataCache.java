@@ -15,6 +15,9 @@ public class DataCache {
     // Singleton
     private static DataCache instance = null;
 
+    /* ATRIBUTO QUE GUARDA O CURRENTID */
+    private static String currentId = null;
+
     /* MAPS PARA AS ENTIDADES */
 
     /* Map para todos os usuários cadastrados */
@@ -142,6 +145,16 @@ public class DataCache {
         for (Set<String> ruleSet : userCommissionRules.values()) {
             ruleSet.remove(ruleId);
         }
+    }
+
+    /* MÉTODOS GET E SET PARA CURRENT ID */
+
+    public String getCurrentId() {
+        return currentId;
+    }
+
+    public void setCurrentId(String id) {
+        currentId = id;
     }
 
     /* MÉTODOS PARA BUSCA SIMPLES COM ID */

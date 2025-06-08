@@ -1,4 +1,4 @@
-/* package com.grupo6.appdecomissao;
+package com.grupo6.appdecomissao.activity;
 
 import android.app.Activity;
 import android.media.Image;
@@ -9,37 +9,50 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.grupo6.appdecomissao.R;
+import com.grupo6.appdecomissao.domain.DataCache;
+import com.grupo6.appdecomissao.domain.User;
+
 public class ManageProfileActivity extends Activity {
 
-    private EditText nameEditText, passwordEditText, confirmPasswordEditText;
+    private TextInputEditText nameEditText, passwordEditText, confirmPasswordEditText;
     private ImageButton showPasswordButton, showConfirmPasswordButton;
     private ImageView profilePictureView;
     private boolean visiblePassword = false;
     private boolean visibleConfirmPassword = false;
     private DataCache dataCache = DataCache.getInstance();
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Trocar o placeholder quando tivermos os xmls das telas
-        setContentView(R.layout.placeholderxml);
+        setContentView(R.layout.activity_mananger_profile_consultant);
 
-        nameEditText = (EditText) findViewById(R.id.placeholdernametxt);
-        profilePictureView = (ImageView) findViewById(R.id.placeholderpfpimageview);
+        TextInputLayout tiName = (TextInputLayout) findViewById(R.id.ti_name);
+        nameEditText= (TextInputEditText) tiName.getEditText();
+        // profilePictureView = (ImageView) findViewById(R.id.placeholderpfpimageview);
 
         User user = dataCache.getUserById("placeholderID");
         String name = user.getName();
-        String picture = user.getPicture();
+        // String picture = user.getPicture();
 
-        // Seta o nome e a foto do usuário na tela (acho que a lógica da foto
-        // não vai funcionar do jeito que está, mas depois pensamos nisso)
+        // Seta o nome do usuário na tela (Assumi que a foto vai ser um
+        // placeholder para esta release, depois arrumamos)
         nameEditText.setText(name);
-        profilePictureView.setImageResource(picture); // Creio que para usar esse metodo a foto deverá estar na Drawable
+        // profilePictureView.setImageResource(picture);
     }
 
     public void saveInfo(View view){
-        passwordEditText = (EditText) findViewById(R.id.placeholderpasswordtxt);
-        confirmPasswordEditText = (EditText) findViewById(R.id.placeholderconfirmpasswordtxt);
+        TextInputLayout tiName = (TextInputLayout) findViewById(R.id.ti_name);
+        nameEditText = (TextInputEditText) tiName.getEditText();
+
+        TextInputLayout tiPassword = (TextInputLayout) findViewById(R.id.ti_password);
+        passwordEditText = (TextInputEditText) tiPassword.getEditText();
+
+        TextInputLayout tiConfirmPassword = (TextInputLayout) findViewById(R.id.ti_confirm_password);
+        confirmPasswordEditText = (TextInputEditText) tiConfirmPassword.getEditText();
 
         String name = nameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
@@ -73,28 +86,29 @@ public class ManageProfileActivity extends Activity {
     private void togglePasswordVisibility(EditText editText, ImageButton toggleButton, boolean isVisible) {
         if (isVisible) {
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            toggleButton.setImageResource(R.drawable.ic_visibility);
+            // toggleButton.setImageResource(R.drawable.ic_visibility);
         } else {
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            toggleButton.setImageResource(R.drawable.ic_visibility_off);
+            // toggleButton.setImageResource(R.drawable.ic_visibility_off);
         }
         editText.setSelection(editText.getText().length());
     }
 
     // Quando o usuário quiser remover sua foto de perfil, colocar
     // uma default da Rubeus
+    /*
     public void removeProfilePicture(View view){
         User user = dataCache.getUserById("placeholderID");
         user.setPicture("placeholderDefaultPicture");
         profilePictureView.setImageResource("placeholderDefaultPicture");
-    }
+    } */
 
     // Não pensei na lógica de update da foto de perfil ainda,
     // então deixei o metodo igual ao de cima por enquanto
+    /*
     public void updateProfilePicture(View view){
         User user = dataCache.getUserById("placeholderID");
         user.setPicture("placeholderNewPicture");
         profilePictureView.setImageResource("placeholderNewPicture");
-    }
+    } */
 }
-*/

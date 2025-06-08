@@ -77,8 +77,9 @@ public class ApiRepository {
         });
     }
 
-    public void getRecordsByStatus(String origin, String token, String targetStatus, ApiCallback<List<Record>> callback) {
+    public void getRecordsByProcessAndStage(String origin, String token, String processId, String finalStage, String currentId, ApiCallback<List<Record>> callback) {
         try {
+            /*
             // Validação do status informado
             if (targetStatus == null || (!targetStatus.equalsIgnoreCase("Em andamento")
                     && !targetStatus.equalsIgnoreCase("Ganho")
@@ -86,12 +87,18 @@ public class ApiRepository {
                 callback.onError("Status inválido");
                 return;
             }
+            */
 
             JsonObject requestBody = new JsonObject();
-            requestBody.addProperty("origem", origin);
+            requestBody.addProperty("origem", Integer.parseInt(origin));
             requestBody.addProperty("token", token);
+            requestBody.addProperty("processo", Integer.parseInt(processId));
 
-            Log.d("API_REQUEST", "Enviando requisição para listRecords com status: " + targetStatus);
+            Log.d("API_REQUEST", "Origem na requisição: " + origin);
+            Log.d("API_REQUEST", "Token na requisição: " + token);
+            Log.d("API_REQUEST", "Processo na requisição: " + processId);
+
+            Log.d("API_REQUEST", "Enviando requisição para listRecords no processo: " + processId);
 
             Call<JsonObject> call = service.listRecords(requestBody);
             call.enqueue(new Callback<JsonObject>() {
@@ -109,8 +116,6 @@ public class ApiRepository {
                         }
 
                         JsonObject jsonResponse = response.body();
-
-                        Log.d("API_RESPONSE", "Resposta bruta: " + jsonResponse.toString());
 
                         if (!jsonResponse.has("success") || !jsonResponse.get("success").getAsBoolean()) {
                             String errorMsg = jsonResponse.has("errors") ?
@@ -140,8 +145,13 @@ public class ApiRepository {
                         for (JsonElement element : recordsArray) {
                             JsonObject recordJson = element.getAsJsonObject();
 
-                            if (recordJson.has("statusNome") &&
-                                    recordJson.get("statusNome").getAsString().equalsIgnoreCase(targetStatus)) {
+                            Log.d("API_RESPONSE", "Resposta da API: " + recordJson.toString());
+
+                            if ((recordJson.has("etapaNome") &&
+                                    recordJson.get("etapaNome").getAsString().equalsIgnoreCase(finalStage)) &&
+                                    (recordJson.has("responsavel") &&
+                                            recordJson.get("responsavel").getAsString().equalsIgnoreCase(currentId))
+                            ) {
 
                                 Record record = new Gson().fromJson(recordJson, Record.class);
                                 records.add(record);

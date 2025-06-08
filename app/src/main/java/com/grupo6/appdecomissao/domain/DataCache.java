@@ -13,13 +13,7 @@ import java.util.Set;
 
 public class DataCache {
     // Singleton
-    private static final DataCache instance = null;
-
-    private DataCache() {}
-
-    public static DataCache getInstance(){
-        return instance;
-    }
+    private static DataCache instance = null;
 
     /* MAPS PARA AS ENTIDADES */
 
@@ -53,6 +47,16 @@ public class DataCache {
     /* Mapeia um usuário a todos os seus registros */
     private final Map<String, Set<String>> userRecords = new HashMap<>();
 
+    private DataCache() {}
+
+    public static DataCache getInstance(){
+        if (instance == null) {
+            instance = new DataCache();
+        }
+
+        return instance;
+    }
+
     /* MÉTODOS PARA COLOCAR OU ATUALIZAR DADOS DOS OBJETOS */
     public void putUser(User user) {
         users.put(user.getId(), user);
@@ -67,8 +71,13 @@ public class DataCache {
     public void putGoal(Goal goal) {
         goals.put(goal.getId(), goal);
 
-        // Adiciona a meta ao consultor relacionado
-        userGoals.computeIfAbsent(goal.getConsultantId(), k -> new HashSet<>()).add(goal.getId());
+
+        // Para cada consultor associado à meta, cria relacionamento user→rule
+        for (String consultantId : goal.getAssignedConsultantIds()) {
+            userSales
+                    .computeIfAbsent(consultantId, k -> new HashSet<>())
+                    .add(goal.getId());
+        }
     }
 
     public void putSale(Sale sale) {
@@ -88,7 +97,7 @@ public class DataCache {
     public void putCommissionRule(CommissionRule rule) {
         commissionRules.put(rule.getId(), rule);
 
-        // para cada consultor associado à regra, cria relacionamento user→rule
+        // Para cada consultor associado à regra, cria relacionamento user→rule
         for (String consultantId : rule.getAssignedConsultantIds()) {
             userCommissionRules
                     .computeIfAbsent(consultantId, k -> new HashSet<>())
@@ -154,5 +163,14 @@ public class DataCache {
 
     public CommissionRule getCommissionRuleById(String ruleId) {
         return commissionRules.get(ruleId);
+    }
+
+    /* MÉTODOS PARA BUSCA MAIORES */
+    public Set<String> getUserCommissionRules(String userId) {
+        return userCommissionRules.getOrDefault(userId, new HashSet<>());
+    }
+
+    public Set<Sale> getSales() {
+        return new HashSet<>(sales.values());
     }
 }

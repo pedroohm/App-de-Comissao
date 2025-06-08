@@ -1,16 +1,18 @@
 package com.grupo6.appdecomissao.domain;
 
+import java.util.Set;
+
 public class Goal {
     private String id;
-    private String consultantId;
+    Set<String> assignedConsultantIds;
     private String description;
     private Double goalValue;
     private Double bonus;
     private Boolean achieved;
 
-    public Goal(String id, String consultantId, String description, Double goalValue, Double bonus, Boolean achieved) {
+    public Goal(String id, Set<String> assignedConsultantIds, String description, Double goalValue, Double bonus, Boolean achieved) {
         this.id = id;
-        this.consultantId = consultantId;
+        this.assignedConsultantIds = assignedConsultantIds;
         this.description = description;
         this.goalValue = goalValue;
         this.bonus = bonus;
@@ -19,7 +21,7 @@ public class Goal {
 
     public String getId() { return id; }
 
-    public String getConsultantId() { return consultantId; }
+    public Set<String> getAssignedConsultantIds() { return assignedConsultantIds; }
 
     public String getDescription() { return description; }
 

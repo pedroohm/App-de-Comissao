@@ -1,4 +1,4 @@
-package com.grupo6.appdecomissao;
+package com.grupo6.appdecomissao.remote;
 
 /*
     Essa é uma interface genérica responsável para lidar com as respostas da API, devolvendo os resultados

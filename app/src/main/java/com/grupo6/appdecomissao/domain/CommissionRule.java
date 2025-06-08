@@ -1,4 +1,4 @@
-package com.grupo6.appdecomissao;
+package com.grupo6.appdecomissao.domain;
 
 import java.util.Set;
 

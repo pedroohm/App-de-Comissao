@@ -1,4 +1,4 @@
-package com.grupo6.appdecomissao;
+/* package com.grupo6.appdecomissao;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -51,3 +51,4 @@ public class ProfileSettingsActivity extends Activity {
         startActivity(it);
     }
 }
+*/

@@ -1,4 +1,4 @@
-package com.grupo6.appdecomissao;
+package com.grupo6.appdecomissao.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+
+import com.grupo6.appdecomissao.R;
+import com.grupo6.appdecomissao.domain.User;
+import com.grupo6.appdecomissao.remote.ApiCallback;
+import com.grupo6.appdecomissao.remote.ApiRepository;
 
 import java.util.List;
 

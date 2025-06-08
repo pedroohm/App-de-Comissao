@@ -1,4 +1,4 @@
-package com.grupo6.appdecomissao;
+/* package com.grupo6.appdecomissao;
 
 import android.app.Activity;
 import android.media.Image;
@@ -97,3 +97,4 @@ public class ManageProfileActivity extends Activity {
         profilePictureView.setImageResource("placeholderNewPicture");
     }
 }
+*/

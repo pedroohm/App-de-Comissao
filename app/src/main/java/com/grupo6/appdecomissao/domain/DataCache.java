@@ -71,8 +71,13 @@ public class DataCache {
     public void putGoal(Goal goal) {
         goals.put(goal.getId(), goal);
 
-        // Adiciona a meta ao consultor relacionado
-        userGoals.computeIfAbsent(goal.getConsultantId(), k -> new HashSet<>()).add(goal.getId());
+
+        // Para cada consultor associado à meta, cria relacionamento user→rule
+        for (String consultantId : goal.getAssignedConsultantIds()) {
+            userSales
+                    .computeIfAbsent(consultantId, k -> new HashSet<>())
+                    .add(goal.getId());
+        }
     }
 
     public void putSale(Sale sale) {
@@ -92,7 +97,7 @@ public class DataCache {
     public void putCommissionRule(CommissionRule rule) {
         commissionRules.put(rule.getId(), rule);
 
-        // para cada consultor associado à regra, cria relacionamento user→rule
+        // Para cada consultor associado à regra, cria relacionamento user→rule
         for (String consultantId : rule.getAssignedConsultantIds()) {
             userCommissionRules
                     .computeIfAbsent(consultantId, k -> new HashSet<>())

@@ -10,6 +10,7 @@ import android.view.View;
 import com.grupo6.appdecomissao.R;
 import com.grupo6.appdecomissao.domain.CommissionRule;
 import com.grupo6.appdecomissao.domain.DataCache;
+import com.grupo6.appdecomissao.domain.Goal;
 import com.grupo6.appdecomissao.domain.User;
 import com.grupo6.appdecomissao.remote.ApiCallback;
 import com.grupo6.appdecomissao.remote.ApiRepository;
@@ -42,6 +43,9 @@ public class MainActivity extends Activity {
 
         // Metodo para adicionar regras de comissão para todos os usuários consultores da plataforma
         createComissionRules();
+
+        // Metodo para adicionar metas para todos os usuários consultores da plataforma
+        createGoals();
     }
 
     public void login(View v){
@@ -109,6 +113,39 @@ public class MainActivity extends Activity {
 
         Log.d("MainActivity", "Regra 1 adicionada: " + rule1.getName());
         Log.d("MainActivity", "Regra 2 adicionada: " + rule2.getName());
+        Log.d("MainActivity", "-----------------------------------");
+    }
+
+    private void createGoals() {
+        Log.d("MainActivity", "Criando metas para os usuários");
+
+        // Consultores associados (exemplo)
+        Set<String> consultants = new HashSet<>(Arrays.asList("84", "85", "86", "87"));
+
+        Goal goal1 = new Goal(
+                "1",
+                consultants,
+                "Vender 20 produtos",
+                20.0,
+                10.0,
+                false
+        );
+
+        Goal goal2 = new Goal(
+                "2",
+                consultants,
+                "Vender 10 produtos",
+                10.0,
+                15.0,
+                false
+        );
+
+        // Adicionando Metas ao DataCache
+        dataCache.putGoal(goal1);
+        dataCache.putGoal(goal2);
+
+        Log.d("MainActivity", "Meta 1 adicionada: " + goal1.getDescription());
+        Log.d("MainActivity", "Meta 2 adicionada: " + goal2.getDescription());
         Log.d("MainActivity", "-----------------------------------");
     }
 }

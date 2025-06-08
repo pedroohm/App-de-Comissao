@@ -1,16 +1,15 @@
-package com.grupo6.appdecomissao;
+package com.grupo6.appdecomissao.domain;
 
-public class Sales {
-
-    private Integer id;
-    private Integer consultantId;
+public class Sale {
+    private String id;
+    private String consultantId;
     private String product;
     private double price;
     private String saleDate;
     private double commission;
-    private Integer recordId;
+    private String recordId;
 
-    public Sales(Integer id, Integer consultantId, String product, double price, String saleDate, double commission, Integer recordId){
+    public Sale(String id, String consultantId, String product, double price, String saleDate, double commission, String recordId){
         this.id = id;
         this.consultantId = consultantId;
         this.product = product;
@@ -20,11 +19,11 @@ public class Sales {
         this.recordId = recordId;
     }
 
-    public Integer getId() { return id; }
-    public Integer getConsultantId() { return consultantId; }
+    public String getId() { return id; }
+    public String getConsultantId() { return consultantId; }
     public String getProduct() { return product; }
     public double getPrice() { return price; }
     public String getSaleDate() { return saleDate; }
     public double getCommission() { return commission; }
-    public Integer getRecordId() { return recordId; }
+    public String getRecordId() { return recordId; }
 }

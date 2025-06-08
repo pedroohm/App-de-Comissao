@@ -6,7 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.grupo6.appdecomissao.R;
 import com.grupo6.appdecomissao.domain.CommissionRule;
 import com.grupo6.appdecomissao.domain.DataCache;
@@ -35,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String token = "b116d29f1252d2ce144d5cb15fb14c7f";
 
     private static final String TAG = "MainActivity";
+    private TextInputEditText passwordEditText, emailEditText;
 
     private Button btnLogin;
     @Override
@@ -59,8 +63,29 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logar(View v){
         //Intent it = new Intent(this, ConsultantDashboardActivity.class);
-        Intent it = new Intent(this, ConsultantDashboardActivity.class);
-        startActivity(it);
+        //Intent it = new Intent(this, ConsultantDashboardActivity.class);
+        // startActivity(it);
+        // Obtém as views e seta as variáveis de email e senha
+        TextInputLayout tiEmail = (TextInputLayout) findViewById(R.id.ti_email);
+        emailEditText = (TextInputEditText) tiEmail.getEditText();
+
+        TextInputLayout tiPassword = (TextInputLayout) findViewById(R.id.ti_password);
+        passwordEditText = (TextInputEditText) tiPassword.getEditText();
+
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        if (email.equals("juan.freire@ufv.br")){
+            Intent it = new Intent(this, ConsultantDashboardActivity.class);
+            startActivity(it);
+        }
+        else if (email.equals("pedro.moura2@ufv.br")){
+            Intent it = new Intent(this, DashboardSupervisor.class);
+            startActivity(it);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Não foi possível realizar o login", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void listAllUsersAndInitialize() {

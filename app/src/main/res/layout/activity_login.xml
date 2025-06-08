@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Login">
+    tools:context=".activity.LoginActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="370dp"
@@ -67,11 +67,8 @@
             android:layout_height="54dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="270dp"
-
             android:layout_marginRight="20dp"
-            android:inputType="textPassword"
             android:textColor="#0DA4A4"
-
             android:textColorHint="#0DA4A4"
             app:boxCornerRadiusBottomEnd="80dp"
             app:boxCornerRadiusBottomStart="80dp"
@@ -88,7 +85,8 @@
                 android:background="@drawable/border"
                 android:hint="Senha"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

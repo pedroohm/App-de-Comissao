@@ -1,10 +1,15 @@
-package com.grupo6.appdecomissao;
+package com.grupo6.appdecomissao.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.grupo6.appdecomissao.R;
+import com.grupo6.appdecomissao.domain.Record;
+import com.grupo6.appdecomissao.remote.ApiCallback;
+import com.grupo6.appdecomissao.remote.ApiRepository;
 
 import java.util.List;
 

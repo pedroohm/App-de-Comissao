@@ -1,4 +1,4 @@
-package com.grupo6.appdecomissao;
+package com.grupo6.appdecomissao.domain;
 
 /*
     Essa classe servirá como um "cache em memória" para mapearmos os dados que receberemos da API

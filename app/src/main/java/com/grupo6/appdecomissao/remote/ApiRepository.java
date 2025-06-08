@@ -1,9 +1,11 @@
-package com.grupo6.appdecomissao;
+package com.grupo6.appdecomissao.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
+import com.grupo6.appdecomissao.domain.Record;
+import com.grupo6.appdecomissao.domain.User;
 
 import java.util.HashMap;
 import java.util.List;

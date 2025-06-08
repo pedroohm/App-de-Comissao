@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,29 +18,20 @@
             android:name=".activity.ConsultantDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
-            android:name=".DashboardSupervisor"
+            android:name=".activity.DashboardSupervisor"
             android:exported="false" />
         <activity
-            android:name=".Menu"
+            android:name=".activity.DashboardConsultant"
             android:exported="false" />
         <activity
-            android:name=".DashboardConsultant"
+            android:name=".activity.ManangerProfileConsultant"
             android:exported="false" />
         <activity
-            android:name=".ManangerProfileConsultant"
+            android:name=".activity.ConfigsConsultant"
             android:exported="false" />
+
         <activity
-            android:name=".ConfigsConsultant"
-            android:exported="false" />
-        <activity
-            android:name=".Configuracoes"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

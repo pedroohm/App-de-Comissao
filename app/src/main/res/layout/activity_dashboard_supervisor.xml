@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DashboardSupervisor">
+    tools:context=".activity.DashboardSupervisor">
 
     <!--    <ScrollView-->
     <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -240,8 +240,7 @@
             android:layout_marginEnd="16dp"
             app:indicatorColor="#009688"
             app:indicatorSize="90dp"
-            app:max="100"
-            app:progress="50"
+
             app:trackColor="#0DA4A4"
             app:trackThickness="12dp" />
 
@@ -289,8 +288,6 @@
             android:layout_gravity="center"
             app:indicatorColor="@color/white"
             app:indicatorSize="120dp"
-            app:max="100"
-            app:progress="10"
             app:trackColor="#0DA4A4"
             app:trackThickness="12dp" />
 
@@ -336,8 +333,7 @@
             android:layout_height="match_parent"
             app:indicatorColor="#009688"
             app:indicatorSize="90dp"
-            app:max="100"
-            app:progress="50"
+
             app:trackColor="#0DA4A4"
             app:trackThickness="12dp" />
 
@@ -389,8 +385,7 @@
                 android:layout_marginEnd="16dp"
                 app:indicatorColor="#009688"
                 app:indicatorSize="65dp"
-                app:max="100"
-                app:progress="50"
+
                 app:trackColor="#0DA4A4"
                 app:trackThickness="12dp" />
 

@@ -101,7 +101,8 @@
             android:layout_marginRight="20dp"
             android:backgroundTint="#0DA4A4"
             android:text="Login"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:onClick="logar"/>
 
         <ImageView
             android:id="@+id/logoRubeus"

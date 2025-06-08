@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ManangerProfileConsultant">
+    tools:context=".activity.ManangerProfileConsultant">
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="37dp"
@@ -43,7 +43,7 @@
         android:background="@drawable/border_rounded"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        android:src="@tools:sample/avatars"
+        android:src="@drawable/person_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:srcCompat="@tools:sample/avatars" />

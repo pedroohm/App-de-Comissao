@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ManangerProfileConsultant">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="37dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="24dp"
+
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/person_icon" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Perfil"
+        android:textAlignment="textStart"
+        android:textColor="#0DA4A4"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.259"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/im_profile"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/border_rounded"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
+        android:src="@tools:sample/avatars"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="text"
+        android:textColor="#0DA4A4"
+        android:textColorHint="#0DA4A4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_profile">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_color"
+            android:hint="Nome"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="textPassword"
+        android:textColor="#0DA4A4"
+        android:textColorHint="#0DA4A4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:endIconMode="password_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/ti_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_color"
+            android:hint="Senha"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti_confirm_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="textPassword"
+        android:textColor="#0DA4A4"
+        android:textColorHint="#0DA4A4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ti_password"
+        app:endIconMode="password_toggle"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_color"
+            android:hint="Confirmar Senha"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#0DA4A4"
+        android:text="Salvar"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ti_confirm_password" />
+
+    <Button
+        android:id="@+id/change_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#0DA4A4"
+        android:text="Trocar Foto"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_profile" />
+
+    <Button
+        android:id="@+id/remove_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="60dp"
+        android:backgroundTint="#0DA4A4"
+        android:text="Remover Foto"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/change_photo"
+        app:layout_constraintTop_toBottomOf="@+id/im_profile" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

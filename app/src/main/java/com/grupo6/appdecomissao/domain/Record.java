@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Record {
 
+    @SerializedName("id")
     private final String id;
     @SerializedName("pessoaNome")
     private final String clientName;

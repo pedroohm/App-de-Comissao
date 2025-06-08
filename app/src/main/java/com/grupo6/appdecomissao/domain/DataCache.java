@@ -13,13 +13,7 @@ import java.util.Set;
 
 public class DataCache {
     // Singleton
-    private static final DataCache instance = null;
-
-    private DataCache() {}
-
-    public static DataCache getInstance(){
-        return instance;
-    }
+    private static DataCache instance = null;
 
     /* MAPS PARA AS ENTIDADES */
 
@@ -52,6 +46,16 @@ public class DataCache {
 
     /* Mapeia um usuário a todos os seus registros */
     private final Map<String, Set<String>> userRecords = new HashMap<>();
+
+    private DataCache() {}
+
+    public static DataCache getInstance(){
+        if (instance == null) {
+            instance = new DataCache();
+        }
+
+        return instance;
+    }
 
     /* MÉTODOS PARA COLOCAR OU ATUALIZAR DADOS DOS OBJETOS */
     public void putUser(User user) {

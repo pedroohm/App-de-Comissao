@@ -18,7 +18,20 @@
             android:name=".activity.ConsultantDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.DashboardSupervisor"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DashboardConsultant"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ManangerProfileConsultant"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ConfigsConsultant"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.DashboardConsultant">
+<!--    <ScrollView-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="#FFFFFF">-->
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Dashboard de Desempenho"
+        android:textColor="#0DA4A4"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti_date_select"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="240dp"
+        android:layout_height="42dp"
+
+        android:layout_marginTop="24dp"
+        android:textColor="#4A4A4A"
+        android:textColorHint="#0DA4A4"
+        app:layout_constraintEnd_toStartOf="@+id/bt_report"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_color"
+            android:hint="Período"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/bt_report"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#0DA4A4"
+        android:text="Relatório"
+        android:textSize="16sp"
+        app:icon="@drawable/download_icon"
+        app:iconSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:strokeColor="#0DA4A4" />
+
+    <FrameLayout
+        android:id="@+id/fl_sales"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:padding="5dp"
+        android:backgroundTint="#400DA4A4"
+        android:background="@drawable/border"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ti_date_select">
+
+        <TextView
+            android:id="@+id/tv_sales"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:textColor="#4A4A4A"
+            android:textSize="16sp"
+            android:text="Vendas"/>
+
+        <TextView
+            android:id="@+id/tv_sales_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="R$ 1,000"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sales" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_goals"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border"
+        android:backgroundTint="#400DA4A4"
+        android:padding="5dp"
+        app:layout_constraintStart_toEndOf="@+id/fl_sales"
+        app:layout_constraintTop_toBottomOf="@+id/ti_date_select">
+
+        <TextView
+            android:id="@+id/tv_goals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Metas"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_goals_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="2"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_goals" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_comission"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border"
+        android:backgroundTint="#400DA4A4"
+        android:padding="5dp"
+        app:layout_constraintStart_toEndOf="@+id/fl_goals"
+        app:layout_constraintTop_toBottomOf="@+id/ti_date_select">
+
+        <TextView
+            android:id="@+id/tv_comission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comissão"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_pcomission_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="R$ 100"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_comission" />
+    </FrameLayout>
+
+    <TableLayout
+        android:id="@+id/tl_log"
+        android:layout_width="371dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_log">
+
+        <TableRow android:background="#0DA4A4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="1"
+                android:text="Nº"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="1"
+                android:layout_weight="1"
+                android:text="Produto"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:layout_weight="1"
+                android:text="Preço do produto"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="3"
+                android:layout_weight="1"
+                android:text="Comissão"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"></TextView>
+        </TableRow>
+
+        <TableRow android:background="#400DA4A4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="1"
+                android:text="Nº"
+                android:textAlignment="center"
+                android:textColor="#4A4A4A"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="1"
+                android:layout_weight="1"
+                android:text="Produto"
+                android:textAlignment="center"
+                android:textColor="#4A4A4A"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:layout_weight="1"
+                android:text="Preço do produto"
+                android:textAlignment="center"
+                android:textColor="#4A4A4A"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="3"
+                android:layout_weight="1"
+                android:text="Comissão"
+                android:textAlignment="center"
+                android:textColor="#4A4A4A"
+                android:textStyle="bold"></TextView>
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tl_goals"
+        android:layout_width="369dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_consultant_sales">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="1"
+                android:text="Metas"
+                android:textColor="#0DA4A4"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="1"
+                android:layout_weight="1"
+                android:text="Bônus"
+                android:textColor="#0DA4A4"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:layout_weight="1"
+                android:text="Atingida?"
+                android:textColor="#0DA4A4"
+                android:textStyle="bold"></TextView>
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="1"
+                android:text="Vender 20 produtos"
+                android:textColor="#4A4A4A"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="1"
+                android:layout_weight="1"
+                android:text="10%"
+                android:textColor="#4A4A4A"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_column="2"
+                android:layout_weight="1"
+                android:text="Não"
+                android:textColor="#4A4A4A"
+                android:textStyle="bold"></TextView>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_consultant_comission"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="68dp"
+        android:background="@drawable/border"
+        android:backgroundTint="#400DA4A4"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_invoicing_goals">
+
+        <TextView
+            android:id="@+id/tv_consultant_comission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="% Comissão"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_consultant_comission_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="10"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sales" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_invoicing_goals"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_sales_goals">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/pi_sales_goals"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_gravity="center"
+            app:indicatorColor="@color/white"
+            app:indicatorSize="120dp"
+            app:trackColor="#0DA4A4"
+            app:trackThickness="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_sales_goals"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="50%"
+            android:textAlignment="center"
+            android:textColor="#009688"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_gains"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/fl_invoicing_goals"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_gains">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/pi_gains"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:indicatorColor="#009688"
+            app:indicatorSize="90dp"
+            app:trackColor="#0DA4A4"
+            app:trackThickness="12dp" />
+
+        <TextView
+            android:id="@+id/tv_gains"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="50%"
+            android:textAlignment="center"
+            android:textColor="#009688"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_title_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:text="Histórico de Vendas"
+        android:textAlignment="center"
+        android:textColor="#0DA4A4"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_goals" />
+
+    <FrameLayout
+        android:id="@+id/fl_consultant_sales"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/border"
+        android:backgroundTint="#400DA4A4"
+        android:padding="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/fl_consultant_comission"
+        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_invoicing_goals">
+
+        <TextView
+            android:id="@+id/tv_consultant_sales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nº de Vendas"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_consultant_sales_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="4"
+            android:textAlignment="center"
+            android:textColor="#4A4A4A"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_consultant_sales" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_graph_goals"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/fl_invoicing_goals"
+        app:layout_constraintTop_toBottomOf="@+id/tv_graph_title_goals">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/pi_goals"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            app:indicatorColor="#009688"
+            app:indicatorSize="90dp"
+            app:trackColor="#0DA4A4"
+            app:trackThickness="12dp" />
+
+        <TextView
+            android:id="@+id/tv_graph_goals"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="50%"
+            android:textAlignment="center"
+            android:textColor="#009688"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_graph_title_goals"
+        android:layout_width="98dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:text="Metas\nantigidas"
+        android:textAlignment="center"
+        android:textColor="#4A4A4A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/fl_invoicing_goals"
+        app:layout_constraintTop_toBottomOf="@+id/fl_goals" />
+
+    <TextView
+        android:id="@+id/tv_title_sales_goals"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Meta de Vendas"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_title_gains"
+        app:layout_constraintStart_toEndOf="@+id/tv_graph_title_goals"
+        app:layout_constraintTop_toBottomOf="@+id/fl_goals" />
+
+    <TextView
+        android:id="@+id/tv_title_gains"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:text="Ganhos\nesperados"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/fl_invoicing_goals"
+        app:layout_constraintTop_toBottomOf="@+id/fl_goals" />
+
+    <ImageView
+        android:id="@+id/icon_dashboard"
+        android:layout_width="37dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="24dp"
+
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dashboard_icon" />
+
+
+<!--</ScrollView>-->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>

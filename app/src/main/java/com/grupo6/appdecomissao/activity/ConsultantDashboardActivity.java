@@ -6,6 +6,12 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -21,7 +27,7 @@ import com.grupo6.appdecomissao.remote.ApiRepository;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ConsultantDashboardActivity extends Activity {
+public class ConsultantDashboardActivity extends AppCompatActivity {
     private static final String TAG = "DashboardActivity";
 
     private static final String currentId = "84";
@@ -42,11 +48,17 @@ public class ConsultantDashboardActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consultant_dashboard);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_dashboard_consultant);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         Log.d(TAG, "Activity criada");
 
-        textResults = findViewById(R.id.textResults);
+        //textResults = findViewById(R.id.textResults);
         apiRepository = new ApiRepository();
 
         recordSales(currentId, new ApiCallback<List<Record>>() {
@@ -86,7 +98,7 @@ public class ConsultantDashboardActivity extends Activity {
                     id++;
                 }
 
-                showResults();
+                //showResults();
 
             }
             @Override
@@ -189,7 +201,7 @@ public class ConsultantDashboardActivity extends Activity {
                     .append("Registro: ").append(sale.getRecordId()).append("\n\n\n");
             }
 
-        textResults.setText(sb.toString());
+        //textResults.setText(sb.toString());
         Log.d(TAG, "Vendas de " + currentId + " exibidas com sucesso");
     }
 

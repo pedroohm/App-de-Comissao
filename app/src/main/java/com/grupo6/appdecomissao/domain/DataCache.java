@@ -164,4 +164,13 @@ public class DataCache {
     public CommissionRule getCommissionRuleById(String ruleId) {
         return commissionRules.get(ruleId);
     }
+
+    /* MÉTODOS PARA BUSCA MAIORES */
+    public Set<String> getUserCommissionRules(String userId) {
+        return userCommissionRules.getOrDefault(userId, new HashSet<>());
+    }
+
+    public Set<Sale> getSales() {
+        return new HashSet<>(sales.values());
+    }
 }

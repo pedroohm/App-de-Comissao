@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 
 import com.grupo6.appdecomissao.R;
@@ -31,21 +32,20 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "MainActivity";
 
+    private Button btnLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btnLogin = findViewById(R.id.btnLogin);
+        // Desabilita o botão enquanto não carregar tudo
+        btnLogin.setEnabled(false);
 
-        // Chamando o metodo para listar todos os usuários da plataforma
-        listAllUsers();
-
-        // Metodo para adicionar regras de comissão para todos os usuários consultores da plataforma
-        createComissionRules();
-
-        // Metodo para adicionar metas para todos os usuários consultores da plataforma
-        createGoals();
+        // Chamando o metodo para listar todos os usuários da plataforma e inicializar o DataCache
+        listAllUsersAndInitialize();
     }
 
     public void login(View v){
@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         startActivity(it);
     }
 
-    private void listAllUsers() {
+    private void listAllUsersAndInitialize() {
         Log.d("MainActivity", "Fazendo requisição para coletar todos os usuários da plataforma");
         apiRepository.getAllUsers(origin, token, new ApiCallback<List<User>>() {
             @Override
@@ -64,6 +64,14 @@ public class MainActivity extends Activity {
 
                 Log.d(TAG, "Usuários adicionados ao DataCache. Total: " + users.size());
                 Log.d("MainActivity", "-----------------------------------");
+
+                // Metodo para adicionar regras de comissão para todos os usuários consultores da plataforma
+                createComissionRules();
+
+                // Metodo para adicionar metas para todos os usuários consultores da plataforma
+                createGoals();
+
+                runOnUiThread(() -> btnLogin.setEnabled(true));
             }
 
             @Override

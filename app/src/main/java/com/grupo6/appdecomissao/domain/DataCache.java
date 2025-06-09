@@ -6,8 +6,10 @@ package com.grupo6.appdecomissao.domain;
     Temos também alguns maps adicionais para os relacionamentos entre as entidades (por exemplo, usuário -> suas regras)
 */
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -74,10 +76,9 @@ public class DataCache {
     public void putGoal(Goal goal) {
         goals.put(goal.getId(), goal);
 
-
         // Para cada consultor associado à meta, cria relacionamento user→rule
         for (String consultantId : goal.getAssignedConsultantIds()) {
-            userSales
+            userGoals
                     .computeIfAbsent(consultantId, k -> new HashSet<>())
                     .add(goal.getId());
         }
@@ -177,6 +178,20 @@ public class DataCache {
     public CommissionRule getCommissionRuleById(String ruleId) {
         return commissionRules.get(ruleId);
     }
+
+    public List<Goal> getGoalsByUserId(String userId) {
+        List<Goal> result = new ArrayList<>();
+        Set<String> goalIds = userGoals.getOrDefault(userId, new HashSet<>());
+
+        for (String goalId : goalIds) {
+            Goal goal = goals.get(goalId);
+            if (goal != null) {
+                result.add(goal);
+            }
+        }
+        return result;
+    }
+
 
     /* MÉTODOS PARA BUSCA MAIORES */
     public Set<String> getUserCommissionRules(String userId) {

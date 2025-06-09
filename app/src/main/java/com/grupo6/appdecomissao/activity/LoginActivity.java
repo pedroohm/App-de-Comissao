@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         listAllUsersAndInitialize();
     }
 
-
     public void logar(View v){
         //Intent it = new Intent(this, ConsultantDashboardActivity.class);
         //Intent it = new Intent(this, ConsultantDashboardActivity.class);

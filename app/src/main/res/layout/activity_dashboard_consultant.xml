@@ -92,6 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:text="R$ 1,000"
+            android:autoSizeTextType="uniform"
             android:textAlignment="center"
             android:textColor="#4A4A4A"
             android:textSize="24sp"
@@ -160,6 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:text="R$ 100"
+            android:autoSizeTextType="uniform"
             android:textAlignment="center"
             android:textColor="#4A4A4A"
             android:textSize="24sp"
@@ -323,6 +325,7 @@
         </TableRow>
 
     </TableLayout>
+
 
     <FrameLayout
         android:id="@+id/fl_consultant_comission"

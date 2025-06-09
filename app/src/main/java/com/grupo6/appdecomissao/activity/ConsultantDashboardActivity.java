@@ -1,8 +1,15 @@
 package com.grupo6.appdecomissao.activity;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,9 +22,11 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.Set;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.grupo6.appdecomissao.R;
 import com.grupo6.appdecomissao.domain.CommissionRule;
 import com.grupo6.appdecomissao.domain.DataCache;
+import com.grupo6.appdecomissao.domain.Goal;
 import com.grupo6.appdecomissao.domain.Record;
 import com.grupo6.appdecomissao.domain.Sale;
 import com.grupo6.appdecomissao.domain.User;
@@ -98,7 +107,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
                     id++;
                 }
 
-                //showResults();
+                plotSalesInfo();
 
             }
             @Override
@@ -169,40 +178,166 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void showResults() {
-        List<Sale> sales = new ArrayList<>();
-        int n = dataCache.getSales().size();
+    private void plotSalesInfo() {
+        TextView saleView = findViewById(R.id.tv_sales_value);
+        TextView comissionView = findViewById(R.id.tv_pcomission_value);
+        TextView goalsView = findViewById(R.id.tv_pcomission_value);
+        TextView salesCountView = findViewById(R.id.tv_consultant_sales_value);
+        TextView comissionPercView = findViewById(R.id.tv_consultant_comission_value);
 
-        for (int i = 1; i <= n; i++) {
+        List<Sale> sales = new ArrayList<>();
+        int qtdSales = dataCache.getSales().size();
+
+        for (int i = 1; i <= qtdSales; i++) {
             sales.add(dataCache.getSaleById(Integer.toString(i)));
         }
 
+        double totalSales = 0;
+        double totalCommission = 0;
+        double avgCommission;
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("=== VENDAS DE ").append(currentId.toUpperCase()).append(" ===\n\n");
+        TableLayout tableLayout = findViewById(R.id.tl_log); // Coloque isso fora do for
 
+        qtdSales = 0;
         for (Sale sale : sales) {
-            // Log no Logcat de cada registro filtrado
-            Log.d(TAG, "Venda encontrada - ID: " + sale.getId()
-                    + ", Responsável: " + sale.getConsultantId()
-                    + ", Produto: " + sale.getProduct()
-                    + ", Data: " + sale.getSaleDate()
-                    + ", Valor: " + sale.getPrice()
-                    + ", Comissão: " + sale.getCommission()
-                    + ", Registro: " + sale.getRecordId()
-            );
+            qtdSales++;
+            String id = sale.getId();
+            String product = sale.getProduct();
+            double price = sale.getPrice();
+            double comission = sale.getCommission();
 
-            sb.append("ID: ").append(sale.getId()).append("\n")
-                    .append("Responsável: ").append(sale.getConsultantId()).append("\n")
-                    .append("Produto: ").append(sale.getProduct()).append("\n")
-                    .append("Data: ").append(sale.getSaleDate()).append("\n")
-                    .append("Valor: ").append(sale.getPrice()).append("\n")
-                    .append("Comissão: ").append(sale.getCommission()).append("\n")
-                    .append("Registro: ").append(sale.getRecordId()).append("\n\n\n");
-            }
+            totalSales += price;
+            totalCommission += comission;
 
-        //textResults.setText(sb.toString());
-        Log.d(TAG, "Vendas de " + currentId + " exibidas com sucesso");
+            TableRow newRow = new TableRow(this);
+            newRow.setBackgroundColor(Color.parseColor("#80E0E0E0"));
+
+            TableRow.LayoutParams cellParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+
+            TextView tvNumero = new TextView(this);
+            tvNumero.setText(id);
+            tvNumero.setTextColor(Color.BLACK);
+            tvNumero.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tvNumero.setTypeface(null, Typeface.BOLD);
+            tvNumero.setLayoutParams(cellParams);
+
+            TextView tvProduto = new TextView(this);
+            tvProduto.setText(product);
+            tvProduto.setTextColor(Color.BLACK);
+            tvProduto.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tvProduto.setTypeface(null, Typeface.BOLD);
+            tvProduto.setLayoutParams(cellParams);
+
+            TextView tvPreco = new TextView(this);
+            tvPreco.setText("R$ " + String.format("%.2f", price));
+            tvPreco.setTextColor(Color.BLACK);
+            tvPreco.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tvPreco.setTypeface(null, Typeface.BOLD);
+            tvPreco.setLayoutParams(cellParams);
+
+            TextView tvComissao = new TextView(this);
+            tvComissao.setText("R$ " + String.format("%.2f", comission));
+            tvComissao.setTextColor(Color.BLACK);
+            tvComissao.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tvComissao.setTypeface(null, Typeface.BOLD);
+            tvComissao.setLayoutParams(cellParams);
+            tvProduto.setMaxLines(1); // Apenas uma linha
+            tvProduto.setEllipsize(TextUtils.TruncateAt.END); // Usa "..." no fim se for muito longo
+            //tvProduto.setSingleLine(true); // Alternativa para .setMaxLines(1)
+
+            newRow.addView(tvNumero);
+            newRow.addView(tvProduto);
+            newRow.addView(tvPreco);
+            newRow.addView(tvComissao);
+
+            tableLayout.addView(newRow);
+        }
+
+        avgCommission = (totalCommission / totalSales) * 100;
+
+        saleView.setText("R$ " + String.format("%.2f", totalSales));
+        comissionView.setText("R$ " + String.format("%.2f", totalCommission));
+        salesCountView.setText(String.valueOf(qtdSales));
+        //goalsView.setText(String.format("%.2f", avgCommission) + "%");
+        comissionPercView.setText(String.format("%.2f", avgCommission));
+
+        int achievied = plotGoalsInfo(currentId);
+
+        animateProgress(R.id.pi_goals, R.id.tv_graph_goals, achievied/2);
+        animateProgress(R.id.pi_sales_goals, R.id.tv_sales_goals, qtdSales/10);
+        animateProgress(R.id.pi_gains, R.id.tv_gains, avgCommission);
+    }
+
+    private void animateProgress(int circularProgressId, int textViewId, double progressoFinal) {
+        CircularProgressIndicator progressIndicator = findViewById(circularProgressId);
+        TextView textView = findViewById(textViewId);
+
+        int progressoInicial = progressIndicator.getProgress();
+
+        ValueAnimator animator = ValueAnimator.ofInt(progressoInicial, (int) progressoFinal);
+        animator.setDuration(800); // duração da animação (ms)
+        animator.addUpdateListener(animation -> {
+            int progressoAtual = (int) animation.getAnimatedValue();
+            progressIndicator.setProgress(progressoAtual);
+            textView.setText(progressoAtual + "%");
+        });
+        animator.start();
+    }
+
+
+    private int plotGoalsInfo(String userId) {
+        TableLayout tableLayout = findViewById(R.id.tl_goals);
+        DataCache dataCache = DataCache.getInstance();
+
+        int achievied = 0;
+
+        while (tableLayout.getChildCount() > 1) {
+            tableLayout.removeViewAt(1);
+        }
+
+        List<Goal> userGoals = dataCache.getGoalsByUserId(userId);
+
+        for (Goal goal : userGoals) {
+            TableRow newRow = new TableRow(this);
+            newRow.setBackgroundColor(Color.parseColor("#80E0E0E0")); // opcional
+
+            TableRow.LayoutParams cellParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+
+            // Descrição da meta
+            TextView tvDescricao = new TextView(this);
+            tvDescricao.setText(goal.getDescription());
+            tvDescricao.setTextColor(Color.parseColor("#4A4A4A"));
+            tvDescricao.setTypeface(null, Typeface.BOLD);
+            tvDescricao.setLayoutParams(cellParams);
+            tvDescricao.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            // Bônus
+            TextView tvBonus = new TextView(this);
+            tvBonus.setText("R$ " + String.format("%.2f", goal.getBonus()));
+            tvBonus.setTextColor(Color.parseColor("#4A4A4A"));
+            tvBonus.setTypeface(null, Typeface.BOLD);
+            tvBonus.setLayoutParams(cellParams);
+            tvBonus.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            // Atingida
+            TextView tvAtingida = new TextView(this);
+            if (goal.getAchieved()) achievied++;
+            tvAtingida.setText(goal.getAchieved() ? "Sim" : "Não");
+            tvAtingida.setTextColor(Color.parseColor("#4A4A4A"));
+            tvAtingida.setTypeface(null, Typeface.BOLD);
+            tvAtingida.setLayoutParams(cellParams);
+            tvAtingida.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            // Adiciona os TextViews à linha
+            newRow.addView(tvDescricao);
+            newRow.addView(tvBonus);
+            newRow.addView(tvAtingida);
+
+            // Adiciona a nova linha na tabela
+            tableLayout.addView(newRow);
+        }
+
+        return achievied;
     }
 
 }

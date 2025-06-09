@@ -43,7 +43,7 @@
         android:background="@drawable/border_rounded"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/person_icon"
+        android:src="@drawable/default_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:srcCompat="@tools:sample/avatars" />
@@ -69,7 +69,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/border_color"
             android:hint="Nome"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,51 +78,48 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:inputType="textPassword"
         android:textColor="#0DA4A4"
         android:textColorHint="#0DA4A4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:endIconMode="password_toggle"
-        app:layout_constraintTop_toBottomOf="@+id/ti_name">
+        app:layout_constraintTop_toBottomOf="@+id/ti_name"
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/border_color"
             android:hint="Senha"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti_confirm_password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:inputType="textPassword"
         android:textColor="#0DA4A4"
         android:textColorHint="#0DA4A4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ti_password"
-        app:endIconMode="password_toggle"
-        >
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/border_color"
             android:hint="Confirmar Senha"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/button"

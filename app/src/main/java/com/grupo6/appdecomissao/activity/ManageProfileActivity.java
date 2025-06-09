@@ -9,13 +9,18 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.grupo6.appdecomissao.R;
 import com.grupo6.appdecomissao.domain.DataCache;
 import com.grupo6.appdecomissao.domain.User;
 
-public class ManageProfileActivity extends Activity {
+public class ManageProfileActivity extends AppCompatActivity {
 
     private TextInputEditText nameEditText, passwordEditText, confirmPasswordEditText;
     private ImageButton showPasswordButton, showConfirmPasswordButton;
@@ -29,12 +34,17 @@ public class ManageProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         // Trocar o placeholder quando tivermos os xmls das telas
         setContentView(R.layout.activity_mananger_profile_consultant);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         TextInputLayout tiName = (TextInputLayout) findViewById(R.id.ti_name);
         nameEditText= (TextInputEditText) tiName.getEditText();
         // profilePictureView = (ImageView) findViewById(R.id.placeholderpfpimageview);
 
-        User user = dataCache.getUserById("placeholderID");
+        User user = dataCache.getUserById(dataCache.getCurrentId());
         String name = user.getName();
         // String picture = user.getPicture();
 

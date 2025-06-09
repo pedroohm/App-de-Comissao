@@ -43,11 +43,14 @@
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:background="@drawable/border_color"
-            android:hint="Período"
-            android:textStyle="bold" />
+            android:hint="Todo o período"
+            android:textStyle="bold"
+            android:focusable="false"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:inputType="none"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

@@ -264,7 +264,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         int achievied = plotGoalsInfo(currentId);
 
         animateProgress(R.id.pi_goals, R.id.tv_graph_goals, achievied/2);
-        animateProgress(R.id.pi_sales_goals, R.id.tv_sales_goals, qtdSales/10);
+        animateProgress(R.id.pi_sales_goals, R.id.tv_sales_goals, qtdSales*10);
         animateProgress(R.id.pi_gains, R.id.tv_gains, avgCommission);
     }
 

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#FFFFFF"
     tools:context=".activity.DashboardSupervisor">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <!--    <ScrollView-->
     <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -58,8 +64,12 @@
 
             android:layout_height="wrap_content"
             android:background="@drawable/border_color"
-            android:hint="Período"
-            android:textStyle="bold" />
+            android:hint="Todo o período"
+            android:textStyle="bold"
+            android:focusable="false"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -105,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="4"
+            android:text="3"
             android:textAlignment="center"
             android:textColor="#4A4A4A"
             android:textSize="24sp"
@@ -140,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="5"
+            android:text="6"
             android:textAlignment="center"
             android:textColor="#4A4A4A"
             android:textSize="24sp"
@@ -175,7 +185,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="R$ 10,000"
+            android:text="R$ 15,000"
             android:textAlignment="center"
             android:textColor="#4A4A4A"
             android:textSize="24sp"
@@ -200,12 +210,16 @@
         app:layout_constraintTop_toBottomOf="@+id/fl_invoicing_goals">
 
         <AutoCompleteTextView
+            android:id="@+id/autoComplete"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:background="@drawable/border_color"
-            android:hint="Consultor"
-            android:textStyle="bold" />
+            android:hint="Juan Freire"
+            android:textStyle="bold"
+            android:focusable="false"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 <!--   -->
 
@@ -430,7 +444,7 @@
             android:layout_gravity="center"
             android:layout_height="match_parent"
             android:layout_marginTop="25dp"
-            android:text="R$ 1,000"
+            android:text="R$ 2,600"
             android:textAlignment="center"
             android:textColor="#4A4A4A"
             android:textSize="24sp"
@@ -466,7 +480,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:text="R$ 100"
+            android:text="R$ 380"
             android:textAlignment="center"
             android:textColor="#4A4A4A"
             android:textSize="24sp"
@@ -492,7 +506,7 @@
     <TableLayout
         android:id="@+id/tl_log"
         android:layout_width="371dp"
-        android:layout_height="96dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -502,7 +516,6 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_column="0"
                 android:layout_weight="1"
                 android:text="Produto"
                 android:textAlignment="center"
@@ -511,55 +524,61 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_column="1"
                 android:layout_weight="1"
                 android:text="Preço"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_column="2"
                 android:layout_weight="1"
                 android:text="Comissão"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_column="3"
                 android:layout_weight="1"
                 android:text="Regra"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_column="3"
                 android:layout_weight="1"
                 android:text="Data"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
         </TableRow>
 
+        <!-- Linha de exemplo 1 -->
         <TableRow android:background="#400DA4A4">
-
+            <TextView android:layout_weight="1" android:text="Curso Livre" />
+            <TextView android:layout_weight="1" android:text="R$ 200" />
+            <TextView android:layout_weight="1" android:text="15%" />
+            <TextView android:layout_weight="1" android:text="Comissão Fixa" />
+            <TextView android:layout_weight="1" android:text="08/06/2025" />
         </TableRow>
 
     </TableLayout>
     <!--    -->
     <!--</ScrollView>-->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+
+

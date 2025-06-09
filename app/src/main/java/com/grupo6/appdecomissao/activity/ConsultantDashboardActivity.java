@@ -2,6 +2,7 @@ package com.grupo6.appdecomissao.activity;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.Set;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.grupo6.appdecomissao.R;
 import com.grupo6.appdecomissao.domain.CommissionRule;
@@ -63,6 +65,21 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_profile) {
+                Intent profileIntent = new Intent(this, ProfileSettingsActivity.class);
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(profileIntent);
+                return true;
+            } else {
+                return false;
+            }
         });
 
         Log.d(TAG, "Activity criada");
@@ -264,7 +281,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         int achievied = plotGoalsInfo(currentId);
 
         animateProgress(R.id.pi_goals, R.id.tv_graph_goals, achievied/2);
-        animateProgress(R.id.pi_sales_goals, R.id.tv_sales_goals, qtdSales*10);
+        animateProgress(R.id.pi_sales_goals, R.id.tv_sales_goals, qtdSales*5);
         animateProgress(R.id.pi_gains, R.id.tv_gains, avgCommission);
     }
 

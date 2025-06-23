@@ -111,6 +111,14 @@ public class DataCache {
 
     /* MÉTODOS DE REMOÇÃO DE OBJETOS */
 
+    public void clearSales() {
+        sales.clear();
+        // Limpa também o relacionamento de vendas por usuário
+        for (Set<String> saleSet : userSales.values()) {
+            saleSet.clear();
+        }
+    }
+
     public void removeUser(String userId) {
         users.remove(userId);
         userCommissionRules.remove(userId);
@@ -196,6 +204,23 @@ public class DataCache {
     /* MÉTODOS PARA BUSCA MAIORES */
     public Set<String> getUserCommissionRules(String userId) {
         return userCommissionRules.getOrDefault(userId, new HashSet<>());
+    }
+
+    public List<Sale> getSalesByUserId(String userId) {
+        // lista vazia para armazenar o resultado.
+        List<Sale> result = new ArrayList<>();
+
+        Set<String> saleIds = userSales.getOrDefault(userId, new HashSet<>());
+
+        for (String saleId : saleIds) {
+            Sale sale = sales.get(saleId);
+
+            if (sale != null) {
+                result.add(sale);
+            }
+        }
+
+        return result;
     }
 
     public Set<Sale> getSales() {

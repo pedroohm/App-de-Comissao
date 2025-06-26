@@ -175,6 +175,10 @@ public class DataCache {
         return records.get(recordId);
     }
 
+    public List<User> getAllConsultants(){
+        return new ArrayList<>(users.values());
+    }
+
     public CommissionRule getCommissionRuleById(String ruleId) {
         return commissionRules.get(ruleId);
     }

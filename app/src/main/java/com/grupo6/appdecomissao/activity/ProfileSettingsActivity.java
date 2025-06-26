@@ -84,7 +84,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     // Chamado pelo botão de gerenciar consultores
     public void manageConsultants(View view){
         // A Activity ManageConsultants ainda não existe, o nome é somente um placeholder
-        //Intent it = new Intent(this, ManageConsultantsActivity.class);
-        // startActivity(it);
+        Intent it = new Intent(this, ManageConsultantsActivity.class);
+        startActivity(it);
     }
 }

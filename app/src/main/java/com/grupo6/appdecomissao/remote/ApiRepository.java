@@ -1,5 +1,8 @@
 package com.grupo6.appdecomissao.remote;
 
+import com.grupo6.appdecomissao.domain.Goal;
+import com.grupo6.appdecomissao.domain.CommissionRule;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -22,6 +25,8 @@ public class ApiRepository {
 
     // Instância única do retrofit
     private final RubeusEndpointsAPI service;
+
+    private final MockApiEndpoints mockService;
     // Corpo de cada requisição
     private final Map<String, String> body;
 
@@ -29,6 +34,10 @@ public class ApiRepository {
         service = ApiClient
                 .getInstance()
                 .create(RubeusEndpointsAPI.class);
+
+        mockService = MockApiClient
+                .getInstance()
+                .create(MockApiEndpoints.class);
 
         body = new HashMap<>();
     }
@@ -180,5 +189,42 @@ public class ApiRepository {
         }
     }
 
+    public void getCommissionRules(ApiCallback<List<CommissionRule>> callback) {
+        Call<List<CommissionRule>> call = mockService.getCommissionRules();
+        call.enqueue(new Callback<List<CommissionRule>>() {
+            @Override
+            public void onResponse(Call<List<CommissionRule>> call, Response<List<CommissionRule>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao buscar regras de comissão: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CommissionRule>> call, Throwable t) {
+                callback.onError("Falha na rede ao buscar regras: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getGoals(ApiCallback<List<Goal>> callback) {
+        Call<List<Goal>> call = mockService.getGoals();
+        call.enqueue(new Callback<List<Goal>>() {
+            @Override
+            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao buscar metas: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Goal>> call, Throwable t) {
+                callback.onError("Falha na rede ao buscar metas: " + t.getMessage());
+            }
+        });
+    }
 
 }

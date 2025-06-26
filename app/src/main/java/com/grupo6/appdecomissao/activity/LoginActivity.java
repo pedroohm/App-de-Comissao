@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setEnabled(false);
 
         // Chamando o metodo para listar todos os usuários da plataforma e inicializar o DataCache
-        listAllUsersAndInitialize();
+        loadApplicationData();
     }
 
     public void logar(View v){
@@ -91,109 +91,63 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void listAllUsersAndInitialize() {
-        Log.d("MainActivity", "Fazendo requisição para coletar todos os usuários da plataforma");
+    private void loadApplicationData() {
+        Log.d(TAG, "Iniciando carregamento de dados do aplicativo...");
+
+        // 1. Carrega os usuários da API Rubeus
         apiRepository.getAllUsers(origin, token, new ApiCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
                 for (User user : users) {
                     dataCache.putUser(user);
                 }
+                Log.d(TAG, "Usuários da Rubeus carregados. Total: " + users.size());
 
-                Log.d(TAG, "Usuários adicionados ao DataCache. Total: " + users.size());
-                Log.d("MainActivity", "-----------------------------------");
+                // 2. Após carregar usuários, carrega as regras de comissão do nosso servidor PHP
+                apiRepository.getCommissionRules(new ApiCallback<List<CommissionRule>>() {
+                    @Override
+                    public void onSuccess(List<CommissionRule> rules) {
+                        for (CommissionRule rule : rules) {
+                            dataCache.putCommissionRule(rule);
+                        }
+                        Log.d(TAG, "Regras de comissão do servidor mock carregadas. Total: " + rules.size());
 
-                // Metodo para adicionar regras de comissão para todos os usuários consultores da plataforma
-                createComissionRules();
+                        // 3. Após carregar as regras, carrega as metas do nosso servidor PHP
+                        apiRepository.getGoals(new ApiCallback<List<Goal>>() {
+                            @Override
+                            public void onSuccess(List<Goal> goals) {
+                                for (Goal goal : goals) {
+                                    dataCache.putGoal(goal);
+                                }
+                                Log.d(TAG, "Metas do servidor mock carregadas. Total: " + goals.size());
 
-                // Metodo para adicionar metas para todos os usuários consultores da plataforma
-                createGoals();
+                                // 4. Somente após tudo carregar, habilita o botão de login
+                                runOnUiThread(() -> {
+                                    btnLogin.setEnabled(true);
+                                });
+                            }
 
-                runOnUiThread(() -> btnLogin.setEnabled(true));
+                            @Override
+                            public void onError(String errorMessage) {
+                                Log.e(TAG, "Erro ao carregar metas: " + errorMessage);
+                                // Lidar com erro
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        Log.e(TAG, "Erro ao carregar regras de comissão: " + errorMessage);
+                        // Lidar com erro
+                    }
+                });
             }
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> {
-                    Log.e(TAG, "Erro: " + errorMessage);
-                });
+                Log.e(TAG, "Erro ao carregar usuários da Rubeus: " + errorMessage);
+                // Lidar com erro
             }
         });
     }
-
-    private void createComissionRules() {
-        Log.d("MainActivity", "Criando regras de comissão");
-
-        // Consultores associados (exemplo)
-        Set<String> consultants = new HashSet<>(Arrays.asList("84", "85", "86", "87"));
-
-        // Criando a primeira regra de comissão
-        CommissionRule rule1 = new CommissionRule(
-                "1",
-                "1",
-                "Matriculado",
-                "Comissão por Matrícula Direta",
-                "Gera comissão quando um aluno é matriculado.",
-                consultants,
-                "Percentual Fixo",
-                "Trimestral",
-                15.0
-        );
-
-        // Criando a segunda regra de comissão
-        CommissionRule rule2 = new CommissionRule(
-                "2",
-                "3",
-                "Venda Concluída",
-                "Comissão por Venda",
-                "Gera comissão quando um curso livre é vendido.",
-                consultants,
-                "Percentual Fixo",
-                "Trimestral",
-                20
-        );
-
-        // Adicionando as regras ao DataCache
-        dataCache.putCommissionRule(rule1);
-        dataCache.putCommissionRule(rule2);
-
-        Log.d("MainActivity", "Regra 1 adicionada: " + rule1.getName());
-        Log.d("MainActivity", "Regra 2 adicionada: " + rule2.getName());
-        Log.d("MainActivity", "-----------------------------------");
-    }
-
-    private void createGoals() {
-        Log.d("MainActivity", "Criando metas para os usuários");
-
-        // Consultores associados (exemplo)
-        Set<String> consultants = new HashSet<>(Arrays.asList("84", "85", "86", "87"));
-
-        Goal goal1 = new Goal(
-                "1",
-                consultants,
-                "Vender 20 produtos",
-                20.0,
-                10.0,
-                false
-        );
-
-        Goal goal2 = new Goal(
-                "2",
-                consultants,
-                "Vender 10 produtos",
-                10.0,
-                15.0,
-                false
-        );
-
-        // Adicionando Metas ao DataCache
-        dataCache.putGoal(goal1);
-        dataCache.putGoal(goal2);
-
-        Log.d("MainActivity", "Meta 1 adicionada: " + goal1.getDescription());
-        Log.d("MainActivity", "Meta 2 adicionada: " + goal2.getDescription());
-        Log.d("MainActivity", "-----------------------------------");
-    }
-
-
 }

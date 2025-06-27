@@ -1,12 +1,28 @@
 package com.grupo6.appdecomissao.activity;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,6 +41,7 @@ import com.grupo6.appdecomissao.domain.Goal;
 import com.grupo6.appdecomissao.domain.Sale;
 import com.grupo6.appdecomissao.viewmodel.ConsultantDashboardViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConsultantDashboardActivity extends AppCompatActivity {
@@ -32,10 +49,36 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     private ConsultantDashboardViewModel viewModel;
 
     // Componentes da UI
-    private TextView saleView, comissionView, salesCountView, comissionPercView;
+    private TextView saleView, comissionView, salesCountView, comissionPercView, goalsValueView;
     private TableLayout tableLayoutLog, tableLayoutGoals;
     private CircularProgressIndicator piGoals, piSalesGoals, piGains;
     private TextView tvGraphGoals, tvSalesGoals, tvGains;
+
+    private AutoCompleteTextView periodSelector;
+    private Button btReport;
+
+    private String generatedCsvContent;
+
+    private Button btnSeeAllSales;
+    private static final int INITIAL_ITEMS_TO_SHOW = 3;
+
+    private Button btnSeeAllGoals;
+
+    // Declara o launcher que vai lidar com a ação de criar o arquivo
+    private final ActivityResultLauncher<Intent> createFileLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                // Aqui recebemos o resultado da tela de seleção de arquivo
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri uri = result.getData().getData();
+                    if (uri != null && this.generatedCsvContent != null) {
+                        writeCsvToFile(uri, this.generatedCsvContent);
+                        this.generatedCsvContent = null; // Limpa a variável após o uso
+                    } else {
+                        Toast.makeText(this, "Erro ao gerar o conteúdo do relatório.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
     // Constantes (idealmente viriam de um login ou SharedPreferences)
     private static final String CONSULTANT_ID = "84";
@@ -51,6 +94,8 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         setupWindowInsets();
         initializeUIComponents();
         setupBottomNavigation();
+        setupPeriodFilter();
+        setupButtonClicks();
 
         // Inicializa o ViewModel
         viewModel = new ViewModelProvider(this).get(ConsultantDashboardViewModel.class);
@@ -75,6 +120,11 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         tvGraphGoals = findViewById(R.id.tv_graph_goals);
         tvSalesGoals = findViewById(R.id.tv_sales_goals);
         tvGains = findViewById(R.id.tv_gains);
+        goalsValueView = findViewById(R.id.tv_goals_value);
+        periodSelector = findViewById(R.id.autoCompleteTextView_period);
+        btReport = findViewById(R.id.bt_report);
+        btnSeeAllSales = findViewById(R.id.btn_see_all_sales);
+        btnSeeAllGoals = findViewById(R.id.btn_see_all_goals);
     }
 
     private void setupObservers() {
@@ -86,6 +136,8 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
         viewModel.getGoalsList().observe(this, goals -> {
             if (goals != null) {
+                goalsValueView.setText(String.valueOf(goals.size()));
+
                 int achievedCount = plotGoalsInfo(goals);
                 int totalGoals = goals.size() > 0 ? goals.size() : 1;
                 int progress = (100 * achievedCount) / totalGoals;
@@ -105,10 +157,19 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tableLayoutLog.removeViewAt(1);
         }
 
+        // Mostra o botão apenas se a lista for maior que o limite
+        if (sales.size() > INITIAL_ITEMS_TO_SHOW) {
+            btnSeeAllSales.setVisibility(View.VISIBLE);
+        } else {
+            btnSeeAllSales.setVisibility(View.GONE);
+        }
+
         double totalSales = 0;
         double totalCommission = 0;
 
-        for (Sale sale : sales) {
+        int itemsToShow = Math.min(sales.size(), INITIAL_ITEMS_TO_SHOW);
+        for (int i = 0; i < itemsToShow; i++) {
+            Sale sale = sales.get(i);
             totalSales += sale.getPrice();
             totalCommission += sale.getCommission();
 
@@ -173,8 +234,17 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tableLayoutGoals.removeViewAt(1);
         }
 
+        if (goals.size() > INITIAL_ITEMS_TO_SHOW - 1) { // reusando a constante
+            btnSeeAllGoals.setVisibility(View.VISIBLE);
+        } else {
+            btnSeeAllGoals.setVisibility(View.GONE);
+        }
+
         int achievedCount = 0;
-        for (Goal goal : goals) {
+        int itemsToShow = Math.min(goals.size(), INITIAL_ITEMS_TO_SHOW - 1);
+
+        for (int i = 0; i < itemsToShow; i++) {
+            Goal goal = goals.get(i);
             if (goal.getAchieved()) {
                 achievedCount++;
             }
@@ -244,5 +314,149 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void setupPeriodFilter() {
+        // Opções que aparecerão no menu dropdown
+        String[] periods = new String[]{"Todo o período", "Este mês", "Últimos 3 meses", "Últimos 6 meses"};
+
+        // O Adapter é o que conecta os dados (nosso array de strings) ao componente visual
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                periods
+        );
+
+        periodSelector.setAdapter(adapter);
+
+        periodSelector.setText(adapter.getItem(0), false);
+
+        // Configura o "ouvinte" de cliques nos itens do menu
+        periodSelector.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedPeriod = (String) parent.getItemAtPosition(position);
+            Toast.makeText(this, "Filtrando por: " + selectedPeriod, Toast.LENGTH_SHORT).show();
+
+            // Avisa o ViewModel que o filtro mudou
+            viewModel.applyFilter(selectedPeriod);
+        });
+    }
+
+    private void setupButtonClicks() {
+        btReport.setOnClickListener(v -> {
+            // Pega a lista de vendas ATUALMENTE exibida (já filtrada) do ViewModel
+            List<Sale> currentSales = viewModel.getSalesList().getValue();
+            List<Goal> currentGoals = viewModel.getGoalsList().getValue();
+
+            if (currentSales == null || currentSales.isEmpty()) {
+                Toast.makeText(this, "Não há dados para exportar.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Gera o conteúdo do CSV
+            this.generatedCsvContent = generateCsvContent(currentSales, currentGoals);
+
+            // Inicia o processo de salvar o arquivo
+            launchSaveFileIntent();
+        });
+
+        btnSeeAllSales.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SalesHistoryActivity.class);
+            // Pega a lista completa do ViewModel
+            ArrayList<Sale> fullList = new ArrayList<>(viewModel.getSalesList().getValue());
+            intent.putParcelableArrayListExtra("SALES_LIST", fullList);
+            startActivity(intent);
+        });
+
+        btnSeeAllGoals.setOnClickListener(v -> {
+            Intent intent = new Intent(this, GoalsListActivity.class);
+            ArrayList<Goal> fullList = new ArrayList<>(viewModel.getGoalsList().getValue());
+            intent.putParcelableArrayListExtra("GOALS_LIST", fullList);
+            startActivity(intent);
+        });
+    }
+
+    private String generateCsvContent(List<Sale> sales, List<Goal> goals) {
+        // StringBuilder é mais eficiente para construir strings grandes
+        StringBuilder csvBuilder = new StringBuilder();
+
+        // Resumo do Período
+        double totalSalesValue = 0;
+        double totalCommissionValue = 0;
+        for (Sale sale : sales) {
+            totalSalesValue += sale.getPrice();
+            totalCommissionValue += sale.getCommission();
+        }
+
+        csvBuilder.append("Resumo do Período\n");
+        csvBuilder.append("Total de Vendas (R$);").append(String.format("%.2f", totalSalesValue)).append("\n");
+        csvBuilder.append("Total de Comissões (R$);").append(String.format("%.2f", totalCommissionValue)).append("\n");
+        csvBuilder.append("Número de Vendas;").append(sales.size()).append("\n");
+        csvBuilder.append("\n");
+
+        // Adicionando as Metas
+        csvBuilder.append("Metas do Consultor\n");
+        csvBuilder.append("Descricao;Bonus (%);Status\n"); // Cabeçalho da tabela de metas
+        if (goals.isEmpty()) {
+            csvBuilder.append("Nenhuma meta encontrada.\n");
+        } else {
+            for (Goal goal : goals) {
+                csvBuilder.append("\"").append(goal.getDescription()).append("\";");
+                csvBuilder.append(String.format("%.2f", goal.getBonus())).append("%;");
+                csvBuilder.append(goal.getAchieved() ? "Atingida" : "Pendente").append("\n");
+            }
+        }
+        csvBuilder.append("\n");
+
+        // Detalhamento das vendas
+        csvBuilder.append("Detalhes das Vendas do Período\n");
+        csvBuilder.append("ID Venda;Produto;Preco do Produto (R$);Comissao (R$);Data\n"); // Cabeçalho da tabela de vendas
+        if (sales.isEmpty()) {
+            csvBuilder.append("Nenhuma venda encontrada no período.\n");
+        } else {
+            for (Sale sale : sales) {
+                csvBuilder.append(sale.getId()).append(";");
+                csvBuilder.append("\"").append(sale.getProduct()).append("\";");
+                csvBuilder.append(String.format("%.2f", sale.getPrice())).append(";");
+                csvBuilder.append(String.format("%.2f", sale.getCommission())).append(";");
+                csvBuilder.append(sale.getSaleDate()).append("\n");
+            }
+        }
+
+        return csvBuilder.toString();
+    }
+
+    private void launchSaveFileIntent() {
+        // Cria um nome de arquivo dinâmico com a data atual
+        String fileName = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            fileName = "relatorio_comissao_" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) + ".csv";
+        }
+
+        // Cria a intenção para o sistema operacional abrir a tela de "Salvar Como..."
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/csv"); // Define o tipo de arquivo como CSV
+        intent.putExtra(Intent.EXTRA_TITLE, fileName);
+
+        // Lança a tela de seleção de arquivo
+        createFileLauncher.launch(intent);
+    }
+
+    private void writeCsvToFile(Uri uri, String content) {
+        try {
+            // Abre um "fluxo de escrita" para o local que o usuário escolheu
+            OutputStream outputStream = getContentResolver().openOutputStream(uri);
+            if (outputStream != null) {
+                // Escreve o conteúdo e fecha o fluxo
+                outputStream.write(new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF });
+                outputStream.write(content.getBytes(StandardCharsets.UTF_8));
+
+                outputStream.close();
+                Toast.makeText(this, "Relatório salvo com sucesso!", Toast.LENGTH_LONG).show();
+            }
+        } catch (IOException e) {
+            Log.e("ExportCSV", "Erro ao salvar arquivo CSV", e);
+            Toast.makeText(this, "Erro ao salvar o relatório.", Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MockApiClient {
     // IMPORTANTE: Do emulador Android, 'localhost' é acessado pelo IP 10.0.2.2
-    private static final String BASE_URL = "http://[ADICIONE O SEU IP]/api-comissao/";
+    private static final String BASE_URL = "http://192.168.3.4/api-comissao/";
 
     private static Retrofit retrofit = null;
 

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppDeComissao"
         tools:targetApi="31">
         <activity
+            android:name=".configSupervisor"
+            android:exported="false" />
+        <activity
             android:name=".activity.RulesSupervisor"
             android:exported="false" />
         <activity

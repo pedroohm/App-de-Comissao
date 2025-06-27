@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/white"
     tools:context=".activity.RulesSupervisor">
 
     <ImageView
@@ -42,7 +43,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/bt_search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+        app:layout_constraintTop_toBottomOf="@+id/bt_new_rule">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ti_date_select"
@@ -61,35 +62,165 @@
         </com.google.android.material.textfield.TextInputLayout>
     </FrameLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#0DA4A4"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
         android:text="Buscar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/bt_new_rule"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_new_rule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/border"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="#0DA4A4"
         android:text="Adicionar nova regra"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:icon="@android:drawable/ic_menu_add"
-        app:iconTint="@color/white"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fl_report"
-        app:strokeColor="#009688" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_report">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descrição:"
+            android:textAlignment="textStart"
+            android:textColor="#0DA4A4"
+            android:textSize="16dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_description_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Texto da Descrição"
+            android:textAlignment="textStart"
+            android:textColor="#4A4A4A"
+            android:textSize="16dp">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Consultores:"
+            android:textAlignment="textStart"
+            android:textColor="#0DA4A4"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_consultants_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="74dp"
+            android:text="Nome dos consultores"
+            android:textAlignment="textStart"
+            android:textColor="#4A4A4A"
+            android:textSize="16dp">
+
+        </TextView>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:layout_marginLeft="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+
+        <FrameLayout
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Metas:"
+                android:textAlignment="textStart"
+                android:textColor="#0DA4A4"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_goals_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="74dp"
+                android:text="Vender 20 produtos"
+                android:textAlignment="textStart"
+                android:textColor="#4A4A4A"
+                android:textSize="16dp">
+
+            </TextView>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Bônus:"
+                android:textAlignment="textStart"
+                android:textColor="#0DA4A4"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_bonus_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="74dp"
+                android:text="10%"
+                android:textAlignment="textStart"
+                android:textColor="#4A4A4A"
+                android:textSize="16dp">
+
+            </TextView>
+        </FrameLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

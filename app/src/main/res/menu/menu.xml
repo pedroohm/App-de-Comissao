@@ -5,12 +5,10 @@
     >
     <item
         android:id="@+id/nav_dashboard"
-        android:icon="@drawable/dashboard_icon"
-        android:iconTint="#0DA4A4" />
+        android:icon="@drawable/dashboard_icon" />
 
     <item
         android:id="@+id/nav_profile"
-        android:iconTint="#0DA4A4"
         android:icon="@drawable/person_icon" />
 
 </menu>

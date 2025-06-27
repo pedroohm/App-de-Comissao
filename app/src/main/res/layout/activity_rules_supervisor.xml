@@ -35,142 +35,126 @@
         app:layout_constraintStart_toEndOf="@+id/rule_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/fl_report"
-        android:layout_width="262dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/bt_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_new_rule">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_date_select"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="#4A4A4A"
-            android:textColorHint="#0DA4A4">
-
-            <AutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_color"
-                android:hint="Regra"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </FrameLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#0DA4A4"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:cornerRadius="10dp"
-        android:text="Buscar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_new_rule"/>
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_new_rule"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#0DA4A4"
-        android:text="Adicionar nova regra"
+        android:layout_marginTop="20dp"
+        android:text="Adicionar Nova Regra"
         android:textColor="@color/white"
         android:textStyle="bold"
+        app:backgroundTint="#0DA4A4"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fl_report">
+        app:layout_constraintTop_toBottomOf="@+id/bt_new_rule">
 
-        <TextView
+        <FrameLayout
+            android:id="@+id/fl_report"
+            android:layout_width="262dp"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toStartOf="@+id/bt_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_new_rule">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_date_select"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColor="#4A4A4A"
+                android:textColorHint="#0DA4A4">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_color"
+                    android:hint="Regra"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bt_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descrição:"
-            android:textAlignment="textStart"
-            android:textColor="#0DA4A4"
-            android:textSize="16dp"
-            android:textStyle="bold">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/tv_description_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Texto da Descrição"
-            android:textAlignment="textStart"
-            android:textColor="#4A4A4A"
-            android:textSize="16dp">
-
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Consultores:"
-            android:textAlignment="textStart"
-            android:textColor="#0DA4A4"
-            android:textSize="16dp"
+            android:layout_marginLeft="8dp"
+            android:backgroundTint="#0DA4A4"
+            android:text="Buscar"
+            android:textColor="@color/white"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/tv_consultants_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="74dp"
-            android:text="Nome dos consultores"
-            android:textAlignment="textStart"
-            android:textColor="#4A4A4A"
-            android:textSize="16dp">
-
-        </TextView>
-
-    </FrameLayout>
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_new_rule" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="24dp"
-        android:layout_marginLeft="24dp"
-        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        android:padding="3dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+        app:layout_constraintTop_toBottomOf="@+id/ll_search">
 
-        <FrameLayout
-            android:layout_width="250dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp">
+            android:background="#f5f5f5"
+            android:paddingLeft="10dp"
+            android:text="Nome da Regra"
+            android:textColor="#0DA4A4"
+            android:textSize="18dp"
+            android:textStyle="bold"></TextView>
+
+        <LinearLayout
+            android:id="@+id/fl_additional_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="Metas:"
+                android:text="Descrição:"
+                android:textAlignment="textStart"
+                android:textColor="#0DA4A4"
+                android:textSize="16dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_description_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Texto da Descrição"
+                android:textAlignment="textStart"
+                android:textColor="#4A4A4A"
+                android:textSize="16dp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consultores:"
                 android:textAlignment="textStart"
                 android:textColor="#0DA4A4"
                 android:textSize="16dp"
@@ -180,47 +164,131 @@
             </TextView>
 
             <TextView
-                android:id="@+id/tv_goals_text"
+                android:id="@+id/tv_consultants_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="74dp"
-                android:text="Vender 20 produtos"
+                android:text="Nome dos consultores"
                 android:textAlignment="textStart"
                 android:textColor="#4A4A4A"
                 android:textSize="16dp">
 
             </TextView>
-        </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_goals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Metas:"
+                    android:textAlignment="textStart"
+                    android:textColor="#0DA4A4"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tv_goals_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vender 20 produtos"
+                    android:textAlignment="textStart"
+                    android:textColor="#4A4A4A"
+                    android:textSize="16dp">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bônus:"
+                    android:textAlignment="textStart"
+                    android:textColor="#0DA4A4"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tv_bonus_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10%"
+                    android:textAlignment="textStart"
+                    android:textColor="#4A4A4A"
+                    android:textSize="16dp">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fl_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="Bônus:"
+                android:text="Processo:"
                 android:textAlignment="textStart"
                 android:textColor="#0DA4A4"
                 android:textSize="16dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
+                android:textStyle="bold">
 
             </TextView>
 
             <TextView
-                android:id="@+id/tv_bonus_text"
+                android:id="@+id/tv_flow_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="74dp"
-                android:text="10%"
+                android:text="Nome do Processo"
                 android:textAlignment="textStart"
                 android:textColor="#4A4A4A"
                 android:textSize="16dp">
 
             </TextView>
-        </FrameLayout>
+
+
+        </LinearLayout>
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemHorizontalTranslationEnabled="false"
+        app:itemIconSize="20dp"
+        app:itemIconTint="#0DA4A4"
+        app:itemRippleColor="#0DA4A4"
+        app:itemTextColor="#0DA4A4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

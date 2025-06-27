@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.grupo6.appdecomissao.R;
 import com.grupo6.appdecomissao.domain.CommissionRule;
@@ -166,5 +167,9 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("MainActivity", "-----------------------------------");
     }
 
+    public void openForgotPasswordActivity(View v) {
+        Intent i = new Intent(LoginActivity.this, ForgotPassword.class);
+        startActivity(i);
+    }
 
 }

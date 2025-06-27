@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".activity.SalesHistoryActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="Histórico de Comissões"
+        app:titleTextColor="#0DA4A4"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="#0DA4A4"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="#0DA4A4">
+        <TextView style="@style/TableHeader" android:layout_weight="0.5" android:text="ID"/>
+        <TextView style="@style/TableHeader" android:layout_weight="1.5" android:text="Produto"/>
+        <TextView style="@style/TableHeader" android:layout_weight="1" android:text="Preço"/>
+        <TextView style="@style/TableHeader" android:layout_weight="1" android:text="Comissão"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sales_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_sale_history"/>
+
+</LinearLayout>

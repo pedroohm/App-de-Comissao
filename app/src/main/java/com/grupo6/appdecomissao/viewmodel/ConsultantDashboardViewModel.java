@@ -31,6 +31,7 @@ public class ConsultantDashboardViewModel extends ViewModel {
     private final DataCache dataCache = DataCache.getInstance();
 
     private List<Sale> originalSalesList = new ArrayList<>();
+    private List<Goal> originalGoalsList = new ArrayList<>();
     private final MutableLiveData<List<Sale>> salesList = new MutableLiveData<>();
     private final MutableLiveData<List<Goal>> goalsList = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
@@ -174,19 +175,21 @@ public class ConsultantDashboardViewModel extends ViewModel {
         }
 
         this.originalSalesList = new ArrayList<>(dataCache.getSalesByUserId(consultantId));
+        this.originalGoalsList = new ArrayList<>(dataCache.getGoalsByUserId(consultantId));
 
         // Dispara a atualização para a UI com os dados processados
         salesList.postValue(this.originalSalesList);
-        goalsList.postValue(dataCache.getGoalsByUserId(consultantId));
+        goalsList.postValue(this.originalGoalsList);
         isLoading.postValue(false);
     }
 
     public void applyFilter(String period) {
         if (originalSalesList == null) return; // Proteção para caso os dados ainda não tenham carregado
 
-        // Se o usuário escolher "Todo o período", simplesmente restaura a lista original
+        // Se o usuário escolher 'Todo o periodo', simplesmente restaura a lista original
         if ("Todo o período".equals(period)) {
             salesList.setValue(originalSalesList);
+            goalsList.setValue(originalGoalsList);
             return;
         }
 
@@ -245,5 +248,6 @@ public class ConsultantDashboardViewModel extends ViewModel {
 
         // Atualiza o LiveData com a nova lista filtrada. A UI reagirá a isso.
         salesList.setValue(filteredList);
+        goalsList.setValue(this.originalGoalsList);
     }
 }

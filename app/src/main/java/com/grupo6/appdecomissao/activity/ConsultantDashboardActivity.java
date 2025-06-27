@@ -167,11 +167,14 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         double totalSales = 0;
         double totalCommission = 0;
 
+        for (Sale sale : sales) {
+            totalSales += sale.getPrice();
+            totalCommission += sale.getCommission();
+        }
+
         int itemsToShow = Math.min(sales.size(), INITIAL_ITEMS_TO_SHOW);
         for (int i = 0; i < itemsToShow; i++) {
             Sale sale = sales.get(i);
-            totalSales += sale.getPrice();
-            totalCommission += sale.getCommission();
 
             TableRow newRow = new TableRow(this);
             newRow.setBackgroundColor(Color.parseColor("#80E0E0E0"));
@@ -189,7 +192,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             TextView tvProduto = new TextView(this);
             tvProduto.setText(sale.getProduct());
             tvProduto.setTextColor(Color.BLACK);
-            tvProduto.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tvProduto.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             tvProduto.setTypeface(null, Typeface.BOLD);
             tvProduto.setLayoutParams(cellParams);
             tvProduto.setMaxLines(1);
@@ -243,11 +246,14 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         int achievedCount = 0;
         int itemsToShow = Math.min(goals.size(), INITIAL_ITEMS_TO_SHOW - 1);
 
-        for (int i = 0; i < itemsToShow; i++) {
-            Goal goal = goals.get(i);
+        for (Goal goal : goals) {
             if (goal.getAchieved()) {
                 achievedCount++;
             }
+        }
+
+        for (int i = 0; i < itemsToShow; i++) {
+            Goal goal = goals.get(i);
             TableRow newRow = new TableRow(this);
             newRow.setBackgroundColor(Color.parseColor("#80E0E0E0"));
             TableRow.LayoutParams cellParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);

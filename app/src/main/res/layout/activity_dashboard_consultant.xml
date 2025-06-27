@@ -569,4 +569,37 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu"/>
+
+    <Button
+        android:id="@+id/btnCadastroRegra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cadastrar Regra"
+        android:layout_marginTop="16dp"/>
+    <Button
+        android:id="@+id/btnRegrasConsultor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Minhas Regras"
+        android:layout_marginTop="8dp"/>
+    <Button
+        android:id="@+id/btnRegrasSupervisor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Regras do Supervisor"
+        android:layout_marginTop="8dp"/>
+    <Button
+        android:id="@+id/btnRegrasComissao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Regras de Comissão"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"/>
+    <Button
+        android:id="@+id/btnVerificarRegras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verificar Regras"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

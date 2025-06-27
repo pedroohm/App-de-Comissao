@@ -203,7 +203,7 @@ public class ApiRepository {
 
             @Override
             public void onFailure(Call<List<CommissionRule>> call, Throwable t) {
-                callback.onError("Falha na rede ao buscar regras: " + t.getMessage());
+                callback.onError("Erro de rede: " + t.getMessage());
             }
         });
     }
@@ -223,6 +223,115 @@ public class ApiRepository {
             @Override
             public void onFailure(Call<List<Goal>> call, Throwable t) {
                 callback.onError("Falha na rede ao buscar metas: " + t.getMessage());
+            }
+        });
+    }
+
+    // --- NOVOS MÉTODOS PARA API PHP LOCAL ---
+    public void getAllCommissionRules(ApiCallback<List<CommissionRule>> callback) {
+        Call<List<CommissionRule>> call = mockService.getCommissionRules();
+        call.enqueue(new Callback<List<CommissionRule>>() {
+            @Override
+            public void onResponse(Call<List<CommissionRule>> call, Response<List<CommissionRule>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao buscar regras de comissão: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<CommissionRule>> call, Throwable t) {
+                callback.onError("Erro de rede: " + t.getMessage());
+            }
+        });
+    }
+
+    public void createCommissionRule(CommissionRule rule, ApiCallback<CommissionRule> callback) {
+        Call<CommissionRule> call = mockService.createCommissionRule(rule);
+        call.enqueue(new Callback<CommissionRule>() {
+            @Override
+            public void onResponse(Call<CommissionRule> call, Response<CommissionRule> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao cadastrar regra: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<CommissionRule> call, Throwable t) {
+                callback.onError("Erro de rede: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getAllUsers(ApiCallback<List<User>> callback) {
+        Call<List<User>> call = mockService.getUsers();
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao buscar usuários: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                callback.onError("Erro de rede: " + t.getMessage());
+            }
+        });
+    }
+
+    public void createUser(User user, ApiCallback<User> callback) {
+        Call<User> call = mockService.createUser(user);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao cadastrar usuário: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                callback.onError("Erro de rede: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getAllGoals(ApiCallback<List<Goal>> callback) {
+        Call<List<Goal>> call = mockService.getGoals();
+        call.enqueue(new Callback<List<Goal>>() {
+            @Override
+            public void onResponse(Call<List<Goal>> call, Response<List<Goal>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao buscar metas: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Goal>> call, Throwable t) {
+                callback.onError("Erro de rede: " + t.getMessage());
+            }
+        });
+    }
+
+    public void createGoal(Goal goal, ApiCallback<Goal> callback) {
+        Call<Goal> call = mockService.createGoal(goal);
+        call.enqueue(new Callback<Goal>() {
+            @Override
+            public void onResponse(Call<Goal> call, Response<Goal> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao cadastrar meta: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<Goal> call, Throwable t) {
+                callback.onError("Erro de rede: " + t.getMessage());
             }
         });
     }

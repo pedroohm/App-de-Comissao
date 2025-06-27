@@ -226,4 +226,39 @@ public class DataCache {
     public Set<Sale> getSales() {
         return new HashSet<>(sales.values());
     }
+
+    // MÉTODOS UTILITÁRIOS ADICIONAIS
+    /**
+     * Retorna uma lista de nomes dos consultores associados a uma regra de comissão.
+     */
+    public List<String> getConsultantNamesByRule(CommissionRule rule) {
+        List<String> nomes = new ArrayList<>();
+        for (String id : rule.getAssignedConsultantIds()) {
+            User user = users.get(id);
+            if (user != null) {
+                nomes.add(user.getName());
+            }
+        }
+        return nomes;
+    }
+
+    /**
+     * Retorna o nome do produto associado a uma regra de comissão.
+     * Se não estiver preenchido em productName, pode tentar buscar por processId/stage.
+     */
+    public String getProductNameByRule(CommissionRule rule) {
+        if (rule.getProductName() != null && !rule.getProductName().isEmpty()) {
+            return rule.getProductName();
+        }
+        // Lógica adicional pode ser implementada aqui se necessário
+        return "Produto não especificado";
+    }
+
+    public List<CommissionRule> getAllCommissionRules() {
+        return new ArrayList<>(commissionRules.values());
+    }
+
+    public List<User> getAllUsers() {
+        return new ArrayList<>(users.values());
+    }
 }

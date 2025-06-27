@@ -10,10 +10,11 @@ public class CommissionRule {
     private String description;
     Set<String> assignedConsultantIds;
     private String ruleType;
+    private String productName;
     // private String goalType;
     private double commissionPercentage;
 
-    public CommissionRule(String id, String processId, String stage, String name, String description, Set<String> assignedConsultantIds, String ruleType, String goalType, double commissionPercentage) {
+    public CommissionRule(String id, String processId, String stage, String name, String description, Set<String> assignedConsultantIds, String ruleType, String goalType, double commissionPercentage, String productName) {
         this.id = id;
         this.processId = processId;
         this.stage = stage;
@@ -22,6 +23,7 @@ public class CommissionRule {
         this.assignedConsultantIds = assignedConsultantIds;
         this.ruleType = ruleType;
         this.commissionPercentage = commissionPercentage;
+        this.productName = productName;
     }
 
     public String getId() { return id; }
@@ -33,7 +35,9 @@ public class CommissionRule {
     public String getRuleType() { return ruleType; }
     // public String getGoalType() { return goalType; }
     public double getCommissionPercentage() { return commissionPercentage; }
+    public String getProductName() { return productName; }
 
     public void setName(String name) { this.name = name; }
     public void setDescription(String description) { this.description = description; }
+    public void setProductName(String productName) { this.productName = productName; }
 }

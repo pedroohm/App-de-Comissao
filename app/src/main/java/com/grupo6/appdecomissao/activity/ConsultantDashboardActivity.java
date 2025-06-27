@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -60,6 +61,13 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
         // Pede ao ViewModel para iniciar o carregamento dos dados
         viewModel.loadConsultantData(CONSULTANT_ID, ORIGIN, TOKEN);
+
+        Button btnCadastroRegra = findViewById(R.id.btnCadastroRegra);
+        Button btnRegrasConsultor = findViewById(R.id.btnRegrasConsultor);
+        Button btnRegrasSupervisor = findViewById(R.id.btnRegrasSupervisor);
+        btnCadastroRegra.setOnClickListener(v -> startActivity(new Intent(this, CadastroRegraActivity.class)));
+        btnRegrasConsultor.setOnClickListener(v -> startActivity(new Intent(this, RegrasConsultorActivity.class)));
+        btnRegrasSupervisor.setOnClickListener(v -> startActivity(new Intent(this, RegrasSupervisorActivity.class)));
     }
 
     private void initializeUIComponents() {

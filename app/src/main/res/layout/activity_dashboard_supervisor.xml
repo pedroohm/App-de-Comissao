@@ -71,9 +71,11 @@
                         android:textColorHint="#0DA4A4">
 
                         <AutoCompleteTextView
+                            android:id="@+id/autoCompleteTextView_period"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/border_color"
+                            android:inputType="none"
                             android:hint="Período"
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>

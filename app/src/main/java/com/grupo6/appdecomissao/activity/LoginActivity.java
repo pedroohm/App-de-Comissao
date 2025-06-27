@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Iniciando carregamento de dados do aplicativo...");
 
         // 1. Carrega os usuários da API Rubeus
-        apiRepository.getAllUsers(origin, token, new ApiCallback<List<User>>() {
+        apiRepository.getUsers(new ApiCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
                 for (User user : users) {

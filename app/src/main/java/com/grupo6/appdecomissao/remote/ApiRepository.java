@@ -227,4 +227,23 @@ public class ApiRepository {
         });
     }
 
+    public void getUsers(ApiCallback<List<User>> callback) {
+        Call<List<User>> call = mockService.getUsers();
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao buscar usuários do mock: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                callback.onError("Falha na rede ao buscar usuários do mock: " + t.getMessage());
+            }
+        });
+    }
+
 }

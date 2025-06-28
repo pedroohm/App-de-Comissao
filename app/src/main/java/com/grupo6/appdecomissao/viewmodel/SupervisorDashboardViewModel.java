@@ -36,6 +36,9 @@ public class SupervisorDashboardViewModel extends ViewModel {
     private final MutableLiveData<List<Goal>> teamGoals = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
+    private final MutableLiveData<User> selectedConsultant = new MutableLiveData<>();
+    private final MutableLiveData<List<Sale>> selectedConsultantSales = new MutableLiveData<>();
+    private final MutableLiveData<List<Goal>> selectedConsultantGoals = new MutableLiveData<>();
 
     private List<Sale> originalSalesList = new ArrayList<>();
     private List<Goal> originalGoalsList = new ArrayList<>();
@@ -47,6 +50,9 @@ public class SupervisorDashboardViewModel extends ViewModel {
     public LiveData<List<Goal>> getTeamGoals() { return teamGoals; }
     public LiveData<Boolean> getIsLoading() { return isLoading; }
     public LiveData<String> getErrorMessage() { return errorMessage; }
+    public LiveData<User> getSelectedConsultant() { return selectedConsultant; }
+    public LiveData<List<Sale>> getSelectedConsultantSales() { return selectedConsultantSales; }
+    public LiveData<List<Goal>> getSelectedConsultantGoals() { return selectedConsultantGoals; }
 
     public void loadSupervisorData(String supervisorId, String origin, String token) {
         if (dataLoaded) return;
@@ -256,5 +262,24 @@ public class SupervisorDashboardViewModel extends ViewModel {
 
         teamSales.setValue(filteredList);
         teamGoals.setValue(this.originalGoalsList);
+    }
+
+    public void selectConsultant(User consultant) {
+        if (consultant == null) return;
+
+        // Atualiza o LiveData do consultor selecionado
+        selectedConsultant.setValue(consultant);
+
+        // Filtra a lista original de vendas para pegar apenas as do consultor selecionado
+        List<Sale> consultantSales = originalSalesList.stream()
+                .filter(sale -> sale.getConsultantId().equals(consultant.getId()))
+                .collect(Collectors.toList());
+        selectedConsultantSales.setValue(consultantSales);
+
+        // Filtra a lista original de metas para pegar apenas as do consultor selecionado
+        List<Goal> consultantGoals = originalGoalsList.stream()
+                .filter(goal -> goal.getAssignedConsultantIds().contains(consultant.getId()))
+                .collect(Collectors.toList());
+        selectedConsultantGoals.setValue(consultantGoals);
     }
 }

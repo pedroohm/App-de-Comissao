@@ -65,7 +65,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/ti_date_select"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                        android:layout_width="190dp"
+                        android:layout_width="225dp"
                         android:layout_height="50dp"
                         android:textColor="#4A4A4A"
                         android:textColorHint="#0DA4A4">
@@ -272,7 +272,7 @@
                             android:layout_height="match_parent"
 
                             android:layout_gravity="center"
-                            app:indicatorColor="@color/white"
+                            app:indicatorColor="#009688"
                             app:indicatorSize="120dp"
                             app:trackColor="#0DA4A4"
                             app:trackThickness="12dp" />
@@ -408,41 +408,57 @@
                 </FrameLayout>
             </LinearLayout>
             <!-- Comp Metas  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_log_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Metas"
+                android:textColor="#0DA4A4"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <TableLayout
                 android:id="@+id/tl_goals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp">
 
-                <TableRow>
+                <TableRow android:background="#0DA4A4">
 
                     <TextView
+                        style="@style/TableHeader"
                         android:layout_width="wrap_content"
                         android:layout_column="0"
                         android:layout_weight="1"
-                        android:text="Metas"
+                        android:text="Descrição"
                         android:textAlignment="center"
-                        android:textColor="#0DA4A4"
                         android:textStyle="bold" />
 
                     <TextView
+                        style="@style/TableHeader"
                         android:layout_width="wrap_content"
                         android:layout_column="1"
                         android:layout_weight="1"
                         android:text="Bônus"
                         android:textAlignment="center"
-                        android:textColor="#0DA4A4"
                         android:textStyle="bold"></TextView>
 
                     <TextView
+                        style="@style/TableHeader"
                         android:layout_width="wrap_content"
                         android:layout_column="2"
                         android:layout_weight="1"
                         android:text="Atingida"
                         android:textAlignment="center"
-                        android:textColor="#0DA4A4"
                         android:textStyle="bold"></TextView>
                 </TableRow>
 
@@ -463,6 +479,8 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 tools:visibility="visible" />
+
+        </LinearLayout>
 
             <!--Comp Histórico de vendas-->
             <LinearLayout

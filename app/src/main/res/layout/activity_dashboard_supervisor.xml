@@ -266,7 +266,7 @@
                             android:layout_height="match_parent"
 
                             android:layout_gravity="center"
-                            app:indicatorColor="@color/white"
+                            app:indicatorColor="#009688"
                             app:indicatorSize="120dp"
                             app:trackColor="#0DA4A4"
                             app:trackThickness="12dp" />
@@ -333,284 +333,195 @@
                 android:id="@+id/ti_consultant_select"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="340dp"
-                android:layout_height="42dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:textColor="#4A4A4A"
-                android:textColorHint="#0DA4A4">
+                android:textColor="#4A4A4A">
 
                 <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView_consultant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_color"
-                    android:hint="Consultor"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:hint="Consultor"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!--Comp Graficos do consultor -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/ll_consultant_details_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-                <!--Comp Metas do Consultor -->
-                <FrameLayout
-                    android:id="@+id/fl_consultant_goals"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/border"
-                    android:backgroundTint="#1A4A4A4A"
-                    android:padding="5dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ti_consultant_select">
+                android:visibility="gone"
+                tools:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/tv_consultant_goals"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Metas"
-                        android:textAlignment="center"
-                        android:textColor="#4A4A4A"
-                        android:textSize="16sp" />
-
-                    <FrameLayout
-                        android:id="@+id/fl_graph_consultant_goals"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp">
-
-                        <com.google.android.material.progressindicator.CircularProgressIndicator
-                            android:id="@+id/pi_consultant_goals"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="16dp"
-                            app:indicatorColor="#009688"
-                            app:indicatorSize="65dp"
-
-                            app:trackColor="#0DA4A4"
-                            app:trackThickness="12dp" />
-
-                        <TextView
-                            android:id="@+id/tv_graph_consultant_goals"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="50%"
-                            android:textAlignment="center"
-                            android:textColor="#009688"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    </FrameLayout>
-                </FrameLayout>
-                <!--  Comp Vendas do Consultor  -->
-                <FrameLayout
-                    android:id="@+id/fl_consultant_sales"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/border"
-                    android:backgroundTint="#400DA4A4"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:id="@+id/tv_consultant_sales"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Vendas"
-                        android:textAlignment="center"
-                        android:textColor="#4A4A4A"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_consultant_sales_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="25dp"
-                        android:text="R$ 1,000"
-                        android:textAlignment="center"
-                        android:textColor="#4A4A4A"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_consultant_sales" />
-                </FrameLayout>
-                <!-- Comp Comissão do Consultor  -->
-                <FrameLayout
-                    android:id="@+id/fl_consultant_comission"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/border"
-                    android:backgroundTint="#400DA4A4"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:id="@+id/tv_consultant_comission"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Comissão"
-                        android:textAlignment="center"
-                        android:textColor="#4A4A4A"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_consultant_comission_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="25dp"
-                        android:text="R$ 100"
-                        android:textAlignment="center"
-                        android:textColor="#4A4A4A"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_sales" />
-                </FrameLayout>
-            </LinearLayout>
-            <!-- Comp Metas  -->
-            <TableLayout
-                android:id="@+id/tl_goals"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp">
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_column="0"
-                        android:layout_weight="1"
-                        android:text="Metas"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0DA4A4"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_column="1"
-                        android:layout_weight="1"
-                        android:text="Preço"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0DA4A4"
-                        android:textStyle="bold"></TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_column="2"
-                        android:layout_weight="1"
-                        android:text="Comissão"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0DA4A4"
-                        android:textStyle="bold"></TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_column="3"
-                        android:layout_weight="1"
-                        android:text="Regra"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0DA4A4"
-                        android:textStyle="bold"></TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_column="3"
-                        android:layout_weight="1"
-                        android:text="Data"
-                        android:textAlignment="viewStart"
-                        android:textColor="#0DA4A4"
-                        android:textStyle="bold"></TextView>
-                </TableRow>
-
-                <TableRow android:background="#400DA4A4">
-
-                </TableRow>
-
-            </TableLayout>
-            <!--Comp Histórico de vendas-->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp">
-                <!-- Comp Histórico de Vendas  -->
-                <TextView
-                    android:id="@+id/tv_title_log"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Histórico de Comissões"
-                    android:textAlignment="center"
-                    android:textColor="#0DA4A4"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
-
-                <TableLayout
-                    android:id="@+id/tl_log"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp">
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp">
 
-                    <TableRow android:background="#0DA4A4">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="0"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ganhos (% Comissão Média)"
+                        android:textColor="#4A4A4A"
+                        android:textSize="14sp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ProgressBar
+                            android:id="@+id/pb_consultant_gains"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="12dp"
                             android:layout_weight="1"
-                            android:text="Produto"
+                            android:progressDrawable="@drawable/custom_progress_bar"
+                            android:max="100"/>
+                        <TextView
+                            android:id="@+id/tv_consultant_gains_perc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="0%"
+                            android:textColor="#009688"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Metas Atingidas"
+                        android:textColor="#4A4A4A"
+                        android:textSize="14sp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ProgressBar
+                            android:id="@+id/pb_consultant_goals"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="12dp"
+                            android:layout_weight="1"
+                            android:progressDrawable="@drawable/custom_progress_bar"
+                            android:max="100"/>
+                        <TextView
+                            android:id="@+id/tv_consultant_goals_perc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="0%"
+                            android:textColor="#009688"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Meta de Vendas"
+                        android:textColor="#4A4A4A"
+                        android:textSize="14sp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <ProgressBar
+                            android:id="@+id/pb_consultant_sales_goals"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="12dp"
+                            android:layout_weight="1"
+                            android:progressDrawable="@drawable/custom_progress_bar"
+                            android:max="100"/>
+                        <TextView
+                            android:id="@+id/tv_consultant_sales_goals_perc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="0%"
+                            android:textColor="#009688"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/fl_consultant_sales"
+                        android:layout_width="150dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/border"
+                        android:backgroundTint="#400DA4A4"
+                        android:padding="5dp">
+                        <TextView
+                            android:id="@+id/tv_consultant_sales"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Vendas"
                             android:textAlignment="center"
-                            android:textColor="@color/white"
+                            android:textColor="#4A4A4A"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/tv_consultant_sales_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:text="R$ 0,00"
+                            android:textAlignment="center"
+                            android:textColor="#4A4A4A"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
+                    </FrameLayout>
 
+                    <FrameLayout
+                        android:id="@+id/fl_consultant_comission"
+                        android:layout_width="150dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/border"
+                        android:backgroundTint="#400DA4A4"
+                        android:padding="5dp">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="1"
-                            android:layout_weight="1"
-                            android:text="Preço"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"></TextView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="2"
-                            android:layout_weight="1"
+                            android:id="@+id/tv_consultant_comission"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="Comissão"
                             android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"></TextView>
-
+                            android:textColor="#4A4A4A"
+                            android:textSize="16sp" />
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="3"
-                            android:layout_weight="1"
-                            android:text="Regra"
+                            android:id="@+id/tv_consultant_comission_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:text="R$ 0,00"
                             android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"></TextView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="3"
-                            android:layout_weight="1"
-                            android:text="Data"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"></TextView>
-                    </TableRow>
-
-                    <TableRow android:background="#400DA4A4">
-
-                    </TableRow>
-
-                </TableLayout>
-            </FrameLayout>
+                            android:textColor="#4A4A4A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

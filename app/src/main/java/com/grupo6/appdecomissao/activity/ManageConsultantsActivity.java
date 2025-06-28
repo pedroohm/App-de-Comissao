@@ -455,7 +455,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
                     consultant.getProfile()
             );
 
-            // Passa os Sets para o método de atualização
+            // Passa os Sets para o metodo de atualização
             updateConsultant(updatedConsultant, currentSelectedGoalIds, currentSelectedCommissionRuleIds);
         });
 
@@ -860,7 +860,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         Retrofit retrofit = MockApiClient.getInstance();
         MockApiEndpoints apiService = retrofit.create(MockApiEndpoints.class);
 
-        // Seu PHP Mockado não tem um método para PATCH (atualizar um usuário específico).
+        // Seu PHP Mockado não tem um metodo para PATCH (atualizar um usuário específico).
         // Se tivesse, a chamada seria aqui.
         Log.i(TAG, "Chamada de atualização para o servidor seria feita aqui, se disponível na API.");
     }

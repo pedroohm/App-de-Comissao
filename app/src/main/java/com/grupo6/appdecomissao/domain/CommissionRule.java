@@ -38,6 +38,7 @@ public class CommissionRule {
     public String getProductName() { return productName; }
 
     public void setName(String name) { this.name = name; }
+    public void setAssignedConsultantIds(Set<String> assignedConsultantIds) { this.assignedConsultantIds = assignedConsultantIds; }
     public void setDescription(String description) { this.description = description; }
     public void setProductName(String productName) { this.productName = productName; }
 }

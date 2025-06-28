@@ -54,6 +54,8 @@
         <activity
             android:name=".activity.ConfigsConsultant"
             android:exported="false" />
+        <activity android:name=".activity.ManageConsultantsActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true">

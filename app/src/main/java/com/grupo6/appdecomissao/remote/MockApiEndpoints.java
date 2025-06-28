@@ -9,7 +9,12 @@ import com.grupo6.appdecomissao.domain.User;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -25,14 +30,23 @@ public interface MockApiEndpoints {
     @GET("api/goals")
     Call<List<Goal>> getGoals();
 
+    @DELETE("api/users/{id}")
+    Call<Void> deleteUser(@Path("id") String userId);
+
+    @POST("api/users")
+    Call<User> createUser(@Body User newUser);
+
+    @PUT("api/users/{id}")
+    Call<User> updateUser(@Path("id") String userId, @Body User updatedUser);
+}
     //@GET("api/users")
     //Call<List<com.grupo6.appdecomissao.domain.User>> getUsers();
 
-    @POST("api/commission-rules")
-    Call<CommissionRule> createCommissionRule(@Body CommissionRule rule);
+    //@POST("api/commission-rules")
+    //Call<CommissionRule> createCommissionRule(@Body CommissionRule rule);
 
-    @POST("api/users")
-    Call<com.grupo6.appdecomissao.domain.User> createUser(@Body com.grupo6.appdecomissao.domain.User user);
+    //@POST("api/users")
+    //Call<com.grupo6.appdecomissao.domain.User> createUser(@Body com.grupo6.appdecomissao.domain.User user);
 
     @POST("api/goals")
     Call<Goal> createGoal(@Body Goal goal);

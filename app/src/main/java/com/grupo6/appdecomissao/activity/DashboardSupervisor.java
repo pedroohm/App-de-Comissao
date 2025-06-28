@@ -36,18 +36,14 @@ public class DashboardSupervisor extends AppCompatActivity {
                 profileIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(profileIntent);
                 return true;
-            } else {
+            } else if (itemId == R.id.nav_regras) {
+                Intent regrasIntent = new Intent(this, RegrasSupervisorActivity.class);
+                regrasIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(regrasIntent);
+                return true;
+            }else {
                 return false;
             }
         });
-
-        Button btnCadastroRegra = findViewById(R.id.btnCadastroRegra);
-        Button btnRegrasConsultor = findViewById(R.id.btnRegrasConsultor);
-        Button btnRegrasSupervisor = findViewById(R.id.btnRegrasSupervisor);
-        btnCadastroRegra.setOnClickListener(v -> startActivity(new Intent(this, CadastroRegraActivity.class)));
-        btnRegrasConsultor.setOnClickListener(v -> startActivity(new Intent(this, RegrasConsultorActivity.class)));
-        btnRegrasSupervisor.setOnClickListener(v -> startActivity(new Intent(this, RegrasSupervisorActivity.class)));
     }
-
-
 }

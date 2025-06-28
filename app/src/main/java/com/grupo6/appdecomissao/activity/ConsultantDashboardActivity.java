@@ -61,13 +61,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
         // Pede ao ViewModel para iniciar o carregamento dos dados
         viewModel.loadConsultantData(CONSULTANT_ID, ORIGIN, TOKEN);
-
-        Button btnCadastroRegra = findViewById(R.id.btnCadastroRegra);
-        Button btnRegrasConsultor = findViewById(R.id.btnRegrasConsultor);
-        Button btnRegrasSupervisor = findViewById(R.id.btnRegrasSupervisor);
-        btnCadastroRegra.setOnClickListener(v -> startActivity(new Intent(this, CadastroRegraActivity.class)));
-        btnRegrasConsultor.setOnClickListener(v -> startActivity(new Intent(this, RegrasConsultorActivity.class)));
-        btnRegrasSupervisor.setOnClickListener(v -> startActivity(new Intent(this, RegrasSupervisorActivity.class)));
     }
 
     private void initializeUIComponents() {
@@ -240,6 +233,11 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.nav_profile) {
                 Intent profileIntent = new Intent(this, ProfileSettingsActivity.class);
                 startActivity(profileIntent);
+                return true;
+            } else if (item.getItemId() == R.id.nav_regras) {
+                Intent regrasIntent = new Intent(this, RegrasSupervisorActivity.class);
+                regrasIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(regrasIntent);
                 return true;
             }
             return false;

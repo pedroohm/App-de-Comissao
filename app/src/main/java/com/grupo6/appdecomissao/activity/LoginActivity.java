@@ -75,15 +75,15 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString();
 
         if (email.equals("juan.freire@ufv.br")){
-            //Intent it = new Intent(this, ConsultantDashboardActivity.class);
-            Intent it = new Intent(this, TesteRegrasActivity.class);
+            Intent it = new Intent(this, ConsultantDashboardActivity.class);
+            //Intent it = new Intent(this, TesteRegrasActivity.class);
             it.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             dataCache.setCurrentId("84");
             startActivity(it);
         }
         else if (email.equals("pedro.moura2@ufv.br")){
-            //Intent it = new Intent(this, DashboardSupervisor.class);
-            Intent it = new Intent(this, TesteRegrasActivity.class);
+            Intent it = new Intent(this, DashboardSupervisor.class);
+            //Intent it = new Intent(this, TesteRegrasActivity.class);
             it.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             dataCache.setCurrentId("85");
             startActivity(it);

@@ -16,4 +16,12 @@ public interface RubeusEndpointsAPI {
     @Headers("Content-type: application/json")
     @POST("api/Oportunidade/listarOportunidades")
     Call<JsonObject> listRecords(@Body JsonObject body);
+
+    @Headers("Content-type: application/json")
+    @POST("api/Processo/listarProcessos")
+    Call<JsonObject> listProcesses(@Body Map<String, String> body);
+
+    @Headers("Content-type: application/json")
+    @POST("api/Etapa/listarEtapas")
+    Call<JsonObject> listStages(@Body Map<String, String> body);
 }

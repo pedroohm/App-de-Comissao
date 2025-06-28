@@ -53,4 +53,5 @@ public class User {
     // Métodos de Set para os atributos que serão mutáveis
     public void setName(String name) { this.name = name; }
     public void setPicture(String picture) { this.picture = picture; }
+    public void setConsultantIds(List<String> consultantIds) { this.consultantIds = consultantIds; }
 }

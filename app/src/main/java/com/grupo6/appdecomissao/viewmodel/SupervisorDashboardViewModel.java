@@ -55,7 +55,12 @@ public class SupervisorDashboardViewModel extends ViewModel {
     public LiveData<List<Goal>> getSelectedConsultantGoals() { return selectedConsultantGoals; }
 
     public void loadSupervisorData(String supervisorId, String origin, String token) {
-        if (dataLoaded) return;
+        Log.d(TAG, "loadSupervisorData chamado - dataLoaded: " + dataLoaded);
+        if (dataLoaded) {
+            Log.d(TAG, "Dados já carregados, retornando...");
+            return;
+        }
+        Log.d(TAG, "Iniciando carregamento de dados do supervisor...");
         isLoading.setValue(true);
         dataLoaded = true;
 
@@ -281,5 +286,10 @@ public class SupervisorDashboardViewModel extends ViewModel {
                 .filter(goal -> goal.getAssignedConsultantIds().contains(consultant.getId()))
                 .collect(Collectors.toList());
         selectedConsultantGoals.setValue(consultantGoals);
+    }
+
+    public void resetDataLoaded() {
+        Log.d(TAG, "Resetando dataLoaded para false");
+        dataLoaded = false;
     }
 }

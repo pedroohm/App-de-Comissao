@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // 5. Verificar se a senha está correta
-        if (user.getPassword().equals(password)) {
+        if (user != null && user.getPassword() != null && user.getPassword().equals(password)) {
             // Senha correta, proceder com o login
             Toast.makeText(getApplicationContext(), "Login bem-sucedido!", Toast.LENGTH_SHORT).show();
 

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Button;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -89,6 +90,7 @@ public class DashboardSupervisor extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("DashboardSupervisor", "onCreate chamado - Activity ID: " + this.hashCode());
         setContentView(R.layout.activity_dashboard_supervisor);
 
         // 1. Configurações iniciais da UI
@@ -107,6 +109,7 @@ public class DashboardSupervisor extends AppCompatActivity {
         setupPeriodFilter();
 
         // 5. Pede ao ViewModel para iniciar o carregamento dos dados
+        Log.d("DashboardSupervisor", "Chamando loadSupervisorData...");
         viewModel.loadSupervisorData(SUPERVISOR_ID, ORIGIN, TOKEN);
     }
 
@@ -393,6 +396,11 @@ public class DashboardSupervisor extends AppCompatActivity {
                 // Define o ID atual no DataCache antes de ir para a próxima tela
                 DataCache.getInstance().setCurrentId(SUPERVISOR_ID);
                 startActivity(profileIntent);
+                return true;
+            } else if (itemId == R.id.nav_regras) {
+                Intent regrasIntent = new Intent(this, RulesSupervisor.class);
+                regrasIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(regrasIntent);
                 return true;
             } else if (itemId == R.id.nav_dashboard) {
                 return true; // Já estamos aqui

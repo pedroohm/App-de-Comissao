@@ -3,12 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
 
     >
+
+    <item
+        android:id="@+id/nav_regras"
+        android:icon="@drawable/check_dollar"
+        android:title="Regras" />
+
     <item
         android:id="@+id/nav_dashboard"
-        android:icon="@drawable/dashboard_icon" />
+        android:icon="@drawable/dashboard_icon"
+        android:title="Dashboard" />
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/person_icon" />
+        android:icon="@drawable/person_icon"
+        android:title="Perfil" />
 
 </menu>

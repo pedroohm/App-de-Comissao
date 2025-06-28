@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context="activity.ConfigSupervisor">
+    tools:context=".configSupervisor">
 
     <ImageView
         android:id="@+id/imageView"
@@ -126,6 +127,7 @@
         android:textStyle="bold"
         app:backgroundTint="#0DA4A4"
         app:cornerRadius="10dp"
+        android:onClick="manageConsultants"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
@@ -133,7 +135,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

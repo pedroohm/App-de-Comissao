@@ -127,6 +127,7 @@
         android:textStyle="bold"
         app:backgroundTint="#0DA4A4"
         app:cornerRadius="10dp"
+        android:onClick="manageConsultants"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />

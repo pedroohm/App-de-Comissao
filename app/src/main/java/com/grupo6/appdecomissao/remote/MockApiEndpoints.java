@@ -38,12 +38,12 @@ public interface MockApiEndpoints {
 
     @PUT("api/users/{id}")
     Call<User> updateUser(@Path("id") String userId, @Body User updatedUser);
-}
+
     //@GET("api/users")
     //Call<List<com.grupo6.appdecomissao.domain.User>> getUsers();
 
-    //@POST("api/commission-rules")
-    //Call<CommissionRule> createCommissionRule(@Body CommissionRule rule);
+    @POST("api/commission-rules")
+    Call<CommissionRule> createCommissionRule(@Body CommissionRule rule);
 
     //@POST("api/users")
     //Call<com.grupo6.appdecomissao.domain.User> createUser(@Body com.grupo6.appdecomissao.domain.User user);

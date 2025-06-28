@@ -315,9 +315,6 @@ public class DataCache {
         return "Produto não especificado";
     }
 
-    public List<CommissionRule> getAllCommissionRules() {
-        return new ArrayList<>(commissionRules.values());
-    }
 
     public List<User> getAllUsers() {
         return new ArrayList<>(users.values());
@@ -327,9 +324,6 @@ public class DataCache {
         return new ArrayList<>(commissionRules.values());
     }
 
-    public List<Goal> getAllGoals() {
-        return new ArrayList<>(goals.values());
-    }
 
     public List<Sale> getAllSales() {
         return new ArrayList<>(sales.values());

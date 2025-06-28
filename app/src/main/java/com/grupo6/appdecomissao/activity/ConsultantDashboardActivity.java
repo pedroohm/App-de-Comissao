@@ -318,9 +318,11 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
                 startActivity(profileIntent);
                 return true;
             } else if (item.getItemId() == R.id.nav_regras) {
-                Intent regrasIntent = new Intent(this, RegrasSupervisorActivity.class);
+                Intent regrasIntent = new Intent(this, RegrasConsultorActivity.class);
                 regrasIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(regrasIntent);
+                return false;
+            } else if (item.getItemId() == R.id.nav_dashboard) {
                 return true;
             }
             return false;

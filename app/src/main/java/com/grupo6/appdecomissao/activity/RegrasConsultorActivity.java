@@ -9,24 +9,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.grupo6.appdecomissao.R;
 import com.grupo6.appdecomissao.domain.CommissionRule;
 import com.grupo6.appdecomissao.domain.DataCache;
-import com.grupo6.appdecomissao.remote.ApiRepository;
-import com.grupo6.appdecomissao.remote.ApiCallback;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class RegrasConsultorActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RegrasConsultorAdapter adapter;
+    private CommissionRuleAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regras_consultor);
         recyclerView = findViewById(R.id.recyclerRegrasConsultor);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RegrasConsultorAdapter(new ArrayList<>());
-        recyclerView.setAdapter(adapter);
 
         String userId = DataCache.getInstance().getCurrentId();
         if (userId == null) {
@@ -43,8 +38,8 @@ public class RegrasConsultorActivity extends AppCompatActivity {
                 minhasRegras.add(rule);
             }
         }
-        
-        adapter = new RegrasConsultorAdapter(minhasRegras);
+
+        adapter = new CommissionRuleAdapter(minhasRegras, false);
         recyclerView.setAdapter(adapter);
     }
 } 

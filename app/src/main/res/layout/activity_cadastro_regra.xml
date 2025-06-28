@@ -1,100 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_cadastro_regra"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Cadastrar Nova Regra"
+        app:titleTextColor="#0DA4A4"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="#0DA4A4"/>
 
-        <EditText
-            android:id="@+id/etNomeRegra"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_cadastro_regra"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome da Regra"
-            android:background="@drawable/border_white"/>
+            android:orientation="vertical"
+            android:padding="24dp">
 
-        <EditText
-            android:id="@+id/etDescricaoRegra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Descrição"
-            android:inputType="textMultiLine"
-            android:background="@drawable/border_white"
-            android:minLines="2"/>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="#0DA4A4"
+                app:hintTextColor="#0DA4A4">
 
-        <EditText
-            android:id="@+id/etPercentualRegra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Percentual (%)"
-            android:background="@drawable/border_white"
-            android:inputType="numberDecimal"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNomeRegra"
+                    android:background="@drawable/border_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nome da Regra" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecionar Processo:"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:boxStrokeColor="#0DA4A4"
+                app:hintTextColor="#0DA4A4">
 
-        <Spinner
-            android:id="@+id/spProcesso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDescricaoRegra"
+                    android:background="@drawable/border_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Descrição"
+                    android:inputType="textMultiLine"
+                    android:minLines="2"
+                    android:gravity="top"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecionar Etapa:"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:boxStrokeColor="#0DA4A4"
+                app:hintTextColor="#0DA4A4">
 
-        <Spinner
-            android:id="@+id/spEtapa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="false"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPercentualRegra"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/border_color"
+                    android:layout_height="wrap_content"
+                    android:hint="Percentual (%)"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecionar Consultores:"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selecionar Processo:"
+                android:layout_marginTop="24dp"
+                android:textColor="#4A4A4A"/>
+            <Spinner
+                android:id="@+id/spProcesso"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/spinner_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"/>
 
-        <Spinner
-            android:id="@+id/spConsultoresRegra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selecionar Etapa:"
+                android:layout_marginTop="16dp"
+                android:textColor="#4A4A4A"/>
+            <Spinner
+                android:id="@+id/spEtapa"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/spinner_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:enabled="false"/>
 
-        <Button
-            android:id="@+id/btnAdicionarConsultor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Adicionar Consultor"
-            android:layout_marginTop="8sp"
-            android:backgroundTint="#0DA4A4"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Atribuir Consultores:"
+                android:layout_marginTop="24dp"
+                android:textColor="#4A4A4A"/>
 
-        <TextView
-            android:id="@+id/tvConsultoresSelecionados"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Consultores selecionados: Nenhum"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/border_rounded"
-            android:padding="8dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+                <Spinner
+                    android:id="@+id/spConsultoresRegra"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"/>
+                <Button
+                    android:id="@+id/btnAdicionarConsultor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adicionar"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="#0DA4A4"/>
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/btnSalvarRegra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Salvar"
-            android:layout_marginTop="16sp"
-            android:backgroundTint="#0DA4A4"/>
-    </LinearLayout>
-</ScrollView> 
+            <TextView
+                android:id="@+id/tvConsultoresSelecionados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Consultores selecionados: Nenhum"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border"
+                android:textColor="#FFF"
+                android:padding="12dp"/>
+
+            <Button
+                android:id="@+id/btnSalvarRegra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Salvar Regra"
+                android:layout_marginTop="32dp"
+                android:padding="12dp"
+                android:backgroundTint="#0DA4A4"/>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

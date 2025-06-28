@@ -44,7 +44,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             Intent profileIntent;
             if (itemId == R.id.nav_dashboard) {
-                if (dataCache.getCurrentId() == "84")
+                if (dataCache.getCurrentId().equals("84"))
                     profileIntent = new Intent(this, ConsultantDashboardActivity.class);
                 else
                     profileIntent = new Intent(this, DashboardSupervisor.class);
@@ -52,8 +52,17 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                 profileIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(profileIntent);
                 return true;
-            } else {
+            } else if (itemId == R.id.nav_profile) {
                 return false;
+            } else {
+                if (dataCache.getCurrentId().equals("84"))
+                    profileIntent = new Intent(this, RegrasConsultorActivity.class);
+                else
+                    profileIntent = new Intent(this, RulesSupervisor.class);
+
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(profileIntent);
+                return true;
             }
         });
 

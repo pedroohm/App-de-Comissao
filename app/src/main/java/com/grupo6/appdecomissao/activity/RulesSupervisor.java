@@ -1,5 +1,6 @@
 package com.grupo6.appdecomissao.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,28 +42,14 @@ public class RulesSupervisor extends AppCompatActivity {
         setupCardClickListeners();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setupCardClickListeners() {
         // Card para cadastrar nova regra
         CardView cardCadastro = findViewById(R.id.card_cadastro);
         if (cardCadastro != null) {
             Log.d("RulesSupervisor", "Card cadastro encontrado, configurando click listener");
-            
-            // Teste com OnTouchListener como alternativa
-            cardCadastro.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, android.view.MotionEvent event) {
-                    if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-                        Intent it = new Intent(RulesSupervisor.this, CadastroRegraActivity.class);
-                        startActivity(it);
 
-                        //Log.d("RulesSupervisor", "Card cadastro tocado");
-                        //Toast.makeText(RulesSupervisor.this, "Card cadastro tocado!", Toast.LENGTH_SHORT).show();
-                        //return true;
-                    }
-                    return false;
-                }
-            });
-            
+            // Mantemos apenas o OnClickListener, que é o correto para a ação de clique.
             cardCadastro.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -80,28 +67,17 @@ public class RulesSupervisor extends AppCompatActivity {
         CardView cardRegrasVigentes = findViewById(R.id.card_regras_vigentes);
         if (cardRegrasVigentes != null) {
             Log.d("RulesSupervisor", "Card regras vigentes encontrado, configurando click listener");
-            
-            // Teste com OnTouchListener como alternativa
-            cardRegrasVigentes.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, android.view.MotionEvent event) {
-                    if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-                        Intent it = new Intent(RulesSupervisor.this, RegrasSupervisorActivity.class);
-                        startActivity(it);
-                        Log.d("RulesSupervisor", "Card regras vigentes tocado");
-                        //Toast.makeText(RulesSupervisor.this, "Card regras vigentes tocado!", Toast.LENGTH_SHORT).show();
-                        //return true;
-                    }
-                    return false;
-                }
-            });
-            
+
+            // Mantemos apenas o OnClickListener aqui também.
             cardRegrasVigentes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d("RulesSupervisor", "Card regras vigentes clicado, abrindo RegrasSupervisorActivity");
                     Toast.makeText(RulesSupervisor.this, "Abrindo regras vigentes...", Toast.LENGTH_SHORT).show();
+
+                    // Corrija a classe de destino para a Activity correta
                     Intent intent = new Intent(RulesSupervisor.this, RegrasSupervisorActivity.class);
+
                     startActivity(intent);
                 }
             });

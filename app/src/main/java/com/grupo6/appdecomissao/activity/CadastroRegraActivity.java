@@ -3,6 +3,7 @@ package com.grupo6.appdecomissao.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.appbar.MaterialToolbar;
 import com.grupo6.appdecomissao.R;
 import com.grupo6.appdecomissao.domain.CommissionRule;
 import com.grupo6.appdecomissao.domain.DataCache;
@@ -58,16 +61,13 @@ public class CadastroRegraActivity extends AppCompatActivity {
         for (User u : todosUsuarios) {
             android.util.Log.d("CadastroRegra", "Usuário: ID=" + u.getId() + ", Nome=" + u.getName() + ", Perfil=" + u.getProfile());
         }
-        
-        /*
-        //comentado pq essa view só aparece se o usuário for supervisor
-        if (user == null || !"Supervisor".equalsIgnoreCase(user.getProfile())) {
-            Toast.makeText(this, "Apenas supervisores podem cadastrar regras.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
 
-         */
+        MaterialToolbar toolbar = findViewById(R.id.toolbar_cadastro_regra);
+
+        // Adiciona a ação de clique para o ícone de navegação (voltar)
+        toolbar.setNavigationOnClickListener(v -> {
+            finish(); // Este comando fecha a tela atual, simulando o botão "voltar"
+        });
 
         etNome = findViewById(R.id.etNomeRegra);
         etDescricao = findViewById(R.id.etDescricaoRegra);

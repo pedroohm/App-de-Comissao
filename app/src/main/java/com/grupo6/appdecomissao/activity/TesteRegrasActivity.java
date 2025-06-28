@@ -26,7 +26,7 @@ public class TesteRegrasActivity extends AppCompatActivity {
         });
 
         btnRegrasSupervisor.setOnClickListener(v -> {
-            startActivity(new Intent(this, RegrasSupervisorActivity.class));
+            startActivity(new Intent(this, CommissionRuleAdapter.class));
         });
     }
 } 

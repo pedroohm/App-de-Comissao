@@ -36,6 +36,8 @@ public class Goal implements Parcelable {
 
     public Boolean getAchieved() { return achieved; }
 
+    public void setAssignedConsultantIds(Set<String> assignedConsultantIds) { this.assignedConsultantIds = assignedConsultantIds; }
+
     protected Goal(Parcel in) {
         id = in.readString();
         assignedConsultantIds = new HashSet<>(in.createStringArrayList());

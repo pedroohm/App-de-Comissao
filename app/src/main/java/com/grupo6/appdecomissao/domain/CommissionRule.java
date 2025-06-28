@@ -35,5 +35,6 @@ public class CommissionRule {
     public double getCommissionPercentage() { return commissionPercentage; }
 
     public void setName(String name) { this.name = name; }
+    public void setAssignedConsultantIds(Set<String> assignedConsultantIds) { this.assignedConsultantIds = assignedConsultantIds; }
     public void setDescription(String description) { this.description = description; }
 }

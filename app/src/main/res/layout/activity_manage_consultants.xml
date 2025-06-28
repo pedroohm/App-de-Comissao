@@ -72,6 +72,24 @@
             android:id="@+id/add_consultant_icon" />
     </LinearLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Pesquisar Consultor"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:singleLine="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <!-- Container for dynamically added consultant items -->
     <ScrollView
         android:layout_width="match_parent"
@@ -89,7 +107,7 @@
     </ScrollView>
 
     <!-- Save Button (Optional for this step, but included for completeness) -->
-    <Button
+    <!-- <Button
         android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,6 +117,6 @@
         android:textColor="@android:color/white"
         android:padding="12dp"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"/> -->
 
 </LinearLayout>

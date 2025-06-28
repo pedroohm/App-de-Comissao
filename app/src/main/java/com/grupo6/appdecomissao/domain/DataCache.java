@@ -175,6 +175,11 @@ public class DataCache {
         return goals.get(goalId);
     }
 
+    public List<Goal> getAllGoals() {
+        // Converte a Collection de valores para um novo ArrayList
+        return new ArrayList<>(goals.values());
+    }
+
     public Sale getSaleById(String saleId) {
         return sales.get(saleId);
     }
@@ -189,6 +194,10 @@ public class DataCache {
 
     public CommissionRule getCommissionRuleById(String ruleId) {
         return commissionRules.get(ruleId);
+    }
+
+    public List<CommissionRule> getAllCommissionRules() {
+        return new ArrayList<>(commissionRules.values());
     }
 
     public List<Goal> getGoalsByUserId(String userId) {

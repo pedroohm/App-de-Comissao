@@ -213,7 +213,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
 
     /**
      * Filtra a lista de consultores com base no texto de pesquisa e atualiza a UI.
-     * @param query O texto a ser usado para filtrar.
+     * query e o texto a ser usado para filtrar.
      */
     private void filterConsultants(String query) {
         filteredConsultants = new ArrayList<>();
@@ -252,7 +252,6 @@ public class ManageConsultantsActivity extends AppCompatActivity {
     /**
      * Adiciona a view de um consultor individual ao container.
      * Inclui campos editáveis e botões de atualização.
-     * @param consultant O objeto User do consultor a ser exibido.
      */
     public void addConsultantView(User consultant){
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -271,10 +270,6 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         Button buttonSaveUpdate = consultorView.findViewById(R.id.button_save_update);
 
 
-        // ***** CORREÇÃO AQUI: Declaração das listas temporárias para edição *****
-        // Elas precisam ser inicializadas com o estado ATUAL do consultor CADA VEZ
-        // que a addConsultantView é executada (quando a caixinha é criada/recriada).
-        // Usar Set aqui é mais apropriado pois assignedConsultantIds é um Set.
         final Set<String> currentSelectedGoalIds = new HashSet<>();
         final Set<String> currentSelectedCommissionRuleIds = new HashSet<>();
 
@@ -471,8 +466,8 @@ public class ManageConsultantsActivity extends AppCompatActivity {
     /**
      * Tenta remover um consultor do servidor. Independentemente do resultado da API,
      * remove o consultor e suas associações do DataCache e atualiza a UI.
-     * @param userId O ID do consultor a ser removido.
-     * @param userName O nome do consultor a ser removido.
+     * parametro userId e o ID do consultor a ser removido.
+     * parametro userName e o nome do consultor a ser removido.
      */
     private void deleteConsultant(String userId, String userName) {
         Toast.makeText(ManageConsultantsActivity.this, "Removendo consultor " + userName + " localmente...", Toast.LENGTH_SHORT).show();
@@ -540,7 +535,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
 
     /**
      * Atualiza a lista de consultantIds do supervisor atual no DataCache ao remover um consultor.
-     * @param consultantIdToRemove O ID do consultor que foi removido.
+     * parametro consultantIdToRemove e o ID do consultor que foi removido.
      */
     private void updateSupervisorConsultantListOnDelete(String consultantIdToRemove) {
         User supervisor = dataCache.getUserById(SUPERVISOR_ID);
@@ -773,7 +768,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
 
     /**
      * Atualiza a lista de consultantIds do supervisor atual no DataCache ao adicionar um novo consultor.
-     * @param newConsultantId O ID do novo consultor.
+     * parametro newConsultantId e o ID do novo consultor.
      */
     private void updateSupervisorConsultantListOnAdd(String newConsultantId) {
         User supervisor = dataCache.getUserById(SUPERVISOR_ID);
@@ -794,9 +789,9 @@ public class ManageConsultantsActivity extends AppCompatActivity {
     /**
      * Atualiza um consultor existente no DataCache e, se houver, no servidor.
      * Gerencia a adição/remoção de associações de Goals e CommissionRules.
-     * @param updatedConsultant O objeto User com os dados atualizados.
-     * @param newSelectedGoalIds O Set de IDs de Goals SELECIONADAS para este consultor.
-     * @param newSelectedCommissionRuleIds O Set de IDs de CommissionRules SELECIONADAS para este consultor.
+     * parametro updatedConsultant O objeto User com os dados atualizados.
+     * parametro newSelectedGoalIds O Set de IDs de Goals SELECIONADAS para este consultor.
+     * parametro newSelectedCommissionRuleIds O Set de IDs de CommissionRules SELECIONADAS para este consultor.
      */
     private void updateConsultant(User updatedConsultant, Set<String> newSelectedGoalIds, Set<String> newSelectedCommissionRuleIds) {
         String consultantId = updatedConsultant.getId();

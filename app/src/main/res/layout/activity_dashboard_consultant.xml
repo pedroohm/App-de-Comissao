@@ -65,16 +65,18 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/ti_date_select"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                        android:layout_width="190dp"
+                        android:layout_width="225dp"
                         android:layout_height="50dp"
                         android:textColor="#4A4A4A"
                         android:textColorHint="#0DA4A4">
 
                         <AutoCompleteTextView
+                            android:id="@+id/autoCompleteTextView_period"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/border_color"
                             android:hint="Período"
+                            android:inputType="none"
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </FrameLayout>
@@ -120,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:text="R$ 1.000"
+                        android:text="R$ 0.00"
                         android:textAlignment="center"
                         android:textColor="#4A4A4A"
                         android:textSize="16sp"
@@ -151,7 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:text="2"
+                        android:text="0"
                         android:textAlignment="center"
                         android:textColor="#4A4A4A"
                         android:textSize="16sp"
@@ -182,7 +184,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:text="R$ 100"
+                        android:text="R$ 0"
                         android:textAlignment="center"
                         android:textColor="#4A4A4A"
                         android:textSize="16sp"
@@ -232,7 +234,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="50%"
+                            android:text="0%"
                             android:textAlignment="center"
                             android:textColor="#009688"
                             android:textSize="20sp"
@@ -270,7 +272,7 @@
                             android:layout_height="match_parent"
 
                             android:layout_gravity="center"
-                            app:indicatorColor="@color/white"
+                            app:indicatorColor="#009688"
                             app:indicatorSize="120dp"
                             app:trackColor="#0DA4A4"
                             app:trackThickness="12dp" />
@@ -280,7 +282,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="50%"
+                            android:text="0%"
                             android:textAlignment="center"
                             android:textColor="#009688"
                             android:textSize="32sp"
@@ -326,7 +328,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="50%"
+                            android:text="0%"
                             android:textAlignment="center"
                             android:textColor="#009688"
                             android:textSize="20sp"
@@ -367,7 +369,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:text="R$ 1,000"
+                        android:text="R$ 0.00"
                         android:textAlignment="center"
                         android:textColor="#4A4A4A"
                         android:textSize="16sp"
@@ -398,7 +400,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:text="R$ 100"
+                        android:text="R$ 0.00"
                         android:textAlignment="center"
                         android:textColor="#4A4A4A"
                         android:textSize="16sp"
@@ -406,41 +408,57 @@
                 </FrameLayout>
             </LinearLayout>
             <!-- Comp Metas  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_log_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Metas"
+                android:textColor="#0DA4A4"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <TableLayout
                 android:id="@+id/tl_goals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp">
 
-                <TableRow>
+                <TableRow android:background="#0DA4A4">
 
                     <TextView
+                        style="@style/TableHeader"
                         android:layout_width="wrap_content"
                         android:layout_column="0"
                         android:layout_weight="1"
-                        android:text="Metas"
+                        android:text="Descrição"
                         android:textAlignment="center"
-                        android:textColor="#0DA4A4"
                         android:textStyle="bold" />
 
                     <TextView
+                        style="@style/TableHeader"
                         android:layout_width="wrap_content"
                         android:layout_column="1"
                         android:layout_weight="1"
                         android:text="Bônus"
                         android:textAlignment="center"
-                        android:textColor="#0DA4A4"
                         android:textStyle="bold"></TextView>
 
                     <TextView
+                        style="@style/TableHeader"
                         android:layout_width="wrap_content"
                         android:layout_column="2"
                         android:layout_weight="1"
                         android:text="Atingida"
                         android:textAlignment="center"
-                        android:textColor="#0DA4A4"
                         android:textStyle="bold"></TextView>
                 </TableRow>
 
@@ -449,19 +467,35 @@
                 </TableRow>
 
             </TableLayout>
+
+            <Button
+                android:id="@+id/btn_see_all_goals"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Ver Tudo"
+                android:textColor="#0DA4A4"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
             <!--Comp Histórico de vendas-->
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp">
-                <!-- Comp Histórico de Vendas  -->
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_title_log"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Histórico de Comissões"
-                    android:textAlignment="center"
                     android:textColor="#0DA4A4"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -470,54 +504,47 @@
                     android:id="@+id/tl_log"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp">
+                    android:layout_marginTop="8dp">
 
                     <TableRow android:background="#0DA4A4">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="0"
-                            android:layout_weight="1"
-                            android:text="nº"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            style="@style/TableHeader"
+                            android:layout_weight="0.5"
+                            android:text="nº" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="1"
-                            android:layout_weight="1"
-                            android:text="Produto"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"></TextView>
+                            style="@style/TableHeader"
+                            android:layout_weight="1.5"
+                            android:text="Produto" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="2"
-                            android:layout_weight="1"
-                            android:text="Preço do Produto"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"></TextView>
+                            style="@style/TableHeader"
+                            android:layout_weight="1.2"
+                            android:text="Preço do Produto" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_column="3"
+                            style="@style/TableHeader"
                             android:layout_weight="1"
-                            android:text="Comissão"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"></TextView>
-
-                    </TableRow>
-
-                    <TableRow android:background="#400DA4A4">
+                            android:text="Comissão" />
 
                     </TableRow>
 
                 </TableLayout>
-            </FrameLayout>
+
+                <Button
+                    android:id="@+id/btn_see_all_sales"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="Ver Tudo"
+                    android:textColor="#0DA4A4"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

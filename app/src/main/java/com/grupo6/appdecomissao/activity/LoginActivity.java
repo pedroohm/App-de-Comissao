@@ -61,19 +61,29 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void logar(View v){
-        //Intent it = new Intent(this, ConsultantDashboardActivity.class);
-        //Intent it = new Intent(this, ConsultantDashboardActivity.class);
-        // startActivity(it);
-        // Obtém as views e seta as variáveis de email e senha
-        TextInputLayout tiEmail = (TextInputLayout) findViewById(R.id.ti_email);
+        // 1. Obter os dados de entrada do usuário
+        TextInputLayout tiEmail = findViewById(R.id.ti_email);
         emailEditText = (TextInputEditText) tiEmail.getEditText();
 
-        TextInputLayout tiPassword = (TextInputLayout) findViewById(R.id.ti_password);
+        TextInputLayout tiPassword = findViewById(R.id.ti_password);
         passwordEditText = (TextInputEditText) tiPassword.getEditText();
 
-        String email = emailEditText.getText().toString();
+        String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString();
 
+        // 2. Validar se os campos não estão vazios
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Por favor, preencha e-mail e senha.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 3. Buscar o usuário no DataCache pelo e-mail fornecido
+        User user = dataCache.getUserByEmail(email);
+
+        // 4. Verificar se o usuário existe
+        if (user == null) {
+            Toast.makeText(getApplicationContext(), "Usuário não encontrado.", Toast.LENGTH_SHORT).show();
+            return;
         if (email.equals("juan.freire@ufv.br")){
             Intent it = new Intent(this, ConsultantDashboardActivity.class);
             //Intent it = new Intent(this, TesteRegrasActivity.class);
@@ -81,6 +91,31 @@ public class LoginActivity extends AppCompatActivity {
             dataCache.setCurrentId("84");
             startActivity(it);
         }
+
+        // 5. Verificar se a senha está correta
+        if (user.getPassword().equals(password)) {
+            // Senha correta, proceder com o login
+            Toast.makeText(getApplicationContext(), "Login bem-sucedido!", Toast.LENGTH_SHORT).show();
+
+            // Armazena o ID do usuário logado para uso em outras telas
+            dataCache.setCurrentId(user.getId());
+
+            // 6. Redirecionar para a tela correta com base no perfil do usuário
+            Intent intent;
+            if ("Supervisor".equalsIgnoreCase(user.getProfile())) {
+                intent = new Intent(this, DashboardSupervisor.class);
+            } else {
+                intent = new Intent(this, ConsultantDashboardActivity.class);
+            }
+
+            // Limpa as atividades anteriores para que o usuário não possa "voltar" para a tela de login
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish(); // Finaliza a LoginActivity
+
+        } else {
+            // Senha incorreta
+            Toast.makeText(getApplicationContext(), "Senha incorreta.", Toast.LENGTH_SHORT).show();
         else if (email.equals("pedro.moura2@ufv.br")){
             Intent it = new Intent(this, DashboardSupervisor.class);
             //Intent it = new Intent(this, TesteRegrasActivity.class);
@@ -93,16 +128,31 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void openForgotPasswordActivity(View view) {
+        // Cria uma Intent (uma "intenção" de ir para outra tela)
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        // Inicia a nova activity
+
+        startActivity(intent);
+    }
+
+    private void loadApplicationData() {
+        Log.d(TAG, "Iniciando carregamento de dados do aplicativo...");
+
+        // 1. Carrega os usuários da API Rubeus
+        apiRepository.getUsers(new ApiCallback<List<User>>() {
     private void loadInitialData() {
         Log.d("LOGIN", "Iniciando carregamento de dados iniciais");
-        
+
         // Carregar usuários da API Rubeus
         Log.d("LOGIN", "Carregando usuários da API Rubeus...");
         dataCache.loadUsersFromApi("app", "token123", new ApiCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
                 Log.d("LOGIN", "Usuários carregados com sucesso da API Rubeus");
-                
+
                 // Carregar regras do servidor PHP
                 Log.d("LOGIN", "Carregando regras do servidor PHP...");
                 dataCache.loadRulesFromApi(new ApiCallback<Void>() {
@@ -111,16 +161,16 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("LOGIN", "Regras carregadas com sucesso do servidor PHP");
                         Log.d("LOGIN", "Total de usuários no cache: " + dataCache.getAllUsers().size());
                         Log.d("LOGIN", "Total de regras no cache: " + dataCache.getAllRules().size());
-                        
+
                         // Carregar metas e vendas mockadas
                         Log.d("LOGIN", "Carregando metas e vendas mockadas...");
                         dataCache.loadMockGoalsAndSales();
                         Log.d("LOGIN", "Metas e vendas mockadas carregadas");
                         Log.d("LOGIN", "Total de metas no cache: " + dataCache.getAllGoals().size());
                         Log.d("LOGIN", "Total de vendas no cache: " + dataCache.getAllSales().size());
-                        
+
                         Log.d("LOGIN", "Carregamento inicial concluído com sucesso");
-                        
+
                         // Habilitar botão de login após carregamento
                         runOnUiThread(() -> {
                             btnLogin.setEnabled(true);
@@ -133,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("LOGIN", "Erro ao carregar regras: " + error);
                         // Continuar mesmo com erro nas regras
                         dataCache.loadMockGoalsAndSales();
-                        
+
                         // Habilitar botão mesmo com erro
                         runOnUiThread(() -> {
                             btnLogin.setEnabled(true);
@@ -147,14 +197,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(String error) {
                 Log.e("LOGIN", "Erro ao carregar usuários da API Rubeus: " + error);
                 Log.d("LOGIN", "Carregando dados mockados como fallback...");
-                
+
                 // Carregar dados mockados quando a API falhar
                 dataCache.loadMockUsers();
                 dataCache.loadMockGoalsAndSales();
-                
+
                 Log.d("LOGIN", "Dados mockados carregados");
                 Log.d("LOGIN", "Total de usuários mockados no cache: " + dataCache.getAllUsers().size());
-                
+
                 // Carregar regras do servidor PHP
                 Log.d("LOGIN", "Carregando regras do servidor PHP...");
                 dataCache.loadRulesFromApi(new ApiCallback<Void>() {
@@ -162,7 +212,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(Void result) {
                         Log.d("LOGIN", "Regras carregadas com sucesso do servidor PHP");
                         Log.d("LOGIN", "Total de regras no cache: " + dataCache.getAllRules().size());
-                        
+
                         // Habilitar botão após carregamento
                         runOnUiThread(() -> {
                             btnLogin.setEnabled(true);
@@ -173,7 +223,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onError(String error) {
                         Log.e("LOGIN", "Erro ao carregar regras: " + error);
-                        
+
                         // Habilitar botão mesmo com erro
                         runOnUiThread(() -> {
                             btnLogin.setEnabled(true);

@@ -59,10 +59,10 @@ public class ApiRepository {
                 }
 
                 JsonObject json = response.body();
-                
+
                 // Log do JSON completo retornado pela API Rubeus
                 Log.d("API_RUBEUS", "Resposta completa da API Rubeus: " + json.toString());
-                
+
                 if (!json.has("success") || !json.get("success").getAsBoolean()) {
                     callback.onError("API retornou success=false");
                     return;
@@ -80,17 +80,17 @@ public class ApiRepository {
 
                 for (int i = 0; i < dataArray.size(); i++) {
                     JsonObject userJson = dataArray.get(i).getAsJsonObject();
-                    
+
                     // Log de cada usuário individual
                     Log.d("API_RUBEUS", "Usuário " + i + ": " + userJson.toString());
-                    
+
                     User user = new Gson().fromJson(userJson, User.class);
                     userList.add(user);
-                    
+
                     // Log dos dados processados
-                    Log.d("API_RUBEUS", "Usuário processado - ID: " + user.getId() + 
-                          ", Nome: " + user.getName() + 
-                          ", Email: " + user.getEmail() + 
+                    Log.d("API_RUBEUS", "Usuário processado - ID: " + user.getId() +
+                          ", Nome: " + user.getName() +
+                          ", Email: " + user.getEmail() +
                           ", Profile: " + user.getProfile());
                 }
 
@@ -121,9 +121,9 @@ public class ApiRepository {
                 }
 
                 JsonObject json = response.body();
-                
+
                 Log.d("API_RUBEUS", "Resposta completa da API Rubeus (Processos): " + json.toString());
-                
+
                 if (!json.has("success") || !json.get("success").getAsBoolean()) {
                     callback.onError("API retornou success=false");
                     return;
@@ -141,14 +141,14 @@ public class ApiRepository {
 
                 for (int i = 0; i < dataArray.size(); i++) {
                     JsonObject processJson = dataArray.get(i).getAsJsonObject();
-                    
+
                     Log.d("API_RUBEUS", "Processo " + i + ": " + processJson.toString());
-                    
+
                     Process process = new Gson().fromJson(processJson, Process.class);
                     processList.add(process);
-                    
-                    Log.d("API_RUBEUS", "Processo processado - ID: " + process.getId() + 
-                          ", Nome: " + process.getName() + 
+
+                    Log.d("API_RUBEUS", "Processo processado - ID: " + process.getId() +
+                          ", Nome: " + process.getName() +
                           ", Ativo: " + process.isActive());
                 }
 
@@ -179,7 +179,7 @@ public class ApiRepository {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.d("API_RUBEUS", "Resposta HTTP recebida - Código: " + response.code());
-                
+
                 if (!response.isSuccessful()) {
                     String errorBody = "";
                     try {
@@ -202,7 +202,7 @@ public class ApiRepository {
 
                 JsonObject json = response.body();
                 Log.d("API_RUBEUS", "Resposta completa da API Rubeus (Etapas): " + json.toString());
-                
+
                 try {
                     if (!json.has("success") || !json.get("success").getAsBoolean()) {
                         String errorMsg = json.has("errors") ? json.get("errors").getAsString() : "API retornou success=false";
@@ -226,12 +226,12 @@ public class ApiRepository {
                         try {
                             JsonObject stageJson = dataArray.get(i).getAsJsonObject();
                             Log.d("API_RUBEUS", "Etapa " + i + ": " + stageJson.toString());
-                            
+
                             Stage stage = new Gson().fromJson(stageJson, Stage.class);
                             stageList.add(stage);
-                            
-                            Log.d("API_RUBEUS", "Etapa processada - ID: " + stage.getId() + 
-                                  ", Título: " + stage.getTitulo() + 
+
+                            Log.d("API_RUBEUS", "Etapa processada - ID: " + stage.getId() +
+                                  ", Título: " + stage.getTitulo() +
                                   ", Índice: " + stage.getIndice());
                         } catch (Exception e) {
                             Log.e("API_RUBEUS", "Erro ao processar etapa " + i + ": " + e.getMessage());
@@ -240,7 +240,7 @@ public class ApiRepository {
 
                     Log.d("API_RUBEUS", "Total de etapas processadas: " + stageList.size());
                     callback.onSuccess(stageList);
-                    
+
                 } catch (Exception e) {
                     Log.e("API_RUBEUS", "Erro ao processar JSON: " + e.getMessage());
                     callback.onError("Erro ao processar JSON: " + e.getMessage());
@@ -502,6 +502,25 @@ public class ApiRepository {
             @Override
             public void onFailure(Call<Goal> call, Throwable t) {
                 callback.onError("Erro de rede: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getUsers(ApiCallback<List<User>> callback) {
+        Call<List<User>> call = mockService.getUsers();
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Erro ao buscar usuários do mock: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                callback.onError("Falha na rede ao buscar usuários do mock: " + t.getMessage());
             }
         });
     }

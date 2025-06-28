@@ -42,7 +42,7 @@
         android:background="@drawable/border_rounded"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_profile"
+        android:src="@drawable/person_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -106,16 +106,18 @@
             android:longClickable="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="#0DA4A4"
         android:text="Gerenciar Perfil"
-        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="#0DA4A4"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ti_email"

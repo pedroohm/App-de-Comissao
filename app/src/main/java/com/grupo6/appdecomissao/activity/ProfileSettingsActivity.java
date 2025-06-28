@@ -28,7 +28,10 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Trocar o placeholder quando tivermos os xmls das telas
-        setContentView(R.layout.activity_configs_consultant);
+        if (dataCache.getCurrentId() == "85")
+            setContentView(R.layout.activity_config_supervisor);
+        else
+            setContentView(R.layout.activity_configs_consultant);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -84,7 +87,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     // Chamado pelo botão de gerenciar consultores
     public void manageConsultants(View view){
         // A Activity ManageConsultants ainda não existe, o nome é somente um placeholder
-        //Intent it = new Intent(this, ManageConsultantsActivity.class);
-        // startActivity(it);
+        Intent it = new Intent(this, ManageConsultantsActivity.class);
+        startActivity(it);
     }
 }

@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setEnabled(false);
 
         // Chamando o metodo para listar todos os usuários da plataforma e inicializar o DataCache
-        loadApplicationData();
+        loadInitialData();
     }
 
     public void logar(View v){
@@ -93,62 +93,94 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void loadApplicationData() {
-        Log.d(TAG, "Iniciando carregamento de dados do aplicativo...");
-
-        // 1. Carrega os usuários da API Rubeus
-        apiRepository.getAllUsers(origin, token, new ApiCallback<List<User>>() {
+    private void loadInitialData() {
+        Log.d("LOGIN", "Iniciando carregamento de dados iniciais");
+        
+        // Carregar usuários da API Rubeus
+        Log.d("LOGIN", "Carregando usuários da API Rubeus...");
+        dataCache.loadUsersFromApi("app", "token123", new ApiCallback<Void>() {
             @Override
-            public void onSuccess(List<User> users) {
-                for (User user : users) {
-                    dataCache.putUser(user);
-                }
-                Log.d(TAG, "Usuários da Rubeus carregados. Total: " + users.size());
-
-                // 2. Após carregar usuários, carrega as regras de comissão do nosso servidor PHP
-                apiRepository.getCommissionRules(new ApiCallback<List<CommissionRule>>() {
+            public void onSuccess(Void result) {
+                Log.d("LOGIN", "Usuários carregados com sucesso da API Rubeus");
+                
+                // Carregar regras do servidor PHP
+                Log.d("LOGIN", "Carregando regras do servidor PHP...");
+                dataCache.loadRulesFromApi(new ApiCallback<Void>() {
                     @Override
-                    public void onSuccess(List<CommissionRule> rules) {
-                        for (CommissionRule rule : rules) {
-                            dataCache.putCommissionRule(rule);
-                        }
-                        Log.d(TAG, "Regras de comissão do servidor mock carregadas. Total: " + rules.size());
-
-                        // 3. Após carregar as regras, carrega as metas do nosso servidor PHP
-                        apiRepository.getGoals(new ApiCallback<List<Goal>>() {
-                            @Override
-                            public void onSuccess(List<Goal> goals) {
-                                for (Goal goal : goals) {
-                                    dataCache.putGoal(goal);
-                                }
-                                Log.d(TAG, "Metas do servidor mock carregadas. Total: " + goals.size());
-
-                                // 4. Somente após tudo carregar, habilita o botão de login
-                                runOnUiThread(() -> {
-                                    btnLogin.setEnabled(true);
-                                });
-                            }
-
-                            @Override
-                            public void onError(String errorMessage) {
-                                Log.e(TAG, "Erro ao carregar metas: " + errorMessage);
-                                // Lidar com erro
-                            }
+                    public void onSuccess(Void result) {
+                        Log.d("LOGIN", "Regras carregadas com sucesso do servidor PHP");
+                        Log.d("LOGIN", "Total de usuários no cache: " + dataCache.getAllUsers().size());
+                        Log.d("LOGIN", "Total de regras no cache: " + dataCache.getAllRules().size());
+                        
+                        // Carregar metas e vendas mockadas
+                        Log.d("LOGIN", "Carregando metas e vendas mockadas...");
+                        dataCache.loadMockGoalsAndSales();
+                        Log.d("LOGIN", "Metas e vendas mockadas carregadas");
+                        Log.d("LOGIN", "Total de metas no cache: " + dataCache.getAllGoals().size());
+                        Log.d("LOGIN", "Total de vendas no cache: " + dataCache.getAllSales().size());
+                        
+                        Log.d("LOGIN", "Carregamento inicial concluído com sucesso");
+                        
+                        // Habilitar botão de login após carregamento
+                        runOnUiThread(() -> {
+                            btnLogin.setEnabled(true);
+                            Log.d("LOGIN", "Botão de login habilitado");
                         });
                     }
 
                     @Override
-                    public void onError(String errorMessage) {
-                        Log.e(TAG, "Erro ao carregar regras de comissão: " + errorMessage);
-                        // Lidar com erro
+                    public void onError(String error) {
+                        Log.e("LOGIN", "Erro ao carregar regras: " + error);
+                        // Continuar mesmo com erro nas regras
+                        dataCache.loadMockGoalsAndSales();
+                        
+                        // Habilitar botão mesmo com erro
+                        runOnUiThread(() -> {
+                            btnLogin.setEnabled(true);
+                            Log.d("LOGIN", "Botão de login habilitado (com erro nas regras)");
+                        });
                     }
                 });
             }
 
             @Override
-            public void onError(String errorMessage) {
-                Log.e(TAG, "Erro ao carregar usuários da Rubeus: " + errorMessage);
-                // Lidar com erro
+            public void onError(String error) {
+                Log.e("LOGIN", "Erro ao carregar usuários da API Rubeus: " + error);
+                Log.d("LOGIN", "Carregando dados mockados como fallback...");
+                
+                // Carregar dados mockados quando a API falhar
+                dataCache.loadMockUsers();
+                dataCache.loadMockGoalsAndSales();
+                
+                Log.d("LOGIN", "Dados mockados carregados");
+                Log.d("LOGIN", "Total de usuários mockados no cache: " + dataCache.getAllUsers().size());
+                
+                // Carregar regras do servidor PHP
+                Log.d("LOGIN", "Carregando regras do servidor PHP...");
+                dataCache.loadRulesFromApi(new ApiCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        Log.d("LOGIN", "Regras carregadas com sucesso do servidor PHP");
+                        Log.d("LOGIN", "Total de regras no cache: " + dataCache.getAllRules().size());
+                        
+                        // Habilitar botão após carregamento
+                        runOnUiThread(() -> {
+                            btnLogin.setEnabled(true);
+                            Log.d("LOGIN", "Botão de login habilitado (com dados mockados)");
+                        });
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.e("LOGIN", "Erro ao carregar regras: " + error);
+                        
+                        // Habilitar botão mesmo com erro
+                        runOnUiThread(() -> {
+                            btnLogin.setEnabled(true);
+                            Log.d("LOGIN", "Botão de login habilitado (com dados mockados e erro nas regras)");
+                        });
+                    }
+                });
             }
         });
     }

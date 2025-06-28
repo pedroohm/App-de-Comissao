@@ -25,8 +25,8 @@ public interface MockApiEndpoints {
     @GET("api/goals")
     Call<List<Goal>> getGoals();
 
-    @GET("api/users")
-    Call<List<com.grupo6.appdecomissao.domain.User>> getUsers();
+    //@GET("api/users")
+    //Call<List<com.grupo6.appdecomissao.domain.User>> getUsers();
 
     @POST("api/commission-rules")
     Call<CommissionRule> createCommissionRule(@Body CommissionRule rule);

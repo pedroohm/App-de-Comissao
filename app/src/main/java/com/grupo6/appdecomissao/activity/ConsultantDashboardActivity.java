@@ -159,10 +159,12 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         }
 
         // Mostra o botão apenas se a lista for maior que o limite
-        if (sales.size() > INITIAL_ITEMS_TO_SHOW) {
-            btnSeeAllSales.setVisibility(View.VISIBLE);
-        } else {
-            btnSeeAllSales.setVisibility(View.GONE);
+        if (btnSeeAllSales != null) {
+            if (sales.size() > INITIAL_ITEMS_TO_SHOW) {
+                btnSeeAllSales.setVisibility(View.VISIBLE);
+            } else {
+                btnSeeAllSales.setVisibility(View.GONE);
+            }
         }
 
         double totalSales = 0;
@@ -238,10 +240,12 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tableLayoutGoals.removeViewAt(1);
         }
 
-        if (goals.size() > INITIAL_ITEMS_TO_SHOW - 1) { // reusando a constante
-            btnSeeAllGoals.setVisibility(View.VISIBLE);
-        } else {
-            btnSeeAllGoals.setVisibility(View.GONE);
+        if (btnSeeAllGoals != null) {
+            if (goals.size() > INITIAL_ITEMS_TO_SHOW - 1) { // reusando a constante
+                btnSeeAllGoals.setVisibility(View.VISIBLE);
+            } else {
+                btnSeeAllGoals.setVisibility(View.GONE);
+            }
         }
 
         int achievedCount = 0;
@@ -259,21 +263,23 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             newRow.setBackgroundColor(Color.parseColor("#80E0E0E0"));
             TableRow.LayoutParams cellParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
 
-            // Célula 1: Descrição da Meta
+            // Célula 1: Descrição
             TextView tvDescricao = new TextView(this);
             tvDescricao.setText(goal.getDescription());
-            tvDescricao.setTextColor(Color.parseColor("#4A4A4A"));
+            tvDescricao.setTextColor(Color.BLACK);
+            tvDescricao.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             tvDescricao.setTypeface(null, Typeface.BOLD);
             tvDescricao.setLayoutParams(cellParams);
-            tvDescricao.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tvDescricao.setMaxLines(2);
+            tvDescricao.setEllipsize(TextUtils.TruncateAt.END);
 
             // Célula 2: Bônus
             TextView tvBonus = new TextView(this);
-            tvBonus.setText(String.format("%.2f", goal.getBonus()) + "%");
-            tvBonus.setTextColor(Color.parseColor("#4A4A4A"));
+            tvBonus.setText(String.format("%.2f%%", goal.getBonus()));
+            tvBonus.setTextColor(Color.BLACK);
+            tvBonus.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             tvBonus.setTypeface(null, Typeface.BOLD);
             tvBonus.setLayoutParams(cellParams);
-            tvBonus.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             // Célula 3: Atingida?
             TextView tvAtingida = new TextView(this);
@@ -355,39 +361,45 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     }
 
     private void setupButtonClicks() {
-        btReport.setOnClickListener(v -> {
-            // Pega a lista de vendas ATUALMENTE exibida (já filtrada) do ViewModel
-            List<Sale> currentSales = viewModel.getSalesList().getValue();
-            List<Goal> currentGoals = viewModel.getGoalsList().getValue();
+        if (btReport != null) {
+            btReport.setOnClickListener(v -> {
+                // Pega a lista de vendas ATUALMENTE exibida (já filtrada) do ViewModel
+                List<Sale> currentSales = viewModel.getSalesList().getValue();
+                List<Goal> currentGoals = viewModel.getGoalsList().getValue();
 
-            if (currentSales == null || currentSales.isEmpty()) {
-                Toast.makeText(this, "Não há dados para exportar.", Toast.LENGTH_SHORT).show();
-                return;
-            }
+                if (currentSales == null || currentSales.isEmpty()) {
+                    Toast.makeText(this, "Não há dados para exportar.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            // Gera o conteúdo do CSV
-            this.generatedCsvContent = generateCsvContent(currentSales, currentGoals);
+                // Gera o conteúdo do CSV
+                this.generatedCsvContent = generateCsvContent(currentSales, currentGoals);
 
-            // Inicia o processo de salvar o arquivo
-            launchSaveFileIntent();
-        });
+                // Inicia o processo de salvar o arquivo
+                launchSaveFileIntent();
+            });
+        }
 
-        btnSeeAllSales.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SalesHistoryActivity.class);
-            // Pega a lista completa do ViewModel
-            ArrayList<Sale> fullList = new ArrayList<>(viewModel.getSalesList().getValue());
-            intent.putParcelableArrayListExtra("SALES_LIST", fullList);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        });
+        if (btnSeeAllSales != null) {
+            btnSeeAllSales.setOnClickListener(v -> {
+                Intent intent = new Intent(this, SalesHistoryActivity.class);
+                // Pega a lista completa do ViewModel
+                ArrayList<Sale> fullList = new ArrayList<>(viewModel.getSalesList().getValue());
+                intent.putParcelableArrayListExtra("SALES_LIST", fullList);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            });
+        }
 
-        btnSeeAllGoals.setOnClickListener(v -> {
-            Intent intent = new Intent(this, GoalsListActivity.class);
-            ArrayList<Goal> fullList = new ArrayList<>(viewModel.getGoalsList().getValue());
-            intent.putParcelableArrayListExtra("GOALS_LIST", fullList);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        });
+        if (btnSeeAllGoals != null) {
+            btnSeeAllGoals.setOnClickListener(v -> {
+                Intent intent = new Intent(this, GoalsListActivity.class);
+                ArrayList<Goal> fullList = new ArrayList<>(viewModel.getGoalsList().getValue());
+                intent.putParcelableArrayListExtra("GOALS_LIST", fullList);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            });
+        }
     }
 
     private String generateCsvContent(List<Sale> sales, List<Goal> goals) {

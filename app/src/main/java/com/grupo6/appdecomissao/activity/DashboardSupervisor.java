@@ -90,6 +90,7 @@ public class DashboardSupervisor extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("DashboardSupervisor", "onCreate chamado - Activity ID: " + this.hashCode());
         setContentView(R.layout.activity_dashboard_supervisor);
 
         // 1. Configurações iniciais da UI
@@ -108,6 +109,7 @@ public class DashboardSupervisor extends AppCompatActivity {
         setupPeriodFilter();
 
         // 5. Pede ao ViewModel para iniciar o carregamento dos dados
+        Log.d("DashboardSupervisor", "Chamando loadSupervisorData...");
         viewModel.loadSupervisorData(SUPERVISOR_ID, ORIGIN, TOKEN);
     }
 
@@ -396,13 +398,10 @@ public class DashboardSupervisor extends AppCompatActivity {
                 startActivity(profileIntent);
                 return true;
             } else if (itemId == R.id.nav_regras) {
-                Intent regrasIntent = new Intent(this, RegrasSupervisorActivity.class);
+                Intent regrasIntent = new Intent(this, RulesSupervisor.class);
                 regrasIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(regrasIntent);
                 return true;
-            }else {
-                return false;
-            }
             } else if (itemId == R.id.nav_dashboard) {
                 return true; // Já estamos aqui
             }

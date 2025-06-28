@@ -484,6 +484,7 @@ public class DataCache {
     }
 
     public void loadMockUsers() {
+        /*
         Log.d("DATACACHE", "Carregando usuários mockados");
         
         // Limpar usuários existentes
@@ -509,6 +510,8 @@ public class DataCache {
                   ", Email: " + user.getEmail() + 
                   ", Profile: " + user.getProfile());
         }
+
+         */
     }
 
     public void loadMockStages() {

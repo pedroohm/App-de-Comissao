@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/white"
+    tools:context=".activity.RegrasSupervisorActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Regras e Consultores"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"/>
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_regras_supervisor"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="Regras e Consultores"
+        app:titleTextColor="#0DA4A4"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="#0DA4A4"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRegrasSupervisor"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-</LinearLayout> 
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        tools:listitem="@layout/item_commission_rule"/>
+
+</LinearLayout>

@@ -403,7 +403,7 @@ public class DashboardSupervisor extends AppCompatActivity {
                 startActivity(regrasIntent);
                 return true;
             } else if (itemId == R.id.nav_dashboard) {
-                return true; // Já estamos aqui
+                return true;
             }
             return false;
         });

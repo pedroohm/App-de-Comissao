@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activity.ConfigsConsultant">
+    tools:context=".configSupervisor">
 
     <ImageView
         android:id="@+id/imageView"
@@ -69,12 +69,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/border_color"
             android:hint="Nome"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:focusable="false"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:longClickable="false" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -98,12 +94,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/border_color"
             android:hint="Email"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:focusable="false"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:longClickable="false" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -120,8 +112,23 @@
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ti_email"
-        android:onClick="manageProfile"/>
+        app:layout_constraintTop_toBottomOf="@+id/ti_email" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_manager_consultants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Gerenciar Consultores"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="#0DA4A4"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -131,9 +138,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu"
-        app:labelVisibilityMode="labeled"
-        app:itemIconSize="24dp"/>
+        app:menu="@menu/menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

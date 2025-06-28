@@ -61,41 +61,73 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void logar(View v){
-        //Intent it = new Intent(this, ConsultantDashboardActivity.class);
-        //Intent it = new Intent(this, ConsultantDashboardActivity.class);
-        // startActivity(it);
-        // Obtém as views e seta as variáveis de email e senha
-        TextInputLayout tiEmail = (TextInputLayout) findViewById(R.id.ti_email);
+        // 1. Obter os dados de entrada do usuário
+        TextInputLayout tiEmail = findViewById(R.id.ti_email);
         emailEditText = (TextInputEditText) tiEmail.getEditText();
 
-        TextInputLayout tiPassword = (TextInputLayout) findViewById(R.id.ti_password);
+        TextInputLayout tiPassword = findViewById(R.id.ti_password);
         passwordEditText = (TextInputEditText) tiPassword.getEditText();
 
-        String email = emailEditText.getText().toString();
+        String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString();
 
-        if (email.equals("juan.freire@ufv.br")){
-            Intent it = new Intent(this, ConsultantDashboardActivity.class);
-            it.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            dataCache.setCurrentId("84");
-            startActivity(it);
+        // 2. Validar se os campos não estão vazios
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Por favor, preencha e-mail e senha.", Toast.LENGTH_SHORT).show();
+            return;
         }
-        else if (email.equals("pedro.moura2@ufv.br")){
-            Intent it = new Intent(this, DashboardSupervisor.class);
-            it.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            dataCache.setCurrentId("85");
-            startActivity(it);
+
+        // 3. Buscar o usuário no DataCache pelo e-mail fornecido
+        User user = dataCache.getUserByEmail(email);
+
+        // 4. Verificar se o usuário existe
+        if (user == null) {
+            Toast.makeText(getApplicationContext(), "Usuário não encontrado.", Toast.LENGTH_SHORT).show();
+            return;
         }
-        else {
-            Toast.makeText(getApplicationContext(), "Não foi possível realizar o login", Toast.LENGTH_SHORT).show();
+
+        // 5. Verificar se a senha está correta
+        if (user.getPassword().equals(password)) {
+            // Senha correta, proceder com o login
+            Toast.makeText(getApplicationContext(), "Login bem-sucedido!", Toast.LENGTH_SHORT).show();
+
+            // Armazena o ID do usuário logado para uso em outras telas
+            dataCache.setCurrentId(user.getId());
+
+            // 6. Redirecionar para a tela correta com base no perfil do usuário
+            Intent intent;
+            if ("Supervisor".equalsIgnoreCase(user.getProfile())) {
+                intent = new Intent(this, DashboardSupervisor.class);
+            } else {
+                intent = new Intent(this, ConsultantDashboardActivity.class);
+            }
+
+            // Limpa as atividades anteriores para que o usuário não possa "voltar" para a tela de login
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish(); // Finaliza a LoginActivity
+
+        } else {
+            // Senha incorreta
+            Toast.makeText(getApplicationContext(), "Senha incorreta.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void openForgotPasswordActivity(View view) {
+        // Cria uma Intent (uma "intenção" de ir para outra tela)
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        // Inicia a nova activity
+
+        startActivity(intent);
     }
 
     private void loadApplicationData() {
         Log.d(TAG, "Iniciando carregamento de dados do aplicativo...");
 
         // 1. Carrega os usuários da API Rubeus
-        apiRepository.getAllUsers(origin, token, new ApiCallback<List<User>>() {
+        apiRepository.getUsers(new ApiCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
                 for (User user : users) {

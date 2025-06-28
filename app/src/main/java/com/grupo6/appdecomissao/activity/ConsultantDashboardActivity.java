@@ -307,6 +307,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_profile) {
                 Intent profileIntent = new Intent(this, ProfileSettingsActivity.class);
+                profileIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(profileIntent);
                 return true;
             }
@@ -370,6 +371,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             // Pega a lista completa do ViewModel
             ArrayList<Sale> fullList = new ArrayList<>(viewModel.getSalesList().getValue());
             intent.putParcelableArrayListExtra("SALES_LIST", fullList);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         });
 
@@ -377,6 +379,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GoalsListActivity.class);
             ArrayList<Goal> fullList = new ArrayList<>(viewModel.getGoalsList().getValue());
             intent.putParcelableArrayListExtra("GOALS_LIST", fullList);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         });
     }

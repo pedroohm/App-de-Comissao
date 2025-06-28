@@ -223,6 +223,20 @@ public class DataCache {
         return result;
     }
 
+    public List<User> getAllUsersFromCache() {
+        return new ArrayList<>(users.values());
+    }
+
+    // E este metodo para buscar um usuário específico pelo email
+    public User getUserByEmail(String email) {
+        for (User user : users.values()) {
+            if (user.getEmail() != null && user.getEmail().equalsIgnoreCase(email)) {
+                return user;
+            }
+        }
+        return null; // Retorna null se não encontrar o email
+    }
+
     public Set<Sale> getSales() {
         return new HashSet<>(sales.values());
     }

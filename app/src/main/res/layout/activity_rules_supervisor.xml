@@ -8,219 +8,217 @@
     android:backgroundTint="@color/white"
     tools:context=".activity.RulesSupervisor">
 
-    <ImageView
-        android:id="@+id/rule_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="29dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintTop_toTopOf="parent">
 
-        android:layout_marginTop="29dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/rulesicon" />
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="118dp"
-        android:text="Regras de Comissão"
-
-        android:textColor="#0DA4A4"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rule_icon"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/fl_report"
-        android:layout_width="262dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/bt_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_new_rule">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_date_select"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="#4A4A4A"
-            android:textColorHint="#0DA4A4">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <AutoCompleteTextView
+            <!-- Header -->
+            <FrameLayout
+                android:id="@+id/fl_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_color"
-                android:hint="Regra"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </FrameLayout>
+                android:layout_marginBottom="32dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#0DA4A4"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:cornerRadius="10dp"
-        android:text="Buscar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_new_rule"/>
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:text="Gerenciar Regras"
+                    android:textColor="#0DA4A4"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_new_rule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#0DA4A4"
-        android:text="Adicionar nova regra"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:cornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+                <ImageView
+                    android:id="@+id/icon_rules"
+                    android:layout_width="40dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/rulesicon" />
+            </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fl_report">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Descrição:"
-            android:textAlignment="textStart"
-            android:textColor="#0DA4A4"
-            android:textSize="16dp"
-            android:textStyle="bold">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/tv_description_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Texto da Descrição"
-            android:textAlignment="textStart"
-            android:textColor="#4A4A4A"
-            android:textSize="16dp">
-
-        </TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Consultores:"
-            android:textAlignment="textStart"
-            android:textColor="#0DA4A4"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/tv_consultants_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="74dp"
-            android:text="Nome dos consultores"
-            android:textAlignment="textStart"
-            android:textColor="#4A4A4A"
-            android:textSize="16dp">
-
-        </TextView>
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="24dp"
-        android:layout_marginLeft="24dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
-
-        <FrameLayout
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp">
-
+            <!-- Descrição -->
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="Metas:"
-                android:textAlignment="textStart"
-                android:textColor="#0DA4A4"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/tv_goals_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="74dp"
-                android:text="Vender 20 produtos"
-                android:textAlignment="textStart"
+                android:layout_marginBottom="32dp"
+                android:text="Escolha uma opção para gerenciar as regras de comissão:"
+                android:textAlignment="center"
                 android:textColor="#4A4A4A"
-                android:textSize="16dp">
+                android:textSize="16sp" />
 
-            </TextView>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Botão Cadastrar Nova Regra -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_cadastro"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="Bônus:"
-                android:textAlignment="textStart"
-                android:textColor="#0DA4A4"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description_text">
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
 
-            </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
 
-            <TextView
-                android:id="@+id/tv_bonus_text"
-                android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/border_rounded"
+                        android:backgroundTint="#E8F5F5"
+                        android:padding="12dp"
+                        app:srcCompat="@drawable/rulesicon"
+                        app:tint="#0DA4A4" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cadastrar Nova Regra"
+                            android:textColor="#0DA4A4"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Criar uma nova regra de comissão para consultores"
+                            android:textColor="#666666"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@android:drawable/ic_media_play"
+                        app:tint="#0DA4A4" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Botão Mostrar Regras Vigentes -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_regras_vigentes"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="74dp"
-                android:text="10%"
-                android:textAlignment="textStart"
-                android:textColor="#4A4A4A"
-                android:textSize="16dp">
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
 
-            </TextView>
-        </FrameLayout>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/border_rounded"
+                        android:backgroundTint="#E8F5F5"
+                        android:padding="12dp"
+                        app:srcCompat="@drawable/dashboard_icon"
+                        app:tint="#0DA4A4" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mostrar Regras Vigentes"
+                            android:textColor="#0DA4A4"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Visualizar e gerenciar regras existentes"
+                            android:textColor="#666666"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@android:drawable/ic_media_play"
+                        app:tint="#0DA4A4" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Informações adicionais -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F8F9FA"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ℹ️ Informações"
+                        android:textColor="#0DA4A4"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="• As regras de comissão definem como os consultores recebem comissões\n• Você pode criar regras específicas por processo e etapa\n• As regras vigentes podem ser editadas ou removidas"
+                        android:textColor="#666666"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

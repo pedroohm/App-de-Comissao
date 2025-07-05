@@ -49,7 +49,6 @@ public class RulesSupervisor extends AppCompatActivity {
         if (cardCadastro != null) {
             Log.d("RulesSupervisor", "Card cadastro encontrado, configurando click listener");
 
-            // Mantemos apenas o OnClickListener, que é o correto para a ação de clique.
             cardCadastro.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -68,14 +67,12 @@ public class RulesSupervisor extends AppCompatActivity {
         if (cardRegrasVigentes != null) {
             Log.d("RulesSupervisor", "Card regras vigentes encontrado, configurando click listener");
 
-            // Mantemos apenas o OnClickListener aqui também.
             cardRegrasVigentes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d("RulesSupervisor", "Card regras vigentes clicado, abrindo RegrasSupervisorActivity");
                     Toast.makeText(RulesSupervisor.this, "Abrindo regras vigentes...", Toast.LENGTH_SHORT).show();
 
-                    // Corrija a classe de destino para a Activity correta
                     Intent intent = new Intent(RulesSupervisor.this, RegrasSupervisorActivity.class);
 
                     startActivity(intent);
@@ -98,7 +95,6 @@ public class RulesSupervisor extends AppCompatActivity {
                 startActivity(profileIntent);
                 return true;
             } else if (itemId == R.id.nav_regras) {
-                // Já estamos na tela de regras, não fazer nada
                 return true;
             } else {
                 return false;

@@ -14,8 +14,6 @@ public class User {
     @SerializedName("email")
     private String email;
 
-    // Possíveis atributos (picture e password) que deverão ser armazenados em um BD
-    // Independem da API
     private String picture; // É o caminho relativo da imagem
     private String password; // É um hash
 

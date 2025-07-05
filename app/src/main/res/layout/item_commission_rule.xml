@@ -11,48 +11,66 @@
     app:strokeColor="#0DA4A4"
     app:strokeWidth="1dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@color/white"
-        >
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_rule_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome da Regra"
-            android:textColor="#0DA4A4"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/white"
+            >
 
-        <TextView
-            android:id="@+id/tv_rule_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Descrição detalhada da regra de comissão."
-            android:textColor="#4A4A4A" />
+            <TextView
+                android:id="@+id/tv_rule_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome da Regra"
+                android:textColor="#0DA4A4"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_rule_percentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Percentual: 20%"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_rule_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Descrição detalhada da regra de comissão."
+                android:textColor="#4A4A4A" />
 
-        <TextView
-            android:id="@+id/tv_rule_consultants"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Consultores: Juan, Pedro"
-            android:textColor="#4A4A4A" />
+            <TextView
+                android:id="@+id/tv_rule_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Percentual: 20%"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_rule_consultants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Consultores: Juan, Pedro"
+                android:textColor="#4A4A4A" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_delete_rule"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_delete"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Remover Regra" />
+
+    </FrameLayout>
 
 </com.google.android.material.card.MaterialCardView>

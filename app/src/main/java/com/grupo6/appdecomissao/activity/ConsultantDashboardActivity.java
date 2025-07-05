@@ -81,7 +81,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
                 }
             });
 
-    // Constantes (idealmente viriam de um login ou SharedPreferences)
     private static final String CONSULTANT_ID = "84";
     private static final String ORIGIN = "8";
     private static final String TOKEN = "b116d29f1252d2ce144d5cb15fb14c7f";
@@ -231,7 +230,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         salesCountView.setText(String.valueOf(sales.size()));
         comissionPercView.setText(String.format("%.2f", avgCommission));
 
-        animateProgress(piSalesGoals, tvSalesGoals, sales.size() * 5); // Ex: 5% por venda para a meta
+        animateProgress(piSalesGoals, tvSalesGoals, sales.size() * 5);
         animateProgress(piGains, tvGains, (int) avgCommission);
     }
 
@@ -241,7 +240,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         }
 
         if (btnSeeAllGoals != null) {
-            if (goals.size() > INITIAL_ITEMS_TO_SHOW - 1) { // reusando a constante
+            if (goals.size() > INITIAL_ITEMS_TO_SHOW - 1) {
                 btnSeeAllGoals.setVisibility(View.VISIBLE);
             } else {
                 btnSeeAllGoals.setVisibility(View.GONE);
@@ -298,7 +297,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     }
 
     private void animateProgress(CircularProgressIndicator progressIndicator, TextView textView, double finalProgress) {
-        int targetProgress = (int) Math.min(100, finalProgress); // Garante que não passe de 100
+        int targetProgress = (int) Math.min(100, finalProgress);
         ValueAnimator animator = ValueAnimator.ofInt(0, targetProgress);
         animator.setDuration(800);
         animator.addUpdateListener(animation -> {
@@ -341,7 +340,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         // Opções que aparecerão no menu dropdown
         String[] periods = new String[]{"Todo o período", "Este mês", "Últimos 3 meses", "Últimos 6 meses"};
 
-        // O Adapter é o que conecta os dados (nosso array de strings) ao componente visual
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_dropdown_item_1line,
@@ -352,12 +350,10 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
         periodSelector.setText(adapter.getItem(0), false);
 
-        // Configura o "ouvinte" de cliques nos itens do menu
         periodSelector.setOnItemClickListener((parent, view, position, id) -> {
             String selectedPeriod = (String) parent.getItemAtPosition(position);
             Toast.makeText(this, "Filtrando por: " + selectedPeriod, Toast.LENGTH_SHORT).show();
 
-            // Avisa o ViewModel que o filtro mudou
             viewModel.applyFilter(selectedPeriod);
         });
     }
@@ -365,7 +361,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     private void setupButtonClicks() {
         if (btReport != null) {
             btReport.setOnClickListener(v -> {
-                // Pega a lista de vendas ATUALMENTE exibida (já filtrada) do ViewModel
+                // Pega a lista de vendas ATUALMENTE exibida do ViewModel
                 List<Sale> currentSales = viewModel.getSalesList().getValue();
                 List<Goal> currentGoals = viewModel.getGoalsList().getValue();
 
@@ -405,7 +401,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     }
 
     private String generateCsvContent(List<Sale> sales, List<Goal> goals) {
-        // StringBuilder é mais eficiente para construir strings grandes
         StringBuilder csvBuilder = new StringBuilder();
 
         // Resumo do Período
@@ -424,7 +419,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
         // Adicionando as Metas
         csvBuilder.append("Metas do Consultor\n");
-        csvBuilder.append("Descricao;Bonus (%);Status\n"); // Cabeçalho da tabela de metas
+        csvBuilder.append("Descricao;Bonus (%);Status\n");
         if (goals.isEmpty()) {
             csvBuilder.append("Nenhuma meta encontrada.\n");
         } else {
@@ -438,7 +433,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
         // Detalhamento das vendas
         csvBuilder.append("Detalhes das Vendas do Período\n");
-        csvBuilder.append("ID Venda;Produto;Preco do Produto (R$);Comissao (R$);Data\n"); // Cabeçalho da tabela de vendas
+        csvBuilder.append("ID Venda;Produto;Preco do Produto (R$);Comissao (R$);Data\n");
         if (sales.isEmpty()) {
             csvBuilder.append("Nenhuma venda encontrada no período.\n");
         } else {

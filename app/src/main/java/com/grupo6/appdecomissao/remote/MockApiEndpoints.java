@@ -21,7 +21,7 @@ import retrofit2.http.Path;
 
 public interface MockApiEndpoints {
 
-    @GET("api/users") // Endpoint para buscar todos os usuários do nosso mock
+    @GET("api/users") // Endpoint para buscar todos os usuários do mock
     Call<List<User>> getUsers();
 
     @GET("api/commission-rules")
@@ -39,14 +39,8 @@ public interface MockApiEndpoints {
     @PUT("api/users/{id}")
     Call<User> updateUser(@Path("id") String userId, @Body User updatedUser);
 
-    //@GET("api/users")
-    //Call<List<com.grupo6.appdecomissao.domain.User>> getUsers();
-
     @POST("api/commission-rules")
     Call<CommissionRule> createCommissionRule(@Body CommissionRule rule);
-
-    //@POST("api/users")
-    //Call<com.grupo6.appdecomissao.domain.User> createUser(@Body com.grupo6.appdecomissao.domain.User user);
 
     @POST("api/goals")
     Call<Goal> createGoal(@Body Goal goal);

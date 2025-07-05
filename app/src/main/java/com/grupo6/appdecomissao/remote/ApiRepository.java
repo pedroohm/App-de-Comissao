@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import android.util.Log; // <-- Add this line
+import android.util.Log;
 
 
 public class ApiRepository {
@@ -258,16 +258,6 @@ public class ApiRepository {
 
     public void getRecordsByProcessAndStage(String origin, String token, String processId, String finalStage, String currentId, ApiCallback<List<Record>> callback) {
         try {
-            /*
-            // Validação do status informado
-            if (targetStatus == null || (!targetStatus.equalsIgnoreCase("Em andamento")
-                    && !targetStatus.equalsIgnoreCase("Ganho")
-                    && !targetStatus.equalsIgnoreCase("Perdido"))) {
-                callback.onError("Status inválido");
-                return;
-            }
-            */
-
             JsonObject requestBody = new JsonObject();
             requestBody.addProperty("origem", Integer.parseInt(origin));
             requestBody.addProperty("token", token);
@@ -397,7 +387,7 @@ public class ApiRepository {
         });
     }
 
-    // --- NOVOS MÉTODOS PARA API PHP LOCAL ---
+    // NOVOS MÉTODOS PARA API PHP LOCAL
     public void getAllCommissionRules(ApiCallback<List<CommissionRule>> callback) {
         Call<List<CommissionRule>> call = mockService.getCommissionRules();
         call.enqueue(new Callback<List<CommissionRule>>() {

@@ -66,7 +66,7 @@ public class CadastroRegraActivity extends AppCompatActivity {
 
         // Adiciona a ação de clique para o ícone de navegação (voltar)
         toolbar.setNavigationOnClickListener(v -> {
-            finish(); // Este comando fecha a tela atual, simulando o botão "voltar"
+            finish();
         });
 
         etNome = findViewById(R.id.etNomeRegra);
@@ -85,7 +85,6 @@ public class CadastroRegraActivity extends AppCompatActivity {
         // Carregar consultores disponíveis
         carregarConsultores();
 
-        // Configurar listener do spinner de processo
         spProcesso.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
@@ -108,7 +107,6 @@ public class CadastroRegraActivity extends AppCompatActivity {
             }
         });
 
-        // Configurar listener do spinner de etapa
         spEtapa.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {

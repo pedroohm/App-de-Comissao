@@ -17,7 +17,6 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- Consultant Header (Name, Delete Icon, Expand Arrow) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,14 +53,13 @@
                 android:focusable="true" />
         </LinearLayout>
 
-        <!-- Details Section (Initially hidden) -->
         <LinearLayout
             android:id="@+id/details_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="8dp"
-            android:visibility="gone"> <!-- Initially hidden -->
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

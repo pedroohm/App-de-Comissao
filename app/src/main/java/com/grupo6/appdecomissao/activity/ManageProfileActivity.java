@@ -32,7 +32,6 @@ public class ManageProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Trocar o placeholder quando tivermos os xmls das telas
         setContentView(R.layout.activity_mananger_profile_consultant);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -42,16 +41,11 @@ public class ManageProfileActivity extends AppCompatActivity {
 
         TextInputLayout tiName = (TextInputLayout) findViewById(R.id.ti_name);
         nameEditText= (TextInputEditText) tiName.getEditText();
-        // profilePictureView = (ImageView) findViewById(R.id.placeholderpfpimageview);
 
         User user = dataCache.getUserById(dataCache.getCurrentId());
         String name = user.getName();
-        // String picture = user.getPicture();
 
-        // Seta o nome do usuário na tela (Assumi que a foto vai ser um
-        // placeholder para esta release, depois arrumamos)
         nameEditText.setText(name);
-        // profilePictureView.setImageResource(picture);
     }
 
     public void saveInfo(View view){
@@ -70,11 +64,7 @@ public class ManageProfileActivity extends AppCompatActivity {
 
         User user = dataCache.getUserById("placeholderID");
 
-        if (password.equals(confirmPassword)) {
-            // Muda a senha (não sei se vamos fazer isso no BD ou mudar pela API
-        }
-
-        // Alterar nome para o que o Usuário definir (assumindo que podemos trocar o nome)
+        // Alterar nome para o que o Usuário definir
         user.setName(name);
     }
 
@@ -103,22 +93,4 @@ public class ManageProfileActivity extends AppCompatActivity {
         }
         editText.setSelection(editText.getText().length());
     }
-
-    // Quando o usuário quiser remover sua foto de perfil, colocar
-    // uma default da Rubeus
-    /*
-    public void removeProfilePicture(View view){
-        User user = dataCache.getUserById("placeholderID");
-        user.setPicture("placeholderDefaultPicture");
-        profilePictureView.setImageResource("placeholderDefaultPicture");
-    } */
-
-    // Não pensei na lógica de update da foto de perfil ainda,
-    // então deixei o metodo igual ao de cima por enquanto
-    /*
-    public void updateProfilePicture(View view){
-        User user = dataCache.getUserById("placeholderID");
-        user.setPicture("placeholderNewPicture");
-        profilePictureView.setImageResource("placeholderNewPicture");
-    } */
 }

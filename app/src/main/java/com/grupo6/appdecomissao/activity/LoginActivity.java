@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void logar(View v){
-        // 1. Obter os dados de entrada do usuário
+        // Obter os dados de entrada do usuário
         TextInputLayout tiEmail = findViewById(R.id.ti_email);
         emailEditText = (TextInputEditText) tiEmail.getEditText();
 
@@ -71,22 +71,22 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString();
 
-        // 2. Validar se os campos não estão vazios
+        // Validar se os campos não estão vazios
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Por favor, preencha e-mail e senha.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 3. Buscar o usuário no DataCache pelo e-mail fornecido
+        // Buscar o usuário no DataCache pelo e-mail fornecido
         User user = dataCache.getUserByEmail(email);
 
-        // 4. Verificar se o usuário existe
+        // Verificar se o usuário existe
         if (user == null) {
             Toast.makeText(getApplicationContext(), "Usuário não encontrado.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 5. Verificar se a senha está correta
+        // Verificar se a senha está correta
         if (user != null && user.getPassword() != null && user.getPassword().equals(password)) {
             // Senha correta, proceder com o login
             Toast.makeText(getApplicationContext(), "Login bem-sucedido!", Toast.LENGTH_SHORT).show();
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             // Armazena o ID do usuário logado para uso em outras telas
             dataCache.setCurrentId(user.getId());
 
-            // 6. Redirecionar para a tela correta com base no perfil do usuário
+            // Redirecionar para a tela correta com base no perfil do usuário
             Intent intent;
             if ("Supervisor".equalsIgnoreCase(user.getProfile())) {
                 intent = new Intent(this, DashboardSupervisor.class);
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             // Limpa as atividades anteriores para que o usuário não possa "voltar" para a tela de login
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish(); // Finaliza a LoginActivity
+            finish();
 
         } else {
             // Senha incorreta
@@ -114,11 +114,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openForgotPasswordActivity(View view) {
-        // Cria uma Intent (uma "intenção" de ir para outra tela)
+        // Cria uma Intent
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        // Inicia a nova activity
 
         startActivity(intent);
     }
@@ -126,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
     private void loadApplicationData() {
         Log.d(TAG, "Iniciando carregamento de dados do aplicativo...");
 
-        // 1. Carrega os usuários da API Rubeus
+        // Carrega os usuários da API Rubeus
         apiRepository.getUsers(new ApiCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
@@ -135,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 Log.d(TAG, "Usuários da Rubeus carregados. Total: " + users.size());
 
-                // 2. Após carregar usuários, carrega as regras de comissão do nosso servidor PHP
+                // Após carregar usuários, carrega as regras de comissão do servidor PHP
                 apiRepository.getCommissionRules(new ApiCallback<List<CommissionRule>>() {
                     @Override
                     public void onSuccess(List<CommissionRule> rules) {
@@ -144,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         Log.d(TAG, "Regras de comissão do servidor mock carregadas. Total: " + rules.size());
 
-                        // 3. Após carregar as regras, carrega as metas do nosso servidor PHP
+                        // Após carregar as regras, carrega as metas do servidor PHP
                         apiRepository.getGoals(new ApiCallback<List<Goal>>() {
                             @Override
                             public void onSuccess(List<Goal> goals) {
@@ -153,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 Log.d(TAG, "Metas do servidor mock carregadas. Total: " + goals.size());
 
-                                // 4. Somente após tudo carregar, habilita o botão de login
+                                // Somente após tudo carregar, habilita o botão de login
                                 runOnUiThread(() -> {
                                     btnLogin.setEnabled(true);
                                 });
@@ -162,7 +161,6 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onError(String errorMessage) {
                                 Log.e(TAG, "Erro ao carregar metas: " + errorMessage);
-                                // Lidar com erro
                             }
                         });
                     }
@@ -170,7 +168,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onError(String errorMessage) {
                         Log.e(TAG, "Erro ao carregar regras de comissão: " + errorMessage);
-                        // Lidar com erro
                     }
                 });
             }
@@ -178,7 +175,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(String errorMessage) {
                 Log.e(TAG, "Erro ao carregar usuários da Rubeus: " + errorMessage);
-                // Lidar com erro
             }
         });
     }

@@ -18,7 +18,7 @@ public class SalesHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sales_history);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> finish()); // Ação do botão voltar
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         RecyclerView recyclerView = findViewById(R.id.rv_sales_history);
 

@@ -81,7 +81,6 @@ public class DashboardSupervisor extends AppCompatActivity {
 
     private LinearLayout consultantDetailsContainer;
 
-    // IDs do supervisor logado e da API (idealmente viriam do login)
     private static final String SUPERVISOR_ID = "85";
     private static final String ORIGIN = "8";
     private static final String TOKEN = "b116d29f1252d2ce144d5cb15fb14c7f";
@@ -93,22 +92,22 @@ public class DashboardSupervisor extends AppCompatActivity {
         Log.d("DashboardSupervisor", "onCreate chamado - Activity ID: " + this.hashCode());
         setContentView(R.layout.activity_dashboard_supervisor);
 
-        // 1. Configurações iniciais da UI
+        // Configurações iniciais da UI
         setupWindowInsets();
         initializeUIComponents();
         setupBottomNavigation();
         setupButtonClicks();
 
-        // 2. Inicializa o ViewModel
+        // Inicializa o ViewModel
         viewModel = new ViewModelProvider(this).get(SupervisorDashboardViewModel.class);
 
-        // 3. Configura os observadores para reagir a mudanças nos dados
+        // Configura os observadores para reagir a mudanças nos dados
         setupObservers();
 
-        // 4. Configura o filtro de período
+        // Configura o filtro de período
         setupPeriodFilter();
 
-        // 5. Pede ao ViewModel para iniciar o carregamento dos dados
+        // Pede ao ViewModel para iniciar o carregamento dos dados
         Log.d("DashboardSupervisor", "Chamando loadSupervisorData...");
         viewModel.loadSupervisorData(SUPERVISOR_ID, ORIGIN, TOKEN);
     }
@@ -168,7 +167,7 @@ public class DashboardSupervisor extends AppCompatActivity {
         try {
             OutputStream outputStream = getContentResolver().openOutputStream(uri);
             if (outputStream != null) {
-                outputStream.write(new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF }); // BOM para UTF-8
+                outputStream.write(new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF });
                 outputStream.write(content.getBytes(StandardCharsets.UTF_8));
                 outputStream.close();
                 Toast.makeText(this, "Relatório salvo com sucesso!", Toast.LENGTH_LONG).show();
@@ -187,7 +186,7 @@ public class DashboardSupervisor extends AppCompatActivity {
         csvBuilder.append("Relatório de Desempenho da Equipe\n");
         csvBuilder.append("Período do Filtro;").append(period).append("\n\n");
 
-        // --- Lógica para gerar o relatório da EQUIPE TODA ---
+        // Lógica para gerar o relatório da EQUIPE TODA
         List<User> consultants = viewModel.getTeamConsultants().getValue();
         List<Sale> allSales = viewModel.getTeamSales().getValue();
         List<Goal> allGoals = viewModel.getTeamGoals().getValue();
@@ -247,10 +246,6 @@ public class DashboardSupervisor extends AppCompatActivity {
     }
 
     private void setupObservers() {
-        viewModel.getIsLoading().observe(this, isLoading -> {
-            // Aqui você pode adicionar um ProgressBar e controlar sua visibilidade
-        });
-
         viewModel.getErrorMessage().observe(this, error -> {
             if (error != null && !error.isEmpty()) {
                 Toast.makeText(this, "Erro: " + error, Toast.LENGTH_LONG).show();
@@ -260,7 +255,6 @@ public class DashboardSupervisor extends AppCompatActivity {
         viewModel.getTeamConsultants().observe(this, consultants -> {
             if (consultants != null) {
                 tvConsultantsValue.setText(String.valueOf(consultants.size()));
-                // AQUI: Populamos o seletor de consultores
                 setupConsultantSelector(consultants);
             }
         });
@@ -309,7 +303,7 @@ public class DashboardSupervisor extends AppCompatActivity {
         viewModel.getSelectedConsultantGoals().observe(this, goals -> {
             if (goals != null) {
                 long achievedCount = goals.stream().filter(Goal::getAchieved).count();
-                int totalGoals = goals.isEmpty() ? 1 : goals.size(); // Evita divisão por zero
+                int totalGoals = goals.isEmpty() ? 1 : goals.size();
 
                 double progressGoals = ((double) achievedCount / totalGoals) * 100;
                 animateHorizontalProgress(pbConsultantGoals, tvConsultantGoalsPerc, progressGoals);
@@ -327,13 +321,13 @@ public class DashboardSupervisor extends AppCompatActivity {
         consultantSelector.setOnItemClickListener((parent, view, position, id) -> {
             String selectedName = (String) parent.getItemAtPosition(position);
 
-            // 2. Procura na lista original de consultores qual deles tem esse nome.
+            // Procura na lista original de consultores qual deles tem esse nome.
             User selectedConsultant = consultants.stream()
                     .filter(consultant -> consultant.getName().equals(selectedName))
                     .findFirst()
-                    .orElse(null); // Retorna null se, por algum motivo, não encontrar
+                    .orElse(null);
 
-            // 3. Continua a lógica apenas se um consultor válido foi encontrado.
+            // Continua a lógica apenas se um consultor válido foi encontrado.
             if (selectedConsultant != null) {
                 consultantDetailsContainer.setVisibility(View.VISIBLE);
 

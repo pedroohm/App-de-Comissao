@@ -30,7 +30,6 @@ public class RulesSupervisor extends AppCompatActivity {
             return insets;
         });
 
-        // Teste para verificar se os views estão sendo encontrados
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
             Log.d("RulesSupervisor", "Main view encontrado");
@@ -42,14 +41,19 @@ public class RulesSupervisor extends AppCompatActivity {
         setupCardClickListeners();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_regras); // Garante a seleção ao retomar
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setupCardClickListeners() {
-        // Card para cadastrar nova regra
         CardView cardCadastro = findViewById(R.id.card_cadastro);
         if (cardCadastro != null) {
             Log.d("RulesSupervisor", "Card cadastro encontrado, configurando click listener");
 
-            // Mantemos apenas o OnClickListener, que é o correto para a ação de clique.
             cardCadastro.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -63,19 +67,16 @@ public class RulesSupervisor extends AppCompatActivity {
             Log.e("RulesSupervisor", "Card cadastro não encontrado!");
         }
 
-        // Card para mostrar regras vigentes
         CardView cardRegrasVigentes = findViewById(R.id.card_regras_vigentes);
         if (cardRegrasVigentes != null) {
             Log.d("RulesSupervisor", "Card regras vigentes encontrado, configurando click listener");
 
-            // Mantemos apenas o OnClickListener aqui também.
             cardRegrasVigentes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d("RulesSupervisor", "Card regras vigentes clicado, abrindo RegrasSupervisorActivity");
                     Toast.makeText(RulesSupervisor.this, "Abrindo regras vigentes...", Toast.LENGTH_SHORT).show();
 
-                    // Corrija a classe de destino para a Activity correta
                     Intent intent = new Intent(RulesSupervisor.this, RegrasSupervisorActivity.class);
 
                     startActivity(intent);
@@ -88,6 +89,7 @@ public class RulesSupervisor extends AppCompatActivity {
 
     private void setupBottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_regras); // Define o item selecionado para esta tela
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -98,14 +100,16 @@ public class RulesSupervisor extends AppCompatActivity {
                 startActivity(profileIntent);
                 return true;
             } else if (itemId == R.id.nav_regras) {
-                // Já estamos na tela de regras, não fazer nada
-                return true;
+                return true; // Já estamos nesta tela, apenas consuma o evento
             } else {
-                return false;
+                Intent dashboardIntent;
+                // Como você não tinha uma lógica para nav_dashboard aqui, adicionei a que leva para o dashboard do supervisor por padrão,
+                // já que esta é a RulesSupervisor. Você pode precisar ajustar isso se houver um dashboard de consultor também.
+                dashboardIntent = new Intent(this, DashboardSupervisor.class);
+                dashboardIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(dashboardIntent);
+                return true;
             }
         });
-
-        // Marcar o item de regras como selecionado
-        bottomNavigationView.setSelectedItemId(R.id.nav_regras);
     }
 }

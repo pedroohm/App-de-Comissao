@@ -12,12 +12,21 @@ import com.grupo6.appdecomissao.domain.DataCache;
 import com.grupo6.appdecomissao.domain.User;
 import java.util.List;
 import java.util.stream.Collectors;
+import android.widget.ImageView;
 
 public class CommissionRuleAdapter extends RecyclerView.Adapter<CommissionRuleAdapter.RuleViewHolder> {
 
     private List<CommissionRule> ruleList;
-
     private boolean showAssignedConsultants;
+    private OnDeleteClickListener onDeleteClickListener;
+
+    public interface OnDeleteClickListener {
+        void onDeleteClick(int position);
+    }
+
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
+        this.onDeleteClickListener = listener;
+    }
 
     public CommissionRuleAdapter(List<CommissionRule> ruleList, boolean showAssignedConsultants) {
         this.ruleList = ruleList;
@@ -34,7 +43,7 @@ public class CommissionRuleAdapter extends RecyclerView.Adapter<CommissionRuleAd
     @Override
     public void onBindViewHolder(@NonNull RuleViewHolder holder, int position) {
         CommissionRule rule = ruleList.get(position);
-        holder.bind(rule, this.showAssignedConsultants); // <-- PASSA O BOOLEANO AQUI
+        holder.bind(rule, this.showAssignedConsultants, onDeleteClickListener);
     }
 
     @Override
@@ -44,6 +53,7 @@ public class CommissionRuleAdapter extends RecyclerView.Adapter<CommissionRuleAd
 
     static class RuleViewHolder extends RecyclerView.ViewHolder {
         TextView ruleName, ruleDescription, rulePercentage, ruleConsultants;
+        ImageView deleteIcon;
 
         public RuleViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,34 +61,49 @@ public class CommissionRuleAdapter extends RecyclerView.Adapter<CommissionRuleAd
             ruleDescription = itemView.findViewById(R.id.tv_rule_description);
             rulePercentage = itemView.findViewById(R.id.tv_rule_percentage);
             ruleConsultants = itemView.findViewById(R.id.tv_rule_consultants);
+            deleteIcon = itemView.findViewById(R.id.iv_delete_rule);
         }
 
-        public void bind(CommissionRule rule, boolean showConsultants) { // <-- RECEBE O BOOLEANO
+        public void bind(CommissionRule rule, boolean showConsultants, final OnDeleteClickListener listener) {
             ruleName.setText(rule.getName());
             ruleDescription.setText(rule.getDescription());
             rulePercentage.setText("Percentual: " + String.format("%.2f", rule.getCommissionPercentage()) + "%");
 
-            // --- LÓGICA DE VISIBILIDADE ---
-            if (showConsultants && rule.getAssignedConsultantIds() != null && !rule.getAssignedConsultantIds().isEmpty()) {
-                // ... (lógica para juntar os nomes dos consultores, que já tínhamos) ...
-                StringBuilder namesBuilder = new StringBuilder();
-                boolean isFirst = true;
-                for (String id : rule.getAssignedConsultantIds()) {
-                    User user = DataCache.getInstance().getUserById(id);
-                    String name = (user != null) ? user.getName().split(" ")[0] : "";
-                    if (!name.isEmpty()) {
-                        if (!isFirst) {
-                            namesBuilder.append(", ");
-                        }
-                        namesBuilder.append(name);
-                        isFirst = false;
-                    }
-                }
-                ruleConsultants.setText("Atribuído a: " + namesBuilder.toString());
+            if (showConsultants) {
+                deleteIcon.setVisibility(View.VISIBLE);
                 ruleConsultants.setVisibility(View.VISIBLE);
+
+                if (rule.getAssignedConsultantIds() != null && !rule.getAssignedConsultantIds().isEmpty()) {
+                    StringBuilder namesBuilder = new StringBuilder();
+                    boolean isFirst = true;
+                    for (String id : rule.getAssignedConsultantIds()) {
+                        User user = DataCache.getInstance().getUserById(id);
+                        String name = (user != null) ? user.getName().split(" ")[0] : "";
+                        if (!name.isEmpty()) {
+                            if (!isFirst) {
+                                namesBuilder.append(", ");
+                            }
+                            namesBuilder.append(name);
+                            isFirst = false;
+                        }
+                    }
+                    ruleConsultants.setText("Atribuído a: " + namesBuilder.toString());
+                } else {
+                    ruleConsultants.setText("Atribuído a: Nenhum consultor");
+                }
+
+                deleteIcon.setOnClickListener(v -> {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onDeleteClick(position);
+                        }
+                    }
+                });
+
             } else {
-                // Esconde o campo se o interruptor estiver desligado ou não houver consultores
                 ruleConsultants.setVisibility(View.GONE);
+                deleteIcon.setVisibility(View.GONE);
             }
         }
     }

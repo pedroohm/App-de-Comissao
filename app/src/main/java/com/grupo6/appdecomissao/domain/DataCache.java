@@ -260,7 +260,7 @@ public class DataCache {
         return new ArrayList<>(users.values());
     }
 
-    // E este metodo para buscar um usuário específico pelo email
+    // Metodo para buscar um usuário específico pelo email
     public User getUserByEmail(String email) {
         for (User user : users.values()) {
             if (user.getEmail() != null && user.getEmail().equalsIgnoreCase(email)) {
@@ -305,7 +305,6 @@ public class DataCache {
 
     /**
      * Retorna o nome do produto associado a uma regra de comissão.
-     * Se não estiver preenchido em productName, pode tentar buscar por processId/stage.
      */
     public String getProductNameByRule(CommissionRule rule) {
         if (rule.getProductName() != null && !rule.getProductName().isEmpty()) {
@@ -488,37 +487,6 @@ public class DataCache {
         
         Log.d("DATACACHE", "Metas e vendas mockadas carregadas - Metas: " + getAllGoals().size() + 
               ", Vendas: " + getAllSales().size());
-    }
-
-    public void loadMockUsers() {
-        /*
-        Log.d("DATACACHE", "Carregando usuários mockados");
-        
-        // Limpar usuários existentes
-        users.clear();
-        
-        // Adicionar usuários mockados
-        User user1 = new User("84", "Juan Freire", "juan.freire@ufv.br", null, null, null);
-        User user2 = new User("85", "Pedro Moura", "pedro.moura2@ufv.br", null, null, "supervisor");
-        User user3 = new User("86", "João Silva", "joao.silva@ufv.br", null, null, null);
-        User user4 = new User("87", "Maria Santos", "maria.santos@ufv.br", null, null, null);
-        User user5 = new User("88", "Carlos Oliveira", "carlos.oliveira@ufv.br", null, null, null);
-        
-        putUser(user1);
-        putUser(user2);
-        putUser(user3);
-        putUser(user4);
-        putUser(user5);
-        
-        Log.d("DATACACHE", "Usuários mockados carregados: " + users.size());
-        for (User user : users.values()) {
-            Log.d("DATACACHE", "Usuário mockado - ID: " + user.getId() + 
-                  ", Nome: " + user.getName() + 
-                  ", Email: " + user.getEmail() + 
-                  ", Profile: " + user.getProfile());
-        }
-
-         */
     }
 
     public void loadMockStages() {

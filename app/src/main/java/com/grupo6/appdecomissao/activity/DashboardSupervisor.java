@@ -72,7 +72,7 @@ public class DashboardSupervisor extends AppCompatActivity {
                     Uri uri = result.getData().getData();
                     if (uri != null && this.generatedCsvContent != null) {
                         writeCsvToFile(uri, this.generatedCsvContent);
-                        this.generatedCsvContent = null; // Limpa após o uso
+                        this.generatedCsvContent = null;
                     } else {
                         Toast.makeText(this, "Erro ao gerar o conteúdo do relatório.", Toast.LENGTH_SHORT).show();
                     }
@@ -81,7 +81,6 @@ public class DashboardSupervisor extends AppCompatActivity {
 
     private LinearLayout consultantDetailsContainer;
 
-    // IDs do supervisor logado e da API (idealmente viriam do login)
     private static final String SUPERVISOR_ID = "85";
     private static final String ORIGIN = "8";
     private static final String TOKEN = "b116d29f1252d2ce144d5cb15fb14c7f";
@@ -93,24 +92,26 @@ public class DashboardSupervisor extends AppCompatActivity {
         Log.d("DashboardSupervisor", "onCreate chamado - Activity ID: " + this.hashCode());
         setContentView(R.layout.activity_dashboard_supervisor);
 
-        // 1. Configurações iniciais da UI
         setupWindowInsets();
         initializeUIComponents();
         setupBottomNavigation();
         setupButtonClicks();
 
-        // 2. Inicializa o ViewModel
         viewModel = new ViewModelProvider(this).get(SupervisorDashboardViewModel.class);
 
-        // 3. Configura os observadores para reagir a mudanças nos dados
         setupObservers();
 
-        // 4. Configura o filtro de período
         setupPeriodFilter();
 
-        // 5. Pede ao ViewModel para iniciar o carregamento dos dados
         Log.d("DashboardSupervisor", "Chamando loadSupervisorData...");
         viewModel.loadSupervisorData(SUPERVISOR_ID, ORIGIN, TOKEN);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_dashboard); // Garante a seleção ao retomar
     }
 
     private void initializeUIComponents() {
@@ -140,14 +141,12 @@ public class DashboardSupervisor extends AppCompatActivity {
 
     private void setupButtonClicks() {
         btGenerateReport.setOnClickListener(v -> {
-            // Gera o conteúdo do CSV com base no estado atual do ViewModel
             this.generatedCsvContent = generateCsvContent();
 
             if (this.generatedCsvContent == null || this.generatedCsvContent.isEmpty()) {
                 Toast.makeText(this, "Não há dados para exportar.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            // Inicia o processo de salvar o arquivo
             launchSaveFileIntent();
         });
     }
@@ -168,7 +167,7 @@ public class DashboardSupervisor extends AppCompatActivity {
         try {
             OutputStream outputStream = getContentResolver().openOutputStream(uri);
             if (outputStream != null) {
-                outputStream.write(new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF }); // BOM para UTF-8
+                outputStream.write(new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF });
                 outputStream.write(content.getBytes(StandardCharsets.UTF_8));
                 outputStream.close();
                 Toast.makeText(this, "Relatório salvo com sucesso!", Toast.LENGTH_LONG).show();
@@ -183,22 +182,18 @@ public class DashboardSupervisor extends AppCompatActivity {
         StringBuilder csvBuilder = new StringBuilder();
         String period = periodSelector.getText().toString();
 
-        // Cabeçalho do Relatório
         csvBuilder.append("Relatório de Desempenho da Equipe\n");
         csvBuilder.append("Período do Filtro;").append(period).append("\n\n");
 
-        // --- Lógica para gerar o relatório da EQUIPE TODA ---
         List<User> consultants = viewModel.getTeamConsultants().getValue();
         List<Sale> allSales = viewModel.getTeamSales().getValue();
         List<Goal> allGoals = viewModel.getTeamGoals().getValue();
 
-        // Verifica se os dados foram carregados antes de continuar
         if (consultants == null || allSales == null || allGoals == null) {
             Toast.makeText(this, "Aguarde o carregamento dos dados antes de gerar o relatório.", Toast.LENGTH_SHORT).show();
             return "";
         }
 
-        // Resumo da Equipe
         double totalInvoicing = allSales.stream().mapToDouble(Sale::getPrice).sum();
         double totalCommission = allSales.stream().mapToDouble(Sale::getCommission).sum();
         csvBuilder.append("Resumo Geral da Equipe\n");
@@ -206,13 +201,11 @@ public class DashboardSupervisor extends AppCompatActivity {
         csvBuilder.append("Faturamento Total (R$);").append(String.format("%.2f", totalInvoicing)).append("\n");
         csvBuilder.append("Comissão Total (R$);").append(String.format("%.2f", totalCommission)).append("\n\n");
 
-        // Detalhes de cada consultor
         for (User consultant : consultants) {
             csvBuilder.append("--- Detalhes do Consultor: ").append(consultant.getName()).append(" ---\n");
             List<Sale> consultantSales = allSales.stream().filter(s -> s.getConsultantId().equals(consultant.getId())).collect(Collectors.toList());
             List<Goal> consultantGoals = allGoals.stream().filter(g -> g.getAssignedConsultantIds().contains(consultant.getId())).collect(Collectors.toList());
 
-            // Histórico de Comissões
             csvBuilder.append("Histórico de Comissões\n");
             csvBuilder.append("ID Venda;Produto;Preço (R$);Comissão (R$);Data\n");
             if (consultantSales.isEmpty()){
@@ -228,7 +221,6 @@ public class DashboardSupervisor extends AppCompatActivity {
             }
             csvBuilder.append("\n");
 
-            // Metas
             csvBuilder.append("Metas\n");
             csvBuilder.append("Descrição;Bônus (%);Status\n");
             if (consultantGoals.isEmpty()){
@@ -247,10 +239,6 @@ public class DashboardSupervisor extends AppCompatActivity {
     }
 
     private void setupObservers() {
-        viewModel.getIsLoading().observe(this, isLoading -> {
-            // Aqui você pode adicionar um ProgressBar e controlar sua visibilidade
-        });
-
         viewModel.getErrorMessage().observe(this, error -> {
             if (error != null && !error.isEmpty()) {
                 Toast.makeText(this, "Erro: " + error, Toast.LENGTH_LONG).show();
@@ -260,7 +248,6 @@ public class DashboardSupervisor extends AppCompatActivity {
         viewModel.getTeamConsultants().observe(this, consultants -> {
             if (consultants != null) {
                 tvConsultantsValue.setText(String.valueOf(consultants.size()));
-                // AQUI: Populamos o seletor de consultores
                 setupConsultantSelector(consultants);
             }
         });
@@ -309,7 +296,7 @@ public class DashboardSupervisor extends AppCompatActivity {
         viewModel.getSelectedConsultantGoals().observe(this, goals -> {
             if (goals != null) {
                 long achievedCount = goals.stream().filter(Goal::getAchieved).count();
-                int totalGoals = goals.isEmpty() ? 1 : goals.size(); // Evita divisão por zero
+                int totalGoals = goals.isEmpty() ? 1 : goals.size();
 
                 double progressGoals = ((double) achievedCount / totalGoals) * 100;
                 animateHorizontalProgress(pbConsultantGoals, tvConsultantGoalsPerc, progressGoals);
@@ -318,7 +305,6 @@ public class DashboardSupervisor extends AppCompatActivity {
     }
 
     private void setupConsultantSelector(List<User> consultants) {
-        // Extrai apenas os nomes dos consultores para uma lista de Strings
         List<String> consultantNames = consultants.stream().map(User::getName).collect(Collectors.toList());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, consultantNames);
@@ -327,17 +313,14 @@ public class DashboardSupervisor extends AppCompatActivity {
         consultantSelector.setOnItemClickListener((parent, view, position, id) -> {
             String selectedName = (String) parent.getItemAtPosition(position);
 
-            // 2. Procura na lista original de consultores qual deles tem esse nome.
             User selectedConsultant = consultants.stream()
                     .filter(consultant -> consultant.getName().equals(selectedName))
                     .findFirst()
-                    .orElse(null); // Retorna null se, por algum motivo, não encontrar
+                    .orElse(null);
 
-            // 3. Continua a lógica apenas se um consultor válido foi encontrado.
             if (selectedConsultant != null) {
                 consultantDetailsContainer.setVisibility(View.VISIBLE);
 
-                // Avisa o ViewModel qual consultor foi selecionado
                 viewModel.selectConsultant(selectedConsultant);
             }
         });
@@ -361,7 +344,6 @@ public class DashboardSupervisor extends AppCompatActivity {
         animator.setDuration(800);
         animator.start();
 
-        // Animação para o texto
         ValueAnimator textAnimator = ValueAnimator.ofInt(0, targetProgress);
         textAnimator.setDuration(800);
         textAnimator.addUpdateListener(animation -> {
@@ -374,7 +356,6 @@ public class DashboardSupervisor extends AppCompatActivity {
         String[] periods = new String[]{"Todo o período", "Este mês", "Últimos 3 meses", "Últimos 6 meses"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, periods);
 
-        // Usa diretamente a variável de classe 'periodSelector'
         periodSelector.setAdapter(adapter);
         periodSelector.setText(adapter.getItem(0), false);
 
@@ -386,14 +367,12 @@ public class DashboardSupervisor extends AppCompatActivity {
 
     private void setupBottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.nav_dashboard); // Define o item selecionado
+        bottomNavigationView.setSelectedItemId(R.id.nav_dashboard);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_profile) {
-                // Navega para a tela de perfil
                 Intent profileIntent = new Intent(this, ProfileSettingsActivity.class);
                 profileIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                // Define o ID atual no DataCache antes de ir para a próxima tela
                 DataCache.getInstance().setCurrentId(SUPERVISOR_ID);
                 startActivity(profileIntent);
                 return true;

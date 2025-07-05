@@ -40,9 +40,6 @@
             android:name=".activity.ManageProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".configSupervisor"
-            android:exported="false" />
-        <activity
             android:name=".activity.ConsultantDashboardActivity"
             android:exported="false" />
         <activity

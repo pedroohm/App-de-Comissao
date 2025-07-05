@@ -42,7 +42,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
 
     private static final String TAG = "ManageConsultantsActivity";
     private DataCache dataCache = DataCache.getInstance();
-    private final String SUPERVISOR_ID = dataCache.getCurrentId(); // ID do supervisor mockado
+    private final String SUPERVISOR_ID = dataCache.getCurrentId();
     private LinearLayout consultantsContainer;
     private List<User> consultants;
     private List<User> filteredConsultants;
@@ -100,10 +100,6 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         updateConsultantListFromCache();
     }
 
-    /**
-     * Carrega todos os dados (usuários, metas, regras) do servidor mockado para popular o DataCache.
-     * Deve ser chamado apenas uma vez na inicialização ou para uma "sincronização" completa.
-     */
     private void loadAllDataFromMockServerToCache() {
         Retrofit retrofit = MockApiClient.getInstance();
         MockApiEndpoints apiService = retrofit.create(MockApiEndpoints.class);
@@ -131,9 +127,8 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Busca metas do servidor mockado e as adiciona ao DataCache.
-     */
+
+    // Busca metas do servidor mockado e as adiciona ao DataCache.
     private void loadGoalsAndRulesFromMockServer() {
         Retrofit retrofit = MockApiClient.getInstance();
         MockApiEndpoints apiService = retrofit.create(MockApiEndpoints.class);
@@ -161,10 +156,8 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Busca regras de comissão do servidor mockado e as adiciona ao DataCache.
-     * Define a flag initialDataLoaded como true ao final.
-     */
+
+    // Busca regras de comissão do servidor mockado e as adiciona ao DataCache.
     private void loadCommissionRulesFromMockServer() {
         Retrofit retrofit = MockApiClient.getInstance();
         MockApiEndpoints apiService = retrofit.create(MockApiEndpoints.class);
@@ -194,10 +187,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Atualiza a lista interna de consultores a partir do DataCache,
-     * filtrando para exibir APENAS consultores associados ao supervisor atual (ID 84).
-     */
+    // Atualiza a lista interna de consultores a partir do DataCache.
     private void updateConsultantListFromCache() {
         List<User> allUsersFromCache = dataCache.getAllConsultants();
         consultants = new ArrayList<>();
@@ -211,10 +201,8 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         filterConsultants(searchEditText.getText().toString());
     }
 
-    /**
-     * Filtra a lista de consultores com base no texto de pesquisa e atualiza a UI.
-     * query e o texto a ser usado para filtrar.
-     */
+
+    // Filtra a lista de consultores com base no texto de pesquisa e atualiza a UI. query e o texto a ser usado para filtrar.
     private void filterConsultants(String query) {
         filteredConsultants = new ArrayList<>();
 
@@ -249,10 +237,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Adiciona a view de um consultor individual ao container.
-     * Inclui campos editáveis e botões de atualização.
-     */
+    // Adiciona a view de um consultor individual ao container.
     public void addConsultantView(User consultant){
         LayoutInflater inflater = LayoutInflater.from(this);
         View consultorView = inflater.inflate(R.layout.item_consultant_detail, consultantsContainer, false);
@@ -274,7 +259,6 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         final Set<String> currentSelectedCommissionRuleIds = new HashSet<>();
 
         // Inicializa as listas de seleção com as associações ATUAIS do consultor no DataCache
-        // Isso garante que o estado inicial do AlertDialog reflita o que está salvo.
         List<Goal> userGoals = dataCache.getGoalsByUserId(consultant.getId());
         Set<String> userRulesIds = dataCache.getUserCommissionRules(consultant.getId());
 
@@ -288,7 +272,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         consultantEmailEditText.setText(consultant.getEmail());
         consultantPasswordEditText.setText(consultant.getPassword() != null && !consultant.getPassword().isEmpty() ? consultant.getPassword() : "");
 
-        // Formata as regras para exibição inicial na caixinha (usando os IDs atualmente selecionados)
+        // Formata as regras para exibição inicial na caixinha
         StringBuilder rulesText = new StringBuilder();
         if (!currentSelectedCommissionRuleIds.isEmpty()) {
             List<String> ruleNames = new ArrayList<>();
@@ -304,7 +288,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         }
         autoCompleteRulesDetails.setText(rulesText.toString());
 
-        // Formata as metas para exibição inicial na caixinha (usando os IDs atualmente selecionados)
+        // Formata as metas para exibição inicial na caixinha
         StringBuilder goalsText = new StringBuilder();
         if (!currentSelectedGoalIds.isEmpty()) {
             List<String> goalDescriptions = new ArrayList<>();
@@ -463,12 +447,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Tenta remover um consultor do servidor. Independentemente do resultado da API,
-     * remove o consultor e suas associações do DataCache e atualiza a UI.
-     * parametro userId e o ID do consultor a ser removido.
-     * parametro userName e o nome do consultor a ser removido.
-     */
+    // Tenta remover um consultor do servidor.
     private void deleteConsultant(String userId, String userName) {
         Toast.makeText(ManageConsultantsActivity.this, "Removendo consultor " + userName + " localmente...", Toast.LENGTH_SHORT).show();
 
@@ -533,10 +512,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Atualiza a lista de consultantIds do supervisor atual no DataCache ao remover um consultor.
-     * parametro consultantIdToRemove e o ID do consultor que foi removido.
-     */
+    // Atualiza a lista de consultantIds do supervisor atual no DataCache ao remover um consultor.
     private void updateSupervisorConsultantListOnDelete(String consultantIdToRemove) {
         User supervisor = dataCache.getUserById(SUPERVISOR_ID);
         if (supervisor != null && supervisor.getConsultantIds() != null) {
@@ -550,9 +526,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Alterna a visibilidade do formulário de adição de novo consultor.
-     */
+    // Alterna a visibilidade do formulário de adição de novo consultor.
     private void toggleAddConsultantForm() {
         if (addConsultantFormView == null || addConsultantFormView.getParent() == null) {
             LayoutInflater inflater = LayoutInflater.from(this);
@@ -690,11 +664,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Envia uma requisição POST para o servidor para adicionar um novo consultor.
-     * Após o sucesso, adiciona o usuário ao DataCache, atualiza as metas e regras selecionadas,
-     * e também atualiza a lista de consultores do supervisor.
-     */
+    // Envia uma requisição POST para o servidor para adicionar um novo consultor.
     private void addNewConsultant(User newUser) {
         Retrofit retrofit = MockApiClient.getInstance();
         MockApiEndpoints apiService = retrofit.create(MockApiEndpoints.class);
@@ -766,10 +736,7 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Atualiza a lista de consultantIds do supervisor atual no DataCache ao adicionar um novo consultor.
-     * parametro newConsultantId e o ID do novo consultor.
-     */
+    // Atualiza a lista de consultantIds do supervisor atual no DataCache ao adicionar um novo consultor.
     private void updateSupervisorConsultantListOnAdd(String newConsultantId) {
         User supervisor = dataCache.getUserById(SUPERVISOR_ID);
         if (supervisor != null) {
@@ -786,26 +753,17 @@ public class ManageConsultantsActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Atualiza um consultor existente no DataCache e, se houver, no servidor.
-     * Gerencia a adição/remoção de associações de Goals e CommissionRules.
-     * parametro updatedConsultant O objeto User com os dados atualizados.
-     * parametro newSelectedGoalIds O Set de IDs de Goals SELECIONADAS para este consultor.
-     * parametro newSelectedCommissionRuleIds O Set de IDs de CommissionRules SELECIONADAS para este consultor.
-     */
+    // Atualiza um consultor existente no DataCache e, se houver, no servidor.
     private void updateConsultant(User updatedConsultant, Set<String> newSelectedGoalIds, Set<String> newSelectedCommissionRuleIds) {
         String consultantId = updatedConsultant.getId();
 
-        // 1. Atualizar o User no DataCache (dados básicos como nome, email, senha)
+        // Atualizar o User no DataCache (dados básicos como nome, email, senha)
         dataCache.putUser(updatedConsultant);
         Log.d(TAG, "Consultor " + updatedConsultant.getName() + " (ID: " + consultantId + ") atualizado no DataCache.");
 
-        // 2. Lógica para atualizar associações de Goals
+        // Lógica para atualizar associações de Goals
         List<Goal> allGoals = dataCache.getAllGoals();
         for (Goal goal : allGoals) {
-            // É crucial criar um novo HashSet mutável a partir do Set existente
-            // para evitar modificar diretamente o Set retornado por goal.getAssignedConsultantIds()
-            // caso ele seja imutável ou compartilhado.
             Set<String> assignedToGoal = (goal.getAssignedConsultantIds() != null) ?
                     new HashSet<>(goal.getAssignedConsultantIds()) : new HashSet<>();
 
@@ -813,22 +771,21 @@ public class ManageConsultantsActivity extends AppCompatActivity {
             boolean nowAssigned = newSelectedGoalIds.contains(goal.getId());
 
             if (nowAssigned && !wasAssigned) {
-                // Adicionar o consultor a esta Goal (se está na nova seleção e não estava antes)
+                // Adicionar o consultor a esta Goal
                 assignedToGoal.add(consultantId);
                 goal.setAssignedConsultantIds(assignedToGoal);
                 dataCache.putGoal(goal);
                 Log.d(TAG, "Consultor " + consultantId + " adicionado à Meta: " + goal.getDescription());
             } else if (!nowAssigned && wasAssigned) {
-                // Remover o consultor desta Goal (se NÃO está na nova seleção e estava antes)
+                // Remover o consultor desta Goal
                 assignedToGoal.remove(consultantId);
                 goal.setAssignedConsultantIds(assignedToGoal);
                 dataCache.putGoal(goal);
                 Log.d(TAG, "Consultor " + consultantId + " removido da Meta: " + goal.getDescription());
             }
-            // Se nowAssigned == wasAssigned, não há mudança para essa Goal, então não faz nada.
         }
 
-        // 3. Lógica para atualizar associações de CommissionRules (análoga às Goals)
+        // Lógica para atualizar associações de CommissionRules
         List<CommissionRule> allRules = dataCache.getAllCommissionRules();
         for (CommissionRule rule : allRules) {
             // Crie um novo HashSet mutável a partir do Set existente
@@ -851,17 +808,10 @@ public class ManageConsultantsActivity extends AppCompatActivity {
             }
         }
 
-        // 4. Recarregar a UI a partir do DataCache para refletir as mudanças
+        // Recarregar a UI a partir do DataCache para refletir as mudanças
         updateConsultantListFromCache();
         Toast.makeText(ManageConsultantsActivity.this, "Consultor " + updatedConsultant.getName() + " atualizado localmente.", Toast.LENGTH_SHORT).show();
 
-
-        // 5. Opcional: Chamar a API para atualizar no servidor (se o servidor não for "de enfeite")
-        Retrofit retrofit = MockApiClient.getInstance();
-        MockApiEndpoints apiService = retrofit.create(MockApiEndpoints.class);
-
-        // Seu PHP Mockado não tem um metodo para PATCH (atualizar um usuário específico).
-        // Se tivesse, a chamada seria aqui.
         Log.i(TAG, "Chamada de atualização para o servidor seria feita aqui, se disponível na API.");
     }
 

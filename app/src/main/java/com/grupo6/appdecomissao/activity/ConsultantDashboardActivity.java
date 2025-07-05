@@ -49,7 +49,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
     private ConsultantDashboardViewModel viewModel;
 
-    // Componentes da UI
     private TextView saleView, comissionView, salesCountView, comissionPercView, goalsValueView;
     private TableLayout tableLayoutLog, tableLayoutGoals;
     private CircularProgressIndicator piGoals, piSalesGoals, piGains;
@@ -65,16 +64,14 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
     private Button btnSeeAllGoals;
 
-    // Declara o launcher que vai lidar com a ação de criar o arquivo
     private final ActivityResultLauncher<Intent> createFileLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                // Aqui recebemos o resultado da tela de seleção de arquivo
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                     Uri uri = result.getData().getData();
                     if (uri != null && this.generatedCsvContent != null) {
                         writeCsvToFile(uri, this.generatedCsvContent);
-                        this.generatedCsvContent = null; // Limpa a variável após o uso
+                        this.generatedCsvContent = null;
                     } else {
                         Toast.makeText(this, "Erro ao gerar o conteúdo do relatório.", Toast.LENGTH_SHORT).show();
                     }
@@ -90,21 +87,24 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_consultant);
 
-        // Configuração inicial da UI
         setupWindowInsets();
         initializeUIComponents();
         setupBottomNavigation();
         setupPeriodFilter();
         setupButtonClicks();
 
-        // Inicializa o ViewModel
         viewModel = new ViewModelProvider(this).get(ConsultantDashboardViewModel.class);
 
-        // Configura os observadores para reagir a mudanças nos dados
         setupObservers();
 
-        // Pede ao ViewModel para iniciar o carregamento dos dados
         viewModel.loadConsultantData(CONSULTANT_ID, ORIGIN, TOKEN);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_dashboard);
     }
 
     private void initializeUIComponents() {
@@ -157,7 +157,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tableLayoutLog.removeViewAt(1);
         }
 
-        // Mostra o botão apenas se a lista for maior que o limite
         if (btnSeeAllSales != null) {
             if (sales.size() > INITIAL_ITEMS_TO_SHOW) {
                 btnSeeAllSales.setVisibility(View.VISIBLE);
@@ -182,7 +181,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             newRow.setBackgroundColor(Color.parseColor("#80E0E0E0"));
             TableRow.LayoutParams cellParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
 
-            // Célula 1: Número (ID da Venda)
             TextView tvNumero = new TextView(this);
             tvNumero.setText(sale.getId());
             tvNumero.setTextColor(Color.BLACK);
@@ -190,7 +188,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tvNumero.setTypeface(null, Typeface.BOLD);
             tvNumero.setLayoutParams(cellParams);
 
-            // Célula 2: Produto
             TextView tvProduto = new TextView(this);
             tvProduto.setText(sale.getProduct());
             tvProduto.setTextColor(Color.BLACK);
@@ -200,7 +197,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tvProduto.setMaxLines(1);
             tvProduto.setEllipsize(TextUtils.TruncateAt.END);
 
-            // Célula 3: Preço do Produto
             TextView tvPreco = new TextView(this);
             tvPreco.setText("R$ " + String.format("%.2f", sale.getPrice()));
             tvPreco.setTextColor(Color.BLACK);
@@ -208,7 +204,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tvPreco.setTypeface(null, Typeface.BOLD);
             tvPreco.setLayoutParams(cellParams);
 
-            // Célula 4: Comissão
             TextView tvComissao = new TextView(this);
             tvComissao.setText("R$ " + String.format("%.2f", sale.getCommission()));
             tvComissao.setTextColor(Color.BLACK);
@@ -262,7 +257,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             newRow.setBackgroundColor(Color.parseColor("#80E0E0E0"));
             TableRow.LayoutParams cellParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
 
-            // Célula 1: Descrição
             TextView tvDescricao = new TextView(this);
             tvDescricao.setText(goal.getDescription());
             tvDescricao.setTextColor(Color.BLACK);
@@ -272,7 +266,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tvDescricao.setMaxLines(2);
             tvDescricao.setEllipsize(TextUtils.TruncateAt.END);
 
-            // Célula 2: Bônus
             TextView tvBonus = new TextView(this);
             tvBonus.setText(String.format("%.2f%%", goal.getBonus()));
             tvBonus.setTextColor(Color.BLACK);
@@ -280,7 +273,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
             tvBonus.setTypeface(null, Typeface.BOLD);
             tvBonus.setLayoutParams(cellParams);
 
-            // Célula 3: Atingida?
             TextView tvAtingida = new TextView(this);
             tvAtingida.setText(goal.getAchieved() ? "Sim" : "Não");
             tvAtingida.setTextColor(goal.getAchieved() ? Color.parseColor("#009688") : Color.RED);
@@ -310,6 +302,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
 
     private void setupBottomNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_dashboard);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_profile) {
                 Intent profileIntent = new Intent(this, ProfileSettingsActivity.class);
@@ -320,7 +313,7 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
                 Intent regrasIntent = new Intent(this, RegrasConsultorActivity.class);
                 regrasIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(regrasIntent);
-                return false;
+                return true;
             } else if (item.getItemId() == R.id.nav_dashboard) {
                 return true;
             }
@@ -337,7 +330,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     }
 
     private void setupPeriodFilter() {
-        // Opções que aparecerão no menu dropdown
         String[] periods = new String[]{"Todo o período", "Este mês", "Últimos 3 meses", "Últimos 6 meses"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -361,7 +353,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     private void setupButtonClicks() {
         if (btReport != null) {
             btReport.setOnClickListener(v -> {
-                // Pega a lista de vendas ATUALMENTE exibida do ViewModel
                 List<Sale> currentSales = viewModel.getSalesList().getValue();
                 List<Goal> currentGoals = viewModel.getGoalsList().getValue();
 
@@ -370,10 +361,8 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Gera o conteúdo do CSV
                 this.generatedCsvContent = generateCsvContent(currentSales, currentGoals);
 
-                // Inicia o processo de salvar o arquivo
                 launchSaveFileIntent();
             });
         }
@@ -381,7 +370,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         if (btnSeeAllSales != null) {
             btnSeeAllSales.setOnClickListener(v -> {
                 Intent intent = new Intent(this, SalesHistoryActivity.class);
-                // Pega a lista completa do ViewModel
                 ArrayList<Sale> fullList = new ArrayList<>(viewModel.getSalesList().getValue());
                 intent.putParcelableArrayListExtra("SALES_LIST", fullList);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -403,7 +391,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     private String generateCsvContent(List<Sale> sales, List<Goal> goals) {
         StringBuilder csvBuilder = new StringBuilder();
 
-        // Resumo do Período
         double totalSalesValue = 0;
         double totalCommissionValue = 0;
         for (Sale sale : sales) {
@@ -417,7 +404,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         csvBuilder.append("Número de Vendas;").append(sales.size()).append("\n");
         csvBuilder.append("\n");
 
-        // Adicionando as Metas
         csvBuilder.append("Metas do Consultor\n");
         csvBuilder.append("Descricao;Bonus (%);Status\n");
         if (goals.isEmpty()) {
@@ -431,7 +417,6 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
         }
         csvBuilder.append("\n");
 
-        // Detalhamento das vendas
         csvBuilder.append("Detalhes das Vendas do Período\n");
         csvBuilder.append("ID Venda;Produto;Preco do Produto (R$);Comissao (R$);Data\n");
         if (sales.isEmpty()) {
@@ -450,28 +435,23 @@ public class ConsultantDashboardActivity extends AppCompatActivity {
     }
 
     private void launchSaveFileIntent() {
-        // Cria um nome de arquivo dinâmico com a data atual
         String fileName = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             fileName = "relatorio_comissao_" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) + ".csv";
         }
 
-        // Cria a intenção para o sistema operacional abrir a tela de "Salvar Como..."
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/csv"); // Define o tipo de arquivo como CSV
+        intent.setType("text/csv");
         intent.putExtra(Intent.EXTRA_TITLE, fileName);
 
-        // Lança a tela de seleção de arquivo
         createFileLauncher.launch(intent);
     }
 
     private void writeCsvToFile(Uri uri, String content) {
         try {
-            // Abre um "fluxo de escrita" para o local que o usuário escolheu
             OutputStream outputStream = getContentResolver().openOutputStream(uri);
             if (outputStream != null) {
-                // Escreve o conteúdo e fecha o fluxo
                 outputStream.write(new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF });
                 outputStream.write(content.getBytes(StandardCharsets.UTF_8));
 

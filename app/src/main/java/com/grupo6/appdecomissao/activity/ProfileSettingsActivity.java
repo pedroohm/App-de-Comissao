@@ -37,6 +37,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile); // Define o item selecionado para esta tela
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -51,7 +52,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                 startActivity(profileIntent);
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                return false;
+                return true; // Já estamos nesta tela, apenas consuma o evento
             } else {
                 if (dataCache.getCurrentId().equals("84"))
                     profileIntent = new Intent(this, RegrasConsultorActivity.class);
@@ -70,23 +71,26 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         TextInputLayout tiEmail = (TextInputLayout) findViewById(R.id.ti_email);
         emailEditText = (TextInputEditText) tiEmail.getEditText();
 
-        // Lógica que obtém o nome e o email do usuário
         User user = dataCache.getUserById(dataCache.getCurrentId());
         String name = user.getName();
         String email = user.getEmail();
 
-        // Seta o nome e o email do usuário na tela
         nameEditText.setText(name);
         emailEditText.setText(email);
     }
 
-    // Chamado pelo botão de gerenciar perfil
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile); // Garante a seleção ao retomar
+    }
+
     public void manageProfile(View view){
         Intent it = new Intent(this, ManageProfileActivity.class);
         startActivity(it);
     }
 
-    // Chamado pelo botão de gerenciar consultores
     public void manageConsultants(View view){
         Intent it = new Intent(this, ManageConsultantsActivity.class);
         startActivity(it);

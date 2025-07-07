@@ -85,7 +85,16 @@ A API mock é responsável por fornecer os dados de regras e metas.
 
 2. Execute o aplicativo a partir do Android Studio.
 
+3. Faça o login com uma das contas a seguir:
 
+  Fluxo do supervisor:
+    email: pedro.moura2@ufv.br
+    senha: supervisor123
+
+  Fluxo do consultor:
+    email: juan.freire@ufv.br
+    senha: consultor123
+    
 ## Integrantes do Grupo 6
 - **Carolina Sarah Pacelli Ferreira**
 
